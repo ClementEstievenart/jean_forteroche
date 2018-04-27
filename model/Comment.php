@@ -9,6 +9,10 @@ class Comment {
     private $_reportNumber;
     private $_reportStatut;
 
+    public function __construct($data) {
+        $this->hydrate($data);
+    }
+
     public function hydrate(array $data) {
         foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);

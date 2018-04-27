@@ -9,6 +9,10 @@ class Post {
     private $_published;
     private $_nbComments;
 
+    public function __construct($data) {
+        $this->hydrate($data);
+    }
+
     public function hydrate(array $data) {
         foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);
