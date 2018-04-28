@@ -37,6 +37,15 @@ class CommentsManager {
         return $comments;
     }
 
+    public function getListPostComments($postId) {
+        $comments = [];
+        $req = $this->_db->query('SELECT * FROM comments WHERE id_post = ' . $postId);
+        while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
+            $comments[] = new Comment($data);
+        }
+        return $comments;
+    }
+
     public function update(Comment $comment) {
         $req = $this->_db->prepare('UPDATE comments SET last_name = :lastName, first_name = :firstName, content = :content, id_post = :idPost WHERE id = :id');
         $req->execute(array(
