@@ -4,16 +4,20 @@ class Frontend {
 
     public function __construct() {
         $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf-8', 'root', '');
+        function loadClass($class) {
+            require('../model/' . $class . '.php');
+        }
+        spl_autoload_register(loadClass);
     }
 
     public function homePage() {
-        //Affichage de la page d'accueil
+        require('../view/homeView.php');
     }
 
     public function getPosts() {
         $postsManager = new PostsManager($this->_db);
         $posts = $postsManager->getList();
-        //Affichage des posts
+        require('../view/listPostsView.php');
     }
 
     public function getPostById($postId) {
@@ -23,7 +27,7 @@ class Frontend {
             $commentsManager = new CommentsManager($this->_db);
             $post = $postsManager->get($postId);
             $comments = $commentsManager->getCommentsByPostId($postId);
-            //Affichage du post et des commentaires
+            require('../view/postView.php');
         } else {
             throw new exception('postView() in class Frontend : $postId doesn\'t exist ->');
         }

@@ -9,7 +9,7 @@ while ($post = $posts->fetch()) {
   <article>
         <h3><?= htmlspecialchars($post->title()) ?></h3>
         <p><?= htmlspecialchars($post->content()) ?></p>
-        <div><a href="../index.php?action=getPostById&postId=" + <?= $post->id() ?>>Commentaires</a></div>
+        <div><a href="../index.php?action=getPost=" + <?= $post->id() ?>>Commentaires</a></div>
   </article>
 <?php
 }
