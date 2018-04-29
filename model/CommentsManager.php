@@ -37,7 +37,7 @@ class CommentsManager {
         return $comments;
     }
 
-    public function getListPostComments($postId) {
+    public function getCommentsByPostId($postId) {
         $comments = [];
         $req = $this->_db->query('SELECT * FROM comments WHERE id_post = ' . $postId);
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
