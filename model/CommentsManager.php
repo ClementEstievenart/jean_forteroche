@@ -47,12 +47,14 @@ class CommentsManager {
     }
 
     public function update(Comment $comment) {
-        $req = $this->_db->prepare('UPDATE comments SET lastName = :lastName, firstName = :firstName, content = :content, idPost = :idPost WHERE id = :id');
+        $req = $this->_db->prepare('UPDATE comments SET lastName = :lastName, firstName = :firstName, content = :content, idPost = :idPost, reportNumber = :reportNumber, reportStatut = :reportStatut WHERE id = :id');
         $req->execute(array(
             'lastName' => $comment->lastName(),
             'firstName' => $comment->firstName(),
             'content' => $comment->content(),
             'idPost' => $comment->idPost(),
+            'reportNumber' => $comment->reportNumber(),
+            'reportStatut' => $comment->reportStatut(),
             'id' => $comment->id()
         ));
     }

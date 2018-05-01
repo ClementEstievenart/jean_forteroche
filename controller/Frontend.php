@@ -64,7 +64,8 @@ class Frontend {
             }
             $comment->setReportNumber($comment->reportNumber() + 1);
         }
-        //redirection
+        $commentsManager->update($comment);
+        header('location: index.php?action=getPost&postId=' . $comment->idPost());
     }
 
     public function db() {

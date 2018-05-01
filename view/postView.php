@@ -22,7 +22,7 @@ ob_start();
         <h5><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?></h5>
         <div><em>à commenter le <?= htmlspecialchars($comment->datePublication()) ?></em></div>
         <p><?= htmlspecialchars($comment->content()) ?></p>
-        <div><button>Signaler le commentaire !</button></div>
+        <a href="index.php?action=report&amp;commentId=<?= $comment->id() ?>"><button>Signaler ce commentaire !</button></a>
     <?php
     }
     ?>
