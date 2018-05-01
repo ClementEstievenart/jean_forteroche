@@ -59,7 +59,7 @@ class Comment {
         if ($id > 0) {
             $this->_id = $id;
         } else {
-            throw new exception('setId() in class comment : $id is not an int -> ' . $id);
+            throw new exception('setId() : $id is not an int -> ' . $id);
         }
     }
 
@@ -67,7 +67,7 @@ class Comment {
         if (strlen($lastName) < 255) {
             $this->_lastName = $lastName;
         } else {
-            throw new exception('setLastName() in class comment : $lastName is not a varchar -> ' . $lastName);
+            throw new exception('setLastName() : $lastName is not a varchar -> ' . $lastName);
         }
     }
 
@@ -75,7 +75,7 @@ class Comment {
         if (strlen($firstName) < 255) {
             $this->_firstName = $firstName;
         } else {
-            throw new exception('setFirstName() in class comment : $firstName is not a varchar -> ' . $firstName);
+            throw new exception('setFirstName() : $firstName is not a varchar -> ' . $firstName);
         }
     }
 
@@ -88,7 +88,7 @@ class Comment {
         if ($idPost > 0) {
             $this->_idPost = $idPost;
         } else {
-            throw new exception('setIdPost() in class comment : $idPost is not an int -> ' . $idPost);
+            throw new exception('setIdPost() : $idPost is not an int -> ' . $idPost);
         }
     }
 
@@ -98,19 +98,19 @@ class Comment {
 
     public function setReportNumber($reportNumber) {
         $reportNumber = (int) $reportNumber;
-        if ($reportNumber > 0) {
+        if ($reportNumber >= 0) {
             $this->_reportNumber = $reportNumber;
         } else {
-            throw new exception('setReportNumber() in class comment : $reportNumber is not an int -> ' . $reportNumber);
+            throw new exception('setReportNumber() : $reportNumber is not an int -> ' . $reportNumber);
         }
     }
 
     public function setReportStatut($reportStatut) {
         $reportStatut = (int) $reportStatut;
-        if ($reportStatut > 0 ) {
+        if ($reportStatut >= 0 ) {
             $this->_reportStatut = $reportStatut;
         } else {
-            throw new exception('setReportStatut() in class comment : $reportStatut is not an int -> ' . $reportStatut);
+            throw new exception('setReportStatut() : $reportStatut is not an int -> ' . $reportStatut);
         }
     }
 }

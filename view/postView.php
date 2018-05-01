@@ -4,13 +4,13 @@ ob_start();
 ?>
 <article>
     <h3><?= htmlspecialchars($post->title()) ?></h3>
-    <div><em>Publié le <?= htmlspecialchars(post->datePublication()) ?> par <?= $post->idUser() ?></em></div>
+    <div><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= $post->idUser() ?></em></div>
     <p><?= htmlspecialchars($post->content()) ?></p>
 </article>
 <h4><?= $post->nbComments() ?> commentaires :</h4>
 <div id="comments">
     <?php
-    while($comment = $comments->fetch()) {
+    foreach($comments as $key => $comment) {
     ?>
         <h5><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?></h5>
         <div><em>à commenter le <?= htmlspecialchars($comment->datePublication()) ?></em></div>

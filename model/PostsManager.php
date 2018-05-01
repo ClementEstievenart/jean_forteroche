@@ -7,7 +7,7 @@ class PostsManager {
     }
 
     public function add (Post $post) {
-        $req = $this->_db->prepare('INSER INTO posts(id_user, title, content, published) VALUES (:idUser, :title, :content, :published)');
+        $req = $this->_db->prepare('INSER INTO posts(idUser, title, content, published) VALUES (:idUser, :title, :content, :published)');
         $req->execute(array(
             'idUser' => $post->idUser(),
             'title' => $post->title(),
@@ -30,14 +30,14 @@ class PostsManager {
     public function getList() {
         $posts = [];
         $req = $this->_db->query('SELECT * FROM posts');
-        while ($data = $req->fetch(PDO::FECH_ASSOC)) {
+        while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = new Post($data);
         }
         return $posts;
     }
 
     public function update(Post $post) {
-        $req = $this->_db->prepare('UPDATE posts SET id_user = :idUser, title =  :title, content = :content, date_update = :dateUpdate, published = :published, nb_comments = :nbComments');
+        $req = $this->_db->prepare('UPDATE posts SET idUser = :idUser, title =  :title, content = :content, dateUpdate = :dateUpdate, published = :published, nbComments = :nbComments');
         $req->execute(array(
             'idUser' => $post->idUser(),
             'title' => $post->title(),

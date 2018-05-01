@@ -1,7 +1,7 @@
 <header>
     <h1>Billet Simple pour l'Alaska</h1>
     <nav>
-        <a href="../index.php?action=home">Accueil</a>
-        <a href="../index.php?action=listPosts">Épisodes</a>
+        <a href="../projet_4/index.php?action=home">Accueil</a>
+        <a href="../projet_4/index.php?action=listPosts">Épisodes</a>
     </nav>
 </header>

@@ -7,7 +7,7 @@ class CommentsManager {
     }
 
     public function add(Comment $comment) {
-        $req = $this->_db->prepare('INSERE INTO comments(last_name, first_name, content, id_post) VALUES (:lastName, :firstName, :content, :idPost)');
+        $req = $this->_db->prepare('INSERE INTO comments(lastName, firstName, content, idPost) VALUES (:lastName, :firstName, :content, :idPost)');
         $req->execute(array(
             'lastName' => $comment->lastName(),
             'firstName' => $comment->firstName(),
@@ -23,7 +23,7 @@ class CommentsManager {
 
     public function get($id) {
         $id = (int) $id;
-        $req $this->_db->query('SELECT * FROM comments WHERE id = ' . $id);
+        $req = $this->_db->query('SELECT * FROM comments WHERE id = ' . $id);
         $data = $req->fetch(PDO::FETCH_ASSOC);
         return new Comment($data);
     }
@@ -39,7 +39,7 @@ class CommentsManager {
 
     public function getCommentsByPostId($postId) {
         $comments = [];
-        $req = $this->_db->query('SELECT * FROM comments WHERE id_post = ' . $postId);
+        $req = $this->_db->query('SELECT * FROM comments WHERE idPost = ' . $postId);
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }
@@ -47,7 +47,7 @@ class CommentsManager {
     }
 
     public function update(Comment $comment) {
-        $req = $this->_db->prepare('UPDATE comments SET last_name = :lastName, first_name = :firstName, content = :content, id_post = :idPost WHERE id = :id');
+        $req = $this->_db->prepare('UPDATE comments SET lastName = :lastName, firstName = :firstName, content = :content, idPost = :idPost WHERE id = :id');
         $req->execute(array(
             'lastName' => $comment->lastName(),
             'firstName' => $comment->firstName(),

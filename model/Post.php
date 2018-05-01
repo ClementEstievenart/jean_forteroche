@@ -59,7 +59,7 @@ class Post {
         if ($id > 0) {
             $this->_id = $id;
         } else {
-            throw new exception('setId() in class article : $id is not an int -> ' . $id);
+            throw new exception('setId() : $id is not an int -> ' . $id);
         }
     }
 
@@ -68,15 +68,15 @@ class Post {
         if ($idUser > 0) {
             $this->_idUser = $idUser;
         } else {
-            throw new exception('setIdUser() in class article : $idUser is not an int -> ' . $idUser);
+            throw new exception('setIdUser() : $idUser is not an int -> ' . $idUser);
         }
     }
 
     public function setTitle($title) {
-        if (strlen($title) > 255) {
+        if (strlen($title) < 255) {
             $this->_title = $title;
         } else {
-            throw new exception('setTitle() in class article : $title is not a varchar -> ' . $title);
+            throw new exception('setTitle() : $title is not a varchar -> ' . $title);
         }
     }
 
@@ -93,10 +93,10 @@ class Post {
     }
 
     public function setPublished($published) {
-        if (is_bool($published)) {
+        if ($published == 0 OR $published == 1) {
             $this->_published = $published;
         } else {
-            throw new exception('setPublished() in class article : $published is not a boolean -> ' . $published);
+            throw new exception('setPublished() : $published is not a boolean -> ' . $published);
         }
     }
 
@@ -105,7 +105,7 @@ class Post {
         if (is_int($nbComments)) {
             $this->_nbComments = $nbComments;
         } else {
-            throw new exception('setNbComments() in class article : $nbComments is not an int -> ' . $nbComments);
+            throw new exception('setNbComments() : $nbComments is not an int -> ' . $nbComments);
         }
     }
 
