@@ -4,7 +4,7 @@ ob_start();
 ?>
 <article>
     <h3><?= htmlspecialchars($post->title()) ?></h3>
-    <div><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= $post->idUser() ?></em></div>
+    <div><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></div>
     <p><?= htmlspecialchars($post->content()) ?></p>
 </article>
 <h4><?= $post->nbComments() ?> commentaires :</h4>

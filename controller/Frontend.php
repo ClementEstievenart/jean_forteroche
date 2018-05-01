@@ -25,8 +25,10 @@ class Frontend {
             $postId = (int) $postId;
             $postsManager = new PostsManager($this->_db);
             $commentsManager = new CommentsManager($this->_db);
+            $usersManager = new UsersManager($this->_db);
             $post = $postsManager->get($postId);
             $comments = $commentsManager->getCommentsByPostId($postId);
+            $user = $usersManager->get($post->idUser());
             require('view/postView.php');
         } else {
             throw new exception('postView() in class Frontend : $postId doesn\'t exist ->');
