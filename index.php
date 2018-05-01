@@ -1,6 +1,9 @@
 <?php
+session_start();
 require('controller/Frontend.php');
+require('controller/Backend.php');
 $frontend = new Frontend();
+$backend = new Backend();
 try {
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'home') {
@@ -25,6 +28,16 @@ try {
             } else {
                 throw new exception('commentId doesn\'t exist to report a comment');
             }
+        } elseif ($_GET['action'] == 'login') {
+            $frontend->login();
+        } elseif ($_GET['action'] == 'connection') {
+            if (!empty($_POST['login']) AND !empty($_POST['password'])) {
+                $frontend->connection($_POST['login'], $_POST['password']);
+            } else {
+                throw new exception('miss a $_POST[] to connect');
+            }
+        } elseif ($_GET['action'] == 'disconnection') {
+            $backend->disconnection();
         } else {
             throw new exception('the action isn\'t recognized');
         }
