@@ -7,7 +7,7 @@ class PostsManager {
     }
 
     public function add (Post $post) {
-        $req = $this->_db->prepare('INSER INTO posts(idUser, title, content, published) VALUES (:idUser, :title, :content, :published)');
+        $req = $this->_db->prepare('INSERT INTO posts(idUser, title, content, published) VALUES (:idUser, :title, :content, :published)');
         $req->execute(array(
             'idUser' => $post->idUser(),
             'title' => $post->title(),

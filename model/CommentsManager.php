@@ -7,7 +7,7 @@ class CommentsManager {
     }
 
     public function add(Comment $comment) {
-        $req = $this->_db->prepare('INSERE INTO comments(lastName, firstName, content, idPost) VALUES (:lastName, :firstName, :content, :idPost)');
+        $req = $this->_db->prepare('INSERT INTO comments(lastName, firstName, content, idPost) VALUES (:lastName, :firstName, :content, :idPost)');
         $req->execute(array(
             'lastName' => $comment->lastName(),
             'firstName' => $comment->firstName(),

@@ -39,10 +39,20 @@ class Frontend {
         //To do
     }
 
-    public function addComment(Comment $comment) {
+    public function addComment($lastName, $firstName, $content, $postId) {
+        $data = array(
+            'lastName' => $lastName,
+            'firstName' => $firstName,
+            'content' => $content,
+            'idPost' => $postId
+        );
         $commentsManager = new CommentsManager($this->_db);
-        $commentsManager->add($comment);
-        //redirection
+        $commentsManager->add(new Comment($data));
+        $postsManager = new PostsManager($this->_db);
+        $post = $postsManager->get($postId);
+        $post->setNbComments($post->nbComments() + 1);
+        $postsManager->update($post);
+        header('location: index.php?action=getPost&postId=' . $postId);
     }
 
     public function reportComment($commentId) {

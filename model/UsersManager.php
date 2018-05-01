@@ -7,7 +7,7 @@ class UsersManager {
     }
 
     public function add(User $user) {
-        $req = $this->_db->prepare('INSER INTO users (login, password) VALUES (:login, :password)');
+        $req = $this->_db->prepare('INSERT INTO users (login, password) VALUES (:login, :password)');
         $req->execute(array(
             'login' => $user->login(),
             'password' => $user->password()
