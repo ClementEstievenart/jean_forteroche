@@ -28,7 +28,7 @@ class PostsManager {
 
     public function getList() {
         $posts = [];
-        $req = $this->_db->query('SELECT * FROM posts');
+        $req = $this->_db->query('SELECT * FROM posts ORDER BY datePublication DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = new Post($data);
         }

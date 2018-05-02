@@ -39,7 +39,7 @@ class CommentsManager {
 
     public function getCommentsByPostId($postId) {
         $comments = [];
-        $req = $this->_db->query('SELECT * FROM comments WHERE idPost = ' . $postId);
+        $req = $this->_db->query('SELECT * FROM comments WHERE idPost = ' . $postId . ' ORDER BY datePublication DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }
