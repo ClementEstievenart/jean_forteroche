@@ -36,14 +36,15 @@ class PostsManager {
     }
 
     public function update(Post $post) {
-        $req = $this->_db->prepare('UPDATE posts SET idUser = :idUser, title =  :title, content = :content, dateUpdate = :dateUpdate, published = :published, nbComments = :nbComments');
+        $req = $this->_db->prepare('UPDATE posts SET idUser = :idUser, title =  :title, content = :content, dateUpdate = :dateUpdate, published = :published, nbComments = :nbComments WHERE id = :id');
         $req->execute(array(
             'idUser' => $post->idUser(),
             'title' => $post->title(),
             'content' => $post->content(),
             'dateUpdate' => $post->dateUpdate(),
             'published' => $post->published(),
-            'nbComments' => $post->nbComments()
+            'nbComments' => $post->nbComments(),
+            'id' => $post->id()
         ));
     }
 

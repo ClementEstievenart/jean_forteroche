@@ -9,10 +9,10 @@ ob_start();
 </article>
 <form action="index.php?action=addComment&amp;postId=<?= $post->id() ?>" method="post">
     <h4>Ajouter un commentaire :</h4>
-    <label for="lastName">Nom : <input id="lastName" name="lastName" type="text" required></label>
-    <label for="firstName">Prénom : <input id="firstName" name="firstName" type="text" required></label>
-    <label for="content">Commentaire : <textarea id="content" name="content" required></textarea></label>
-    <input id="send" type="submit" value="Envoyer">
+    <div><label for="lastName">Nom : <input id="lastName" name="lastName" type="text" required></label></div>
+    <div><label for="firstName">Prénom : <input id="firstName" name="firstName" type="text" required></label></div>
+    <div><label for="content">Commentaire : <textarea id="content" name="content" required></textarea></label></div>
+    <div><input id="send" type="submit" value="Envoyer"></div>
 </form>
 <h4><?= $post->nbComments() ?> commentaires :</h4>
 <div id="comments">

@@ -41,10 +41,31 @@ try {
         } elseif ($_GET['action'] == 'writeNewPost') {
             $backend->writeNewPost();
         } elseif ($_GET['action'] == 'addPost') {
-            if (!empty($_POST['title']) AND !empty($_POST['content']) AND !empty($_POST['published'])) {
+            if (!empty($_POST['title']) AND !empty($_POST['content']) AND ($_POST['published'] == 1 OR $_POST['published'] == 0)) {
                 $backend->addPost($_POST['title'], $_POST['content'], $_POST['published']);
             } else {
+                var_dump(!empty($_POST['published']));
                 throw new exception('miss a $_POST[] value to add a post');
+            }
+        } elseif ($_GET['action'] == 'listPostsTitle') {
+            $backend->listPostsTitle();
+        } elseif ($_GET['action'] == 'editPost') {
+            if(isset($_GET['postId'])) {
+                $backend->editPost($_GET['postId']);
+            } else {
+                throw new exception('postId doesn\'t exist');
+            }
+        } elseif ($_GET['action'] == 'updatePost') {
+            if(isset($_GET['postId']) AND !empty($_POST['title']) AND !empty($_POST['content']) AND !empty($_POST['published'])) {
+                $backend->updatePost($_GET['postId']);
+            } else {
+                throw new exception('miss a value to update a post');
+            }
+        } elseif ($_GET['action'] == 'deletePost') {
+            if(isset($_GET['postId'])) {
+                $backend->deletePost($_GET['postId']);
+            } else {
+                throw new exception('postId doesn\'t exist');
             }
         } else {
             throw new exception('the action isn\'t recognized');

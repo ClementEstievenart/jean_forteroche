@@ -25,12 +25,37 @@ class Backend {
         header('location: index.php?action=home');
     }
 
-    public function deletePost() {
-
+    public function listPostsTitle() {
+        $postsManager = new PostsManager($this->_db);
+        $posts = $postsManager->getList();
+        require('view/listPostsTitle.php');
     }
 
-    public function updatePost() {
+    public function editPost($postId) {
+        $postId = (int) $postId;
+        $postsManager = new PostsManager($this->_db);
+        $post = $postsManager->get($postId);
+        require('view/editPost.php');
+    }
 
+    public function deletePost($postId) {
+        $postId = (int) $postId;
+        $postsManager = new PostsManager($this->_db);
+        $post = $postsManager->get($postId);
+        $postsManager->delete($post);
+        header('location: index.php?action=home');
+    }
+
+    public function updatePost($postId) {
+        $postId = (int) $postId;
+        $postsManager = new PostsManager($this->_db);
+        $post = $postsManager->get($postId);
+        $post->setTitle(htmlspecialchars($_POST['title']));
+        $post->setContent(htmlspecialchars($_POST['content']));
+        $post->setPublished((int) htmlspecialchars($_POST['published']));
+        $post->setDateUpdate(date('Y-m-d H:i:s'));
+        $postsManager->update($post);
+        header('location: index.php?action=home');
     }
 
     public function ListComments() {
