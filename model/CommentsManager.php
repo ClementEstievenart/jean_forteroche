@@ -30,7 +30,7 @@ class CommentsManager {
 
     public function getList() {
         $comments = [];
-        $req = $this->_db->query('SELECT * FROM comments');
+        $req = $this->_db->query('SELECT * FROM comments WHERE reportStatut < 2 ORDER BY reportNumber DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }

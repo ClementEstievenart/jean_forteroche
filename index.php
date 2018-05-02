@@ -67,6 +67,20 @@ try {
             } else {
                 throw new exception('postId doesn\'t exist');
             }
+        } elseif ($_GET['action'] == 'listCommentsReport') {
+            $backend->listCommentsReport();
+        } elseif ($_GET['action'] == 'deleteComment') {
+            if(isset($_GET['commentId'])) {
+                $backend->deleteComment($_GET['commentId']);
+            } else {
+                throw new exception('commentId doesn\'t exist');
+            }
+        } elseif ($_GET['action'] == 'validComment') {
+            if(isset($_GET['commentId'])) {
+                $backend->validComment($_GET['commentId']);
+            } else {
+                throw new exception('commentId doesn\'t exist');
+            }
         } else {
             throw new exception('the action isn\'t recognized');
         }
