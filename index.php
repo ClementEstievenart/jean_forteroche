@@ -38,6 +38,14 @@ try {
             }
         } elseif ($_GET['action'] == 'disconnection') {
             $backend->disconnection();
+        } elseif ($_GET['action'] == 'writeNewPost') {
+            $backend->writeNewPost();
+        } elseif ($_GET['action'] == 'addPost') {
+            if (!empty($_POST['title']) AND !empty($_POST['content']) AND !empty($_POST['published'])) {
+                $backend->addPost($_POST['title'], $_POST['content'], $_POST['published']);
+            } else {
+                throw new exception('miss a $_POST[] value to add a post');
+            }
         } else {
             throw new exception('the action isn\'t recognized');
         }

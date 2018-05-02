@@ -11,13 +11,13 @@ class Frontend {
     }
 
     public function homePage() {
-        require('view/homeView.php');
+        require('view/home.php');
     }
 
     public function getPosts() {
         $postsManager = new PostsManager($this->_db);
         $posts = $postsManager->getList();
-        require('view/listPostsView.php');
+        require('view/listPosts.php');
     }
 
     public function getPostById($postId) {
@@ -28,11 +28,11 @@ class Frontend {
         $post = $postsManager->get($postId);
         $comments = $commentsManager->getCommentsByPostId($postId);
         $user = $usersManager->get($post->idUser());
-        require('view/postView.php');
+        require('view/post.php');
     }
 
     public function login() {
-        require('view/loginView.php');
+        require('view/login.php');
     }
 
     public function connection($login, $password) {
@@ -45,7 +45,7 @@ class Frontend {
             $_SESSION['password'] = $password;
             header('location: index.php?action=home');
         } else {
-            require('view/loginView.php');
+            require('view/login.php');
         }
     }
 
