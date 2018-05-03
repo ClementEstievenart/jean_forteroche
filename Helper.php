@@ -1,22 +1,22 @@
 <?php
 class Helper {
     public function getGetValues() {
-        $get = [];
+        $getVar = [];
 
         foreach ($_GET as $key => $value) {
-            $get[htmlspecialchars($key)] = htmlspecialchars($value);
+            $getVar[htmlspecialchars($key)] = htmlspecialchars($value);
         }
 
-        return $get;
+        return $getVar;
     }
 
     public function getPostValues() {
-        $post = [];
+        $postVar = [];
 
         foreach ($_POST as $key => $value) {
-            $post[htmlspecialchars($key)] = htmlspecialchars($value);
+            $postVar[htmlspecialchars($key)] = htmlspecialchars($value);
         }
 
-        return $post;
+        return $postVar;
     }
 }

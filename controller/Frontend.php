@@ -5,10 +5,10 @@ class Frontend {
     public function __construct() {
         $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
 
-        function loadClassFrontend($class) {
+        function loadClass($class) {
             require('model/' . $class . '.php');
         }
-        spl_autoload_register('loadClassFrontend');
+        spl_autoload_register('loadClass');
     }
 
     public function homePage() {
@@ -41,15 +41,16 @@ class Frontend {
     }
 
     public function connection($login, $password) {
-        $password = htmlspecialchars($password);
-        $login = htmlspecialchars($login);
-
         $usersManager = new UsersManager($this->_db);
         $user = $usersManager->getByLogin($login);
 
-        if ($login == $user->login() AND password_verify($password, $user->password())) {
+        if ($user) {
+            if (password_verify($password, $user->password())) {
             $_SESSION['login'] = $login;
             header('location: index.php?action=home');
+            } else {
+                require('view/login.php');
+            }
         } else {
             require('view/login.php');
         }
@@ -79,8 +80,8 @@ class Frontend {
         $commentsManager = new CommentsManager($this->_db);
         $comment = $commentsManager->get($commentId);
 
-        if ($comment->reportStatut() != 2) {
-            if ($comment->reportStatut() ==0) {
+        if ($comment->reportStatut() !== 2) {
+            if (!$comment->reportStatut()) {
                 $comment->setReportStatut(1);
             }
             $comment->setReportNumber($comment->reportNumber() + 1);

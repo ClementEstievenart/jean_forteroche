@@ -4,7 +4,8 @@ ob_start();
 ?>
 <article>
     <h3><?= htmlspecialchars($post->title()) ?></h3>
-    <div><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></div>
+    <p><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></p>
+    <?php if ($post->updateStatut()) {?><p><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
     <p><?= htmlspecialchars($post->content()) ?></p>
 </article>
 <form action="index.php?action=addComment&amp;postId=<?= htmlspecialchars($post->id()) ?>" method="post">

@@ -34,7 +34,7 @@ class User {
         if ($id > 0) {
             $this->_id = $id;
         } else {
-            throw new exception('setId() in class user : $id is not an int -> ' . $id);
+            throw new exception('setId() in class user : $id is not an int > 0 -> ' . $id);
         }
     }
 

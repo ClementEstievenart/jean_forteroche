@@ -17,7 +17,7 @@ class UsersManager {
 
     public function delete(User $user) {
         $this->_db->prepare('DELETE FROM users WHERE id = :id');
-        $req->execute(array('id' => htmlspecialchars($user->id())));
+        $req->execute(array('id' => (int) htmlspecialchars($user->id())));
         $req->closeCursor();
     }
 
@@ -47,7 +47,12 @@ class UsersManager {
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
 
-        return new User($data);
+        if ($data) {
+            return new User($data);
+        } else {
+            return false;
+        }
+
     }
 
     public function update(User $user) {

@@ -9,10 +9,10 @@ class Backend {
 
         $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
 
-        function loadClassBackend($class) {
+        function loadClass($class) {
             require('model/' . $class . '.php');
         }
-        spl_autoload_register('loadClassBackend');
+        spl_autoload_register('loadClass');
     }
 
     public function writeNewPost() {
@@ -21,10 +21,6 @@ class Backend {
 
     public function addPost($title, $content, $published) {
         $published = (int) $published;
-
-        if ($published != 0 AND $published != 1) {
-            throw new exception('$published value isn\'t 0 or 1 -> ' . $published);
-        }
 
         $data = array(
             'title' => $title,
@@ -66,6 +62,8 @@ class Backend {
 
     public function updatePost($postId, $title, $content, $published) {
         $postId = (int) $postId;
+        $published = (int) $published;
+        date_default_timezone_set('Europe/Paris');
 
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
@@ -73,12 +71,14 @@ class Backend {
         $post->setTitle($title);
         $post->setContent($content);
 
-        if ($post->published == 0 AND $_POST['published'] == 1) {
+        if (!$post->published() AND $published) {
             $post->setDatePublication(date('Y-m-d H:i:s'));
+        } elseif ($post->published()) {
+            $post->setDateUpdate(date('Y-m-d H:i:s'));
+            $post->setUpdateStatut(1);
         }
 
-        $post->setPublished((int) $published);
-        $post->setDateUpdate(date('Y-m-d H:i:s'));
+        $post->setPublished($published);
         $postsManager->update($post);
 
         header('location: index.php?action=home');

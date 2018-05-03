@@ -7,19 +7,19 @@ class CommentsManager {
     }
 
     public function add(Comment $comment) {
-        $req = $this->_db->prepare('INSERT INTO comments(lastName, firstName, content, idPost) VALUES (:lastName, :firstName, :content, :idPost)');
+        $req = $this->_db->prepare('INSERT INTO comments (lastName, firstName, content, idPost) VALUES (:lastName, :firstName, :content, :idPost)');
         $req->execute(array(
             'lastName' => htmlspecialchars($comment->lastName()),
             'firstName' => htmlspecialchars($comment->firstName()),
             'content' => htmlspecialchars($comment->content()),
-            'idPost' => htmlspecialchars($comment->idPost())
+            'idPost' => (int) htmlspecialchars($comment->idPost())
         ));
         $req->closeCursor();
     }
 
     public function delete(Comment $comment) {
         $req = $this->_db->prepare('DELETE FROM comments WHERE id = :id');
-        $req->execute(array('id' => htmlspecialchars($comment->id())));
+        $req->execute(array('id' => (int) htmlspecialchars($comment->id())));
         $req->closeCursor();
     }
 
@@ -46,7 +46,7 @@ class CommentsManager {
     public function getCommentsByPostId($postId) {
         $comments = [];
         $req = $this->_db->prepare('SELECT * FROM comments WHERE idPost = :idPost ORDER BY datePublication DESC');
-        $req->execute(array('idPost' => htmlspecialchars($postId)));
+        $req->execute(array('idPost' => (int) htmlspecialchars($postId)));
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }
@@ -61,9 +61,9 @@ class CommentsManager {
             'lastName' => htmlspecialchars($comment->lastName()),
             'firstName' => htmlspecialchars($comment->firstName()),
             'content' => htmlspecialchars($comment->content()),
-            'idPost' => htmlspecialchars($comment->idPost()),
-            'reportNumber' => htmlspecialchars($comment->reportNumber()),
-            'reportStatut' => htmlspecialchars($comment->reportStatut()),
+            'idPost' => (int) htmlspecialchars($comment->idPost()),
+            'reportNumber' => (int) htmlspecialchars($comment->reportNumber()),
+            'reportStatut' => (int) htmlspecialchars($comment->reportStatut()),
             'id' => htmlspecialchars($comment->id())
         ));
         $req->closeCursor();

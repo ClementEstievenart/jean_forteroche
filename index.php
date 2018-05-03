@@ -6,11 +6,11 @@ try {
     require('Helper.php');
 
     $helper = new Helper();
-    $get = $helper->getGetValues();
-    $post = $helper->getPostValues();
+    $getVar = $helper->getGetValues();
+    $postVar = $helper->getPostValues();
 
     include('routerConfig.php');
-    $fontback = ['frontend', 'backend'];
+    $controlerList = ['frontend', 'backend'];
 
     for ($i = 0; $i<= 2; $i++) {
         if ($i === 2) {
@@ -19,8 +19,8 @@ try {
             break;
         }
 
-        foreach ($routerConfig[$fontback[$i]] as $action => $data) {
-            if($get['action'] === $action) {
+        foreach ($routerConfig[$controlerList[$i]] as $action => $actionParameters) {
+            if($getVar['action'] === $action) {
                 if ($i === 0) {
                     $controler = new Frontend();
                 } else {
@@ -29,25 +29,25 @@ try {
 
                 $parameters = [];
 
-                if(isset($data['getName'])){
-                    if(isset($get[$data['getName']])) {
-                        $parameters[] = $get[$data['getName']];
+                if(isset($actionParameters['_GetKey'])){
+                    if(isset($getVar[$actionParameters['_GetKey']])) {
+                        $parameters[] = $getVar[$actionParameters['_GetKey']];
                     } else {
-                        throw new exception($data['getName'] . 'doesn\'t exist for the action : ' . $action);
+                        throw new exception($actionParameters['_GetKey'] . 'doesn\'t exist for the action : ' . $action);
                     }
                 }
 
-                if(isset($data['postsName'])) {
-                    foreach ($data['postsName'] as $postName) {
-                        if (isset($post[$postName])) {
-                            $parameters[] = $post[$postName];
+                if(isset($actionParameters['_PostKeys'])) {
+                    foreach ($actionParameters['_PostKeys'] as $postKeys) {
+                        if (isset($postVar[$postKeys])) {
+                            $parameters[] = $postVar[$postKeys];
                         } else {
-                            throw new exception($postName . 'doesn\'t exist for the action : ' . $action);
+                            throw new exception($postKeys . 'doesn\'t exist for the action : ' . $action);
                         }
                     }
                 }
 
-                $controler->$data['method'](...$parameters);
+                $controler->$actionParameters['method'](...$parameters);
                 break 2;
             }
         }

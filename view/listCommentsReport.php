@@ -5,10 +5,10 @@ ob_start();
 <h2>Modérer les commentaires :</h2>
 <?php foreach ($comments as $comment) {?>
     <div>
-        <h4><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?> à commenté le <?= htmlspecialchars($comment->datePublication()) ?> l'épisode <em><?= htmlspecialchars($postsManager->get($comment->idPost())->title()) ?></em></h4>
+        <h4><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?> à commenté le <?= htmlspecialchars($comment->datePublication()) ?> l'épisode <em><a href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($postsManager->get($comment->idPost())->id()) ?>"><?= htmlspecialchars($postsManager->get($comment->idPost())->title()) ?></a></em></h4>
         <p><?= htmlspecialchars($comment->content()) ?></p>
         <p>Statut : <?php
-        if ($comment->reportStatut() == 0) {
+        if (!$comment->reportStatut()) {
             echo 'Non signalé';
         } else {
             echo 'Signalé ' . htmlspecialchars($comment->reportNumber()) . ' fois';
