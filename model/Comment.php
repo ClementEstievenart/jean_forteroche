@@ -59,7 +59,7 @@ class Comment {
         if ($id > 0) {
             $this->_id = $id;
         } else {
-            throw new exception('setId() : $id is not an int -> ' . $id);
+            throw new exception('setId() : $id is not an int > 0 -> ' . $id);
         }
     }
 
@@ -88,12 +88,17 @@ class Comment {
         if ($idPost > 0) {
             $this->_idPost = $idPost;
         } else {
-            throw new exception('setIdPost() : $idPost is not an int -> ' . $idPost);
+            throw new exception('setIdPost() : $idPost is not an int > 0 -> ' . $idPost);
         }
     }
 
     public function setDatePublication($datePublication) {
-        $this->_datePublication = $datePublication;
+        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $datePublication) === 1) {
+            $this->_datePublication = $datePublication;
+        } else {
+            throw new exception('setDatePublication() : $datePublication is not a date : ' . $datePublication);
+        }
+
     }
 
     public function setReportNumber($reportNumber) {
@@ -101,7 +106,7 @@ class Comment {
         if ($reportNumber >= 0) {
             $this->_reportNumber = $reportNumber;
         } else {
-            throw new exception('setReportNumber() : $reportNumber is not an int -> ' . $reportNumber);
+            throw new exception('setReportNumber() : $reportNumber is not an int >= 0 -> ' . $reportNumber);
         }
     }
 
@@ -110,7 +115,7 @@ class Comment {
         if ($reportStatut >= 0 ) {
             $this->_reportStatut = $reportStatut;
         } else {
-            throw new exception('setReportStatut() : $reportStatut is not an int -> ' . $reportStatut);
+            throw new exception('setReportStatut() : $reportStatut is not an int >= 0 -> ' . $reportStatut);
         }
     }
 }

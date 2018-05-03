@@ -6,7 +6,7 @@ ob_start();
 <?php
 foreach ($posts as $post) {
 ?>
-    <h3><a href="index.php?action=editPost&amp;postId=<?= $post->id() ?>"><?= htmlspecialchars($post->title()) ?></a></h3>
+    <h3><a href="index.php?action=editPost&amp;postId=<?= htmlspecialchars($post->id()) ?>"><?= htmlspecialchars($post->title()) ?></a></h3>
 <?php
 }
 $content = ob_get_clean();

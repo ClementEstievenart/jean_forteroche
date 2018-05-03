@@ -3,7 +3,7 @@
     <nav>
         <a href="index.php?action=home">Accueil</a>
         <a href="index.php?action=listPosts">Épisodes</a>
-        <?php if (isset($_SESSION['login']) AND isset($_SESSION['password'])) {?>
+        <?php if (isset($_SESSION['login'])) {?>
             <a href="index.php?action=writeNewPost">Nouvel épisode</a>
             <a href="index.php?action=listPostsTitle">Éditer un épisode</a>
             <a href="index.php?action=listCommentsReport">Modérer les commentaires</a>

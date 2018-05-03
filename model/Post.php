@@ -59,7 +59,7 @@ class Post {
         if ($id > 0) {
             $this->_id = $id;
         } else {
-            throw new exception('setId() : $id is not an int -> ' . $id);
+            throw new exception('setId() : $id is not an int > 0 -> ' . $id);
         }
     }
 
@@ -68,7 +68,7 @@ class Post {
         if ($idUser > 0) {
             $this->_idUser = $idUser;
         } else {
-            throw new exception('setIdUser() : $idUser is not an int -> ' . $idUser);
+            throw new exception('setIdUser() : $idUser is not an int > 0 -> ' . $idUser);
         }
     }
 
@@ -85,15 +85,25 @@ class Post {
     }
 
     public function setDatePublication($datePublication) {
-        $this->_datePublication = $datePublication;
+        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $datePublication) === 1) {
+            $this->_datePublication = $datePublication;
+        } else {
+            throw new exception('setDatePublication() : $datePublication is not a date : ' . $datePublication);
+        }
     }
 
     public function setDateUpdate($dateUpdate) {
-        $this->_dateUpdate = $dateUpdate;
+        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $dateUpdate) === 1) {
+            $this->_dateUpdate = $dateUpdate;
+        } else {
+            throw new exception('setDateUpdate() : $dateUpdate is not a date : ' . $dateUpdate);
+        }
     }
 
     public function setPublished($published) {
-        if ($published == 0 OR $published == 1) {
+        $published = (int) $published;
+
+        if ($published === 0 OR $published === 1) {
             $this->_published = $published;
         } else {
             throw new exception('setPublished() : $published is not a boolean -> ' . $published);
@@ -102,10 +112,10 @@ class Post {
 
     public function setNbComments($nbComments) {
         $nbComments = (int) $nbComments;
-        if (is_int($nbComments)) {
+        if ($nbComments >= 0) {
             $this->_nbComments = $nbComments;
         } else {
-            throw new exception('setNbComments() : $nbComments is not an int -> ' . $nbComments);
+            throw new exception('setNbComments() : $nbComments is not an int >= 0 -> ' . $nbComments);
         }
     }
 

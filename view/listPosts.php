@@ -9,7 +9,7 @@ foreach ($posts as $post) {
   <article>
         <h3><?= htmlspecialchars($post->title()) ?></h3>
         <p><?= htmlspecialchars($post->content()) ?></p>
-        <div><a href="index.php?action=getPost&amp;postId=<?= $post->id() ?>">Commentaires</a></div>
+        <div><a href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>">Commentaires</a></div>
   </article>
 <?php
 }
