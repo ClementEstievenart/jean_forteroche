@@ -3,11 +3,11 @@ class Backend {
     private $_db;
 
     public function __construct() {
-        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
-
         if (!isset($_SESSION['login'])) {
             header('location: index.php?action=home');
         }
+
+        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
 
         function loadClassBackend($class) {
             require('model/' . $class . '.php');
@@ -20,15 +20,15 @@ class Backend {
     }
 
     public function addPost($title, $content, $published) {
-        $published = (int) htmlspecialchars($published)
-            ;
+        $published = (int) $published;
+
         if ($published != 0 AND $published != 1) {
             throw new exception('$published value isn\'t 0 or 1 -> ' . $published);
         }
 
         $data = array(
-            'title' => htmlspecialchars($title),
-            'content' => htmlspecialchars($content),
+            'title' => $title,
+            'content' => $content,
             'published' => $published
         );
 
@@ -64,20 +64,20 @@ class Backend {
         header('location: index.php?action=home');
     }
 
-    public function updatePost($postId) {
+    public function updatePost($postId, $title, $content, $published) {
         $postId = (int) $postId;
 
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
 
-        $post->setTitle(htmlspecialchars($_POST['title']));
-        $post->setContent(htmlspecialchars($_POST['content']));
+        $post->setTitle($title);
+        $post->setContent($content);
 
         if ($post->published == 0 AND $_POST['published'] == 1) {
             $post->setDatePublication(date('Y-m-d H:i:s'));
         }
 
-        $post->setPublished((int) htmlspecialchars($_POST['published']));
+        $post->setPublished((int) $published);
         $post->setDateUpdate(date('Y-m-d H:i:s'));
         $postsManager->update($post);
 

@@ -55,7 +55,7 @@ class Frontend {
         }
     }
 
-    public function addComment($lastName, $firstName, $content, $postId) {
+    public function addComment($postId, $lastName, $firstName, $content) {
         $data = array(
             'lastName' => $lastName,
             'firstName' => $firstName,

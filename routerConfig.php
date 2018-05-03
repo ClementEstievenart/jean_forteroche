@@ -1,0 +1,53 @@
+<?php
+$routerConfig = array (
+    'frontend' => array(
+        'home' => array(
+            'method' => 'homePage'),
+        'listPosts' => array(
+            'method' => 'getPostsPublished'),
+        'getPost' => array(
+            'method' => 'getPostById',
+            'getName' => 'postId'),
+        'addComment' => array(
+            'method' => 'addComment',
+            'getName' => 'postId',
+            'postsName' => ['lastName', 'firstName', 'content']),
+        'report' => array(
+            'method' => 'reportComment',
+            'getName' => 'commentId'),
+        'login' => array(
+            'method' => 'login'),
+        'connection' => array(
+            'method' => 'connection',
+            'postsName' => ['login', 'password'])
+    ),
+    'backend' => array(
+        'disconnection' => array(
+            'method' => 'disconnection'),
+        'writeNewPost' => array(
+            'method' => 'writeNewPost'),
+        'addPost' => array(
+            'method' => 'addPost',
+            'postsName' => ['title', 'content', 'published']),
+        'listPostsTitle' => array(
+            'method' => 'listPostsTitle'),
+        'editPost' => array(
+            'method' => 'editPost',
+            'getName' => 'postId'),
+        'updatePost' => array(
+            'method' => 'updatePost',
+            'getName' => 'postId',
+            'postsName' => ['title', 'content', 'published']),
+        'deletePost' => array(
+            'method' => 'deletePost',
+            'getName' => 'postId'),
+        'listCommentsReport' => array(
+            'method' => 'listCommentsReport'),
+        'deleteComment' => array(
+            'method' => 'deleteComment',
+            'getName' => 'commentId'),
+        'validComment' => array(
+            'method' => 'validComment',
+            'getName' => 'commentId')
+    )
+);
