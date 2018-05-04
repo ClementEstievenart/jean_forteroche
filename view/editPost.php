@@ -1,5 +1,7 @@
 <?php
 $title = 'Éditer';
+$tinyMCE = null;
+
 ob_start();
 ?>
 <h2>Éditer l'épisode</h2>
@@ -13,10 +15,10 @@ ob_start();
     </div>
     <div><input id="send" type="submit" value="Modifier l'épisode"></div>
 </form>
+
 <h2>Supprimer l'épisode</h2>
 <p><a href="index.php?action=deletePost&amp;postId=<?= htmlspecialchars($post->id()) ?>"><button>Supprimer !</button></a></p>
-
-
 <?php
 $content = ob_get_clean();
+
 require('template/template.php');

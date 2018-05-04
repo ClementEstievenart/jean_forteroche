@@ -1,5 +1,7 @@
 <?php
 $title = 'Connexion';
+$tinyMCE = null;
+
 ob_start();
 ?>
 <h2>Connexion :</h2>
@@ -11,7 +13,7 @@ ob_start();
     <?php }?>
         <div><input id="connection" type="submit" value="Se connecter"></div>
 </form>
-
 <?php
 $content = ob_get_clean();
+
 require ('template/template.php');

@@ -1,13 +1,16 @@
 <?php
-$title = $post->title();
+$title = htmlspecialchars($post->title());
+$tinyMCE = null;
+
 ob_start();
 ?>
 <article>
     <h3><?= htmlspecialchars($post->title()) ?></h3>
     <p><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></p>
     <?php if ($post->updateStatut()) {?><p><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
-    <p><?= htmlspecialchars($post->content()) ?></p>
+    <p><?= htmlspecialchars_decode($post->content()) ?></p>
 </article>
+
 <form action="index.php?action=addComment&amp;postId=<?= htmlspecialchars($post->id()) ?>" method="post">
     <h4>Ajouter un commentaire :</h4>
     <div><label for="lastName">Nom : <input id="lastName" name="lastName" type="text" required></label></div>
@@ -15,6 +18,7 @@ ob_start();
     <div><label for="content">Commentaire : <textarea id="content" name="content" required></textarea></label></div>
     <div><input id="send" type="submit" value="Envoyer"></div>
 </form>
+
 <h4><?= htmlspecialchars($post->nbComments()) ?> commentaires :</h4>
 <div id="comments">
     <?php
@@ -28,7 +32,7 @@ ob_start();
     }
     ?>
 </div>
-
 <?php
 $content = ob_get_clean();
+
 require('template/template.php');

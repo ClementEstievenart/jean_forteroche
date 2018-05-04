@@ -12,11 +12,13 @@ try {
     include('routerConfig.php');
     $controlerList = ['frontend', 'backend'];
 
-    for ($i = 0; $i<= 2; $i++) {
-        if ($i === 2) {
+    for ($i = -1; $i<= 1; $i++) {
+        if ($i === -1 AND !isset($getVar['action'])) {
             $controler = new Frontend();
             $controler->homePage();
             break;
+        } elseif ($i === -1) {
+            continue;
         }
 
         foreach ($routerConfig[$controlerList[$i]] as $action => $actionParameters) {

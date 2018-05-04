@@ -1,5 +1,7 @@
 <?php
 $title = 'Liste des commentaires';
+$tinyMCE = null;
+
 ob_start();
 ?>
 <h2>Modérer les commentaires :</h2>
@@ -19,7 +21,7 @@ ob_start();
             <a href="index.php?action=validComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>"><button>Valider le commentaire</button></a>
         </div>
     </div>
-
 <?php }
 $content = ob_get_clean();
+
 require('template/template.php');
