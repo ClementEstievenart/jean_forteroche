@@ -63,7 +63,6 @@ class Backend {
     public function updatePost($postId, $title, $content, $published) {
         $postId = (int) $postId;
         $published = (int) $published;
-        date_default_timezone_set('Europe/Paris');
 
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
