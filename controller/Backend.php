@@ -67,17 +67,16 @@ class Backend {
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
 
-        $post->setTitle($title);
-        $post->setContent($content);
-
         if (!$post->published() AND $published) {
             $post->setDatePublication(date('Y-m-d H:i:s'));
-        } elseif ($post->published()) {
+        } elseif ($post->published() AND $content !== $post->content()) {
             $post->setDateUpdate(date('Y-m-d H:i:s'));
-            $post->setUpdateStatut(1);
         }
 
+        $post->setTitle($title);
+        $post->setContent($content);
         $post->setPublished($published);
+
         $postsManager->update($post);
 
         header('location: index.php?action=home');

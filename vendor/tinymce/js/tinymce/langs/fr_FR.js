@@ -9,7 +9,7 @@ tinymce.addI18n('fr_FR',{
 "Ok": "Ok",
 "Cancel": "Annuler",
 "Publish": "Publier",
-"Unpublish": "Dépublier",
+"Unpublish": "Annuler la publication",
 "Visual aids": "Aides visuelle",
 "Bold": "Gras",
 "Italic": "Italique",
@@ -219,7 +219,7 @@ tinymce.addI18n('fr_FR',{
 "Height": "Hauteur",
 "Cell spacing": "Espacement inter-cellulles",
 "Cell padding": "Espacement interne cellule",
-"Caption": "Titre",
+"Caption": "L\u00e9gende",
 "Left": "Gauche",
 "Center": "Centr\u00e9",
 "Right": "Droite",
@@ -260,5 +260,7 @@ tinymce.addI18n('fr_FR',{
 "Table": "Tableau",
 "Tools": "Outils",
 "Powered by {0}": "Propuls\u00e9 par {0}",
-"Rich Text Area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help": "Zone Texte Riche. Appuyer sur ALT-F9 pour le menu. Appuyer sur ALT-F10 pour la barre d'outils. Appuyer sur ALT-0 pour de l'aide."
+"Rich Text Area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help": "Zone Texte Riche. Appuyer sur ALT-F9 pour le menu. Appuyer sur ALT-F10 pour la barre d'outils. Appuyer sur ALT-0 pour de l'aide.",
+"Error: Title or editor empty.": "Erreur: le titre et/ou l'éditeur est vide !",
+"Are you sur you want to delete ? You will not be able to go back !": "Êtes-vous sûr de vouloir supprimer ? Vous ne pourrez pas revenir en arrière !"
 });

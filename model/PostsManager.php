@@ -9,22 +9,22 @@ class PostsManager {
     public function add(Post $post) {
         $req = $this->_db->prepare('INSERT INTO posts (title, content, published) VALUES (:title, :content, :published)');
         $req->execute(array(
-            'title' => htmlspecialchars($post->title()),
-            'content' => htmlspecialchars($post->content()),
-            'published' => (int) htmlspecialchars($post->published())
+            'title' => $post->title(),
+            'content' => $post->content(),
+            'published' => $post->published()
         ));
         $req->closeCursor();
     }
 
     public function delete(Post $post) {
         $req = $this->_db->prepare('DELETE FROM posts WHERE id = :id');
-        $req->execute(array('id' => (int) htmlspecialchars($post->id())));
+        $req->execute(array('id' => $post->id()));
         $req->closeCursor();
     }
 
     public function get($id) {
-        $req = $this->_db->prepare('SELECT * FROM posts WHERE id = :id');
-        $req->execute(array('id' => (int) htmlspecialchars($id)));
+        $req = $this->_db->prepare('SELECT id, idUser, title, content, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, DATE_FORMAT(dateUpdate, "%d/%m/%Y à %Hh%i") as dateUpdate, published, nbComments FROM posts WHERE id = :id');
+        $req->execute(array('id' => $id));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
 
@@ -33,7 +33,7 @@ class PostsManager {
 
     public function getList() {
         $posts = [];
-        $req = $this->_db->query('SELECT * FROM posts ORDER BY datePublication DESC');
+        $req = $this->_db->query('SELECT id, idUser, title, content, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, DATE_FORMAT(dateUpdate, "%d/%m/%Y à %Hh%i") as dateUpdate, published, nbComments FROM posts ORDER BY datePublication DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = new Post($data);
         }
@@ -44,7 +44,7 @@ class PostsManager {
 
     public function getListPublished() {
         $posts = [];
-        $req = $this->_db->query('SELECT * FROM posts WHERE published = 1 ORDER BY datePublication DESC');
+        $req = $this->_db->query('SELECT id, idUser, title, content, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, DATE_FORMAT(dateUpdate, "%d/%m/%Y à %Hh%i") as dateUpdate, published, nbComments FROM posts WHERE published = 1 ORDER BY datePublication DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = new Post($data);
         }
@@ -54,16 +54,15 @@ class PostsManager {
     }
 
     public function update(Post $post) {
-        $req = $this->_db->prepare('UPDATE posts SET idUser = :idUser, title =  :title, content = :content, dateUpdate = :dateUpdate, updateStatut = :updateStatut, published = :published, nbComments = :nbComments WHERE id = :id');
+        $req = $this->_db->prepare('UPDATE posts SET idUser = :idUser, title =  :title, content = :content, dateUpdate = :dateUpdate, published = :published, nbComments = :nbComments WHERE id = :id');
         $req->execute(array(
-            'idUser' => (int) htmlspecialchars($post->idUser()),
-            'title' => htmlspecialchars($post->title()),
-            'content' => htmlspecialchars($post->content()),
-            'dateUpdate' => htmlspecialchars($post->dateUpdate()),
-            'updateStatut' => htmlspecialchars($post->updateStatut()),
-            'published' => (int) htmlspecialchars($post->published()),
-            'nbComments' => (int) htmlspecialchars($post->nbComments()),
-            'id' => (int) htmlspecialchars($post->id())
+            'idUser' => $post->idUser(),
+            'title' => $post->title(),
+            'content' => $post->content(),
+            'dateUpdate' => $post->dateUpdate(),
+            'published' => $post->published(),
+            'nbComments' => $post->nbComments(),
+            'id' => $post->id()
         ));
         $req->closeCursor();
     }

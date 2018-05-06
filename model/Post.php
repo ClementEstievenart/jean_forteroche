@@ -6,7 +6,6 @@ class Post {
     private $_content;
     private $_datePublication;
     private $_dateUpdate;
-    private $_updateStatut;
     private $_published;
     private $_nbComments;
 
@@ -45,10 +44,6 @@ class Post {
 
     public function dateUpdate() {
         return $this->_dateUpdate;
-    }
-
-    public function updateStatut() {
-        return $this->_updateStatut;
     }
 
     public function published() {
@@ -90,7 +85,7 @@ class Post {
     }
 
     public function setDatePublication($datePublication) {
-        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $datePublication)) {
+        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $datePublication) OR preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}/', $datePublication)) {
             $this->_datePublication = $datePublication;
         } else {
             throw new exception('setDatePublication() : $datePublication is not a date : ' . $datePublication);
@@ -98,20 +93,10 @@ class Post {
     }
 
     public function setDateUpdate($dateUpdate) {
-        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $dateUpdate)) {
+        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $dateUpdate) OR preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}/', $dateUpdate) OR $dateUpdate === null) {
             $this->_dateUpdate = $dateUpdate;
         } else {
             throw new exception('setDateUpdate() : $dateUpdate is not a date : ' . $dateUpdate);
-        }
-    }
-
-    public function setUpdateStatut($updateStatut) {
-        $updateStatut = (int) $updateStatut;
-
-        if ($updateStatut === 0 OR $updateStatut === 1) {
-            $this->_updateStatut = $updateStatut;
-        } else {
-            throw new exception('setUpdateStatut() : $updateStatut is not a boolean -> ' . $updateStatut);
         }
     }
 

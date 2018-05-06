@@ -9,21 +9,21 @@ class UsersManager {
     public function add(User $user) {
         $req = $this->_db->prepare('INSERT INTO users (login, password) VALUES (:login, :password)');
         $req->execute(array(
-            'login' => htmlspecialchars($user->login()),
-            'password' => htmlspecialchars($user->password())
+            'login' => $user->login(),
+            'password' => $user->password()
         ));
         $req->closeCursor();
     }
 
     public function delete(User $user) {
         $this->_db->prepare('DELETE FROM users WHERE id = :id');
-        $req->execute(array('id' => (int) htmlspecialchars($user->id())));
+        $req->execute(array('id' => $user->id()));
         $req->closeCursor();
     }
 
     public function get($id) {
         $req = $this->_db->prepare('SELECT * FROM users WHERE id = :id');
-        $req->execute(array('id' => (int) htmlspecialchars($id)));
+        $req->execute(array('id' => $id));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
 
@@ -43,7 +43,7 @@ class UsersManager {
 
     public function getByLogin($login) {
         $req = $this->_db->prepare('SELECT * FROM users WHERE login = :login');
-        $req->execute(array('login' => htmlspecialchars($login)));
+        $req->execute(array('login' => $login));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
 
@@ -58,8 +58,8 @@ class UsersManager {
     public function update(User $user) {
         $req = $this->_db->prepare('UPDATE users SET login = :login, password = :password');
         $req->execute(array(
-            'login' => htmlspecialchars($user->login()),
-            'password' => htmlspecialchars($user->password())
+            'login' => $user->login(),
+            'password' => $user->password()
         ));
         $req->closeCursor();
     }

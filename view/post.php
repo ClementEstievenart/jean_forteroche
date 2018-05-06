@@ -5,9 +5,9 @@ $tinyMCE = null;
 ob_start();
 ?>
 <article>
-    <h3><?= htmlspecialchars($post->title()) ?></h3>
+    <h3><?= htmlspecialchars_decode($post->title()) ?></h3>
     <p><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></p>
-    <?php if ($post->updateStatut()) {?><p><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
+    <?php if ($post->dateUpdate()) {?><p><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
     <p><?= htmlspecialchars_decode($post->content()) ?></p>
 </article>
 

@@ -9,23 +9,23 @@ class CommentsManager {
     public function add(Comment $comment) {
         $req = $this->_db->prepare('INSERT INTO comments (lastName, firstName, content, idPost) VALUES (:lastName, :firstName, :content, :idPost)');
         $req->execute(array(
-            'lastName' => htmlspecialchars($comment->lastName()),
-            'firstName' => htmlspecialchars($comment->firstName()),
-            'content' => htmlspecialchars($comment->content()),
-            'idPost' => (int) htmlspecialchars($comment->idPost())
+            'lastName' => $comment->lastName(),
+            'firstName' => $comment->firstName(),
+            'content' => $comment->content(),
+            'idPost' => $comment->idPost()
         ));
         $req->closeCursor();
     }
 
     public function delete(Comment $comment) {
         $req = $this->_db->prepare('DELETE FROM comments WHERE id = :id');
-        $req->execute(array('id' => (int) htmlspecialchars($comment->id())));
+        $req->execute(array('id' => $comment->id()));
         $req->closeCursor();
     }
 
     public function get($id) {
         $req = $this->_db->prepare('SELECT * FROM comments WHERE id = :id');
-        $req->execute(array('id' => (int) htmlspecialchars($id)));
+        $req->execute(array('id' => $id));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
 
@@ -46,7 +46,7 @@ class CommentsManager {
     public function getCommentsByPostId($postId) {
         $comments = [];
         $req = $this->_db->prepare('SELECT * FROM comments WHERE idPost = :idPost ORDER BY datePublication DESC');
-        $req->execute(array('idPost' => (int) htmlspecialchars($postId)));
+        $req->execute(array('idPost' => $postId));
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }
@@ -58,13 +58,13 @@ class CommentsManager {
     public function update(Comment $comment) {
         $req = $this->_db->prepare('UPDATE comments SET lastName = :lastName, firstName = :firstName, content = :content, idPost = :idPost, reportNumber = :reportNumber, reportStatut = :reportStatut WHERE id = :id');
         $req->execute(array(
-            'lastName' => htmlspecialchars($comment->lastName()),
-            'firstName' => htmlspecialchars($comment->firstName()),
-            'content' => htmlspecialchars($comment->content()),
-            'idPost' => (int) htmlspecialchars($comment->idPost()),
-            'reportNumber' => (int) htmlspecialchars($comment->reportNumber()),
-            'reportStatut' => (int) htmlspecialchars($comment->reportStatut()),
-            'id' => htmlspecialchars($comment->id())
+            'lastName' => $comment->lastName(),
+            'firstName' => $comment->firstName(),
+            'content' => $comment->content(),
+            'idPost' => $comment->idPost(),
+            'reportNumber' => $comment->reportNumber(),
+            'reportStatut' => $comment->reportStatut(),
+            'id' => $comment->id()
         ));
         $req->closeCursor();
     }

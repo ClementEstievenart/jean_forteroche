@@ -8,7 +8,7 @@ ob_start();
 <?php
 foreach ($posts as $post) {?>
   <article>
-        <h3><?= htmlspecialchars($post->title()) ?></h3>
+        <h3><?= htmlspecialchars_decode($post->title()) ?></h3>
         <p><em>Publié le <?= htmlspecialchars($post->datePublication()) ?></em></p>
         <p><?= htmlspecialchars_decode($post->content()) ?></p>
         <div><a href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>">Commentaires</a></div>

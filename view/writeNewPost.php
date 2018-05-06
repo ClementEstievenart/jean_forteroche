@@ -26,7 +26,7 @@ ob_start();
             table: {title: 'Table', items: 'inserttable tableprops deletetable | cell | row column'},
             tools: {title: 'Tools', items: 'spellchecker | code'},
             help : {title: 'Help', items: 'help'}},
-        toolbar: ["fontselect | formatselect | fontsizeselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | forecolor backcolor | numlist bullist outdent indent", "spellchecker save publish"],
+        toolbar: ["fontselect | formatselect | fontsizeselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | forecolor backcolor | numlist bullist outdent indent", "spellchecker | save publish | fullscreen"],
         language_url: 'http://localhost/projet_4/vendor/tinymce/js/tinymce/langs/fr_FR',
         image_advtab: true,
         image_caption: true,
