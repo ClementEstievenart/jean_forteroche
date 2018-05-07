@@ -2,14 +2,16 @@
 class Backend {
     private $_db;
     private $_path;
+    private $_login;
 
     public function __construct() {
+        if (!isset($_SESSION['login'])) {
+            header('location: index.php?action=home');
+        }
+
+        $this->_login = $_SESSION['login'];
         $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
         $this->_path = realpath('.');
-
-        if (!isset($_SESSION['login'])) {
-            header('location: ' . $this->_path . '/index.php?action=home');
-        }
     }
 
     public function writeNewPost() {
@@ -19,7 +21,11 @@ class Backend {
     public function addPost($title, $content, $published) {
         $published = (int) $published;
 
+        $usersManager = new UsersManager($this->_db);
+        $user = $usersManager->getByLogin($this->_login);
+
         $data = array(
+            'idUser' => $user->id(),
             'title' => $title,
             'content' => $content,
             'published' => $published
@@ -28,14 +34,14 @@ class Backend {
         $postsManager = new PostsManager($this->_db);
         $postsManager->add(new Post($data));
 
-        header('location: ' . $this->_path . '/index.php?action=home');
+        header('location: index.php?action=listPostsTitle');
     }
 
     public function listPostsTitle() {
         $postsManager = new PostsManager($this->_db);
         $posts = $postsManager->getList();
 
-        require($this->_path . 'view/listPostsTitle.php');
+        require($this->_path . '/view/listPostsTitle.php');
     }
 
     public function editPost($postId) {
@@ -44,7 +50,7 @@ class Backend {
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
 
-        require($this->_path . 'view/editPost.php');
+        require($this->_path . '/view/editPost.php');
     }
 
     public function deletePost($postId) {
@@ -54,7 +60,7 @@ class Backend {
         $post = $postsManager->get($postId);
         $postsManager->delete($post);
 
-        header('location: ' . $this->_path . '/index.php?action=home');
+        header('location: index.php?action=listPostsTitle');
     }
 
     public function updatePost($postId, $title, $content, $published) {
@@ -68,6 +74,8 @@ class Backend {
             $post->setDatePublication(date('Y-m-d H:i:s'));
         } elseif ($post->published() AND $content !== $post->content()) {
             $post->setDateUpdate(date('Y-m-d H:i:s'));
+        } elseif ($post->published() AND !$published) {
+            $post->setDateUpdate(null);
         }
 
         $post->setTitle($title);
@@ -76,7 +84,7 @@ class Backend {
 
         $postsManager->update($post);
 
-        header('location: ' . $this->_path . '/index.php?action=home');
+        header('location: index.php?action=listPostsTitle');
     }
 
     public function ListCommentsReport() {
@@ -100,7 +108,7 @@ class Backend {
         $postsManager->update($post);
         $commentsManager->delete($comment);
 
-        header('location: ' . $this->_path . '/index.php?action=listCommentsReport');
+        header('location: index.php?action=listCommentsReport');
     }
 
     public function validComment($commentId) {
@@ -108,15 +116,15 @@ class Backend {
 
         $commentsManager = new CommentsManager($this->_db);
         $comment = $commentsManager->get($commentId);
-        $comment->setReportStatut(2);
+        $comment->setReportStatut(Comment::COMMENT_VALIDATED);
         $commentsManager->update($comment);
 
-        header('location: ' . $this->_path . '/index.php?action=listCommentsReport');
+        header('location: index.php?action=listCommentsReport');
     }
 
     public function disconnection() {
         session_destroy();
 
-        header('location: ' . $this->_path . '/index.php?action=home');
+        header('location: index.php?action=home');
     }
 }

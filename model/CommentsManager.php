@@ -24,7 +24,7 @@ class CommentsManager {
     }
 
     public function get($id) {
-        $req = $this->_db->prepare('SELECT * FROM comments WHERE id = :id');
+        $req = $this->_db->prepare('SELECT id, lastName, firstName, content, idPost, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, reportNumber, reportStatut FROM comments WHERE id = :id');
         $req->execute(array('id' => $id));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
@@ -34,7 +34,7 @@ class CommentsManager {
 
     public function getList() {
         $comments = [];
-        $req = $this->_db->query('SELECT * FROM comments WHERE reportStatut < 2 ORDER BY reportNumber DESC');
+        $req = $this->_db->query('SELECT id, lastName, firstName, content, idPost, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, reportNumber, reportStatut FROM comments WHERE reportStatut < 2 ORDER BY reportNumber DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }
@@ -45,7 +45,7 @@ class CommentsManager {
 
     public function getCommentsByPostId($postId) {
         $comments = [];
-        $req = $this->_db->prepare('SELECT * FROM comments WHERE idPost = :idPost ORDER BY datePublication DESC');
+        $req = $this->_db->prepare('SELECT id, lastName, firstName, content, idPost, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, reportNumber, reportStatut FROM comments WHERE idPost = :idPost ORDER BY datePublication DESC');
         $req->execute(array('idPost' => $postId));
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);

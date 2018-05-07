@@ -38,16 +38,16 @@ try {
 
                 $parameters = [];
 
-                if(isset($actionParameters['_GetKey'])){
-                    if(isset($getVar[$actionParameters['_GetKey']])) {
-                        $parameters[] = $getVar[$actionParameters['_GetKey']];
+                if(isset($actionParameters['getKey'])){
+                    if(isset($getVar[$actionParameters['getKey']])) {
+                        $parameters[] = $getVar[$actionParameters['getKey']];
                     } else {
-                        throw new exception($actionParameters['_GetKey'] . 'doesn\'t exist for the action : ' . $action);
+                        throw new exception($actionParameters['getKey'] . 'doesn\'t exist for the action : ' . $action);
                     }
                 }
 
-                if(isset($actionParameters['_PostKeys'])) {
-                    foreach ($actionParameters['_PostKeys'] as $postKeys) {
+                if(isset($actionParameters['postKeys'])) {
+                    foreach ($actionParameters['postKeys'] as $postKeys) {
                         if (isset($postVar[$postKeys])) {
                             $parameters[] = $postVar[$postKeys];
                         } else {

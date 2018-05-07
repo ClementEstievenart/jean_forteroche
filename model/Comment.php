@@ -9,6 +9,10 @@ class Comment {
     private $_reportNumber;
     private $_reportStatut;
 
+    const COMMENT_NOT_REPORTED = 0;
+    const COMMENT_REPORTED = 1;
+    const COMMENT_VALIDATED = 2;
+
     public function __construct($data) {
         $this->hydrate($data);
     }
@@ -93,7 +97,7 @@ class Comment {
     }
 
     public function setDatePublication($datePublication) {
-        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $datePublication)) {
+        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $datePublication) OR preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}/', $datePublication)) {
             $this->_datePublication = $datePublication;
         } else {
             throw new exception('setDatePublication() : $datePublication is not a date : ' . $datePublication);
@@ -111,11 +115,10 @@ class Comment {
     }
 
     public function setReportStatut($reportStatut) {
-        $reportStatut = (int) $reportStatut;
-        if ($reportStatut === 0 OR $reportStatut === 1 OR $reportStatut === 2) {
-            $this->_reportStatut = $reportStatut;
+        if (in_array($reportStatut, [self::COMMENT_NOT_REPORTED, self::COMMENT_REPORTED, self::COMMENT_VALIDATED])) {
+            $this->_reportStatut = (int) $reportStatut;
         } else {
-            throw new exception('setReportStatut() : $reportStatut is not an int === \[0-2]\ -> ' . $reportStatut);
+            throw new exception('setReportStatut() : $reportStatut is not a valid const ["COMMENT_NO_REPORTED", "COMMENT_REPORTED", "COMMENT_VALIDATED"] -> ' . $reportStatut);
         }
     }
 }

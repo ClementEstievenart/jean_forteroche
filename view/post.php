@@ -25,7 +25,7 @@ ob_start();
     foreach($comments as $comment) {
     ?>
         <h5><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?></h5>
-        <div><em>à commenter le <?= htmlspecialchars($comment->datePublication()) ?></em></div>
+        <div><em>a commenté le <?= htmlspecialchars($comment->datePublication()) ?></em></div>
         <p><?= htmlspecialchars($comment->content()) ?></p>
         <a href="index.php?action=report&amp;commentId=<?= htmlspecialchars($comment->id()) ?>"><button>Signaler ce commentaire !</button></a>
     <?php

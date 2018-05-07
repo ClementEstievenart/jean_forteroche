@@ -43,8 +43,8 @@ class Frontend {
 
         if ($user) {
             if (password_verify($password, $user->password())) {
-            $_SESSION['login'] = $login;
-            header('location: ' . $this->_path .'/index.php?action=home');
+                $_SESSION['login'] = $login;
+                header('location: index.php?action=home');
             } else {
                 require($this->_path . '/view/login.php');
             }
@@ -70,22 +70,22 @@ class Frontend {
         $post->setNbComments($post->nbComments() + 1);
         $postsManager->update($post);
 
-        header('location: '. $this->_path . '/index.php?action=getPost&postId=' . $postId);
+        header('location: index.php?action=getPost&postId=' . $postId);
     }
 
     public function reportComment($commentId) {
         $commentsManager = new CommentsManager($this->_db);
         $comment = $commentsManager->get($commentId);
 
-        if ($comment->reportStatut() !== 2) {
-            if (!$comment->reportStatut()) {
-                $comment->setReportStatut(1);
+        if ($comment->reportStatut() !== Comment::COMMENT_VALIDATED) {
+            if ($comment->reportStatut() === Comment::COMMENT_NOT_REPORTED) {
+                $comment->setReportStatut(Comment::COMMENT_REPORTED);
             }
             $comment->setReportNumber($comment->reportNumber() + 1);
         }
         $commentsManager->update($comment);
 
-        header('location: ' . $this->_path . '/index.php?action=getPost&postId=' . $comment->idPost());
+        header('location: index.php?action=getPost&postId=' . $comment->idPost());
     }
 
     public function db() {
