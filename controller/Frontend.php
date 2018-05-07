@@ -1,25 +1,22 @@
 <?php
 class Frontend {
     private $_db;
+    private $_path;
 
     public function __construct() {
         $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
-
-        function loadClass($class) {
-            require('model/' . $class . '.php');
-        }
-        spl_autoload_register('loadClass');
+        $this->_path = realpath('.');
     }
 
     public function homePage() {
-        require('view/home.php');
+        require($this->_path . '/view/home.php');
     }
 
     public function getPostsPublished() {
         $postsManager = new PostsManager($this->_db);
         $posts = $postsManager->getListPublished();
 
-        require('view/listPosts.php');
+        require($this->_path . '/view/listPosts.php');
     }
 
     public function getPostById($postId) {
@@ -33,11 +30,11 @@ class Frontend {
         $comments = $commentsManager->getCommentsByPostId($postId);
         $user = $usersManager->get($post->idUser());
 
-        require('view/post.php');
+        require($this->_path . '/view/post.php');
     }
 
     public function login() {
-        require('view/login.php');
+        require($this->_path . '/view/login.php');
     }
 
     public function connection($login, $password) {
@@ -47,12 +44,12 @@ class Frontend {
         if ($user) {
             if (password_verify($password, $user->password())) {
             $_SESSION['login'] = $login;
-            header('location: index.php?action=home');
+            header('location: ' . $this->_path .'/index.php?action=home');
             } else {
-                require('view/login.php');
+                require($this->_path . '/view/login.php');
             }
         } else {
-            require('view/login.php');
+            require($this->_path . '/view/login.php');
         }
     }
 
@@ -73,7 +70,7 @@ class Frontend {
         $post->setNbComments($post->nbComments() + 1);
         $postsManager->update($post);
 
-        header('location: index.php?action=getPost&postId=' . $postId);
+        header('location: '. $this->_path . '/index.php?action=getPost&postId=' . $postId);
     }
 
     public function reportComment($commentId) {
@@ -88,7 +85,7 @@ class Frontend {
         }
         $commentsManager->update($comment);
 
-        header('location: index.php?action=getPost&postId=' . $comment->idPost());
+        header('location: ' . $this->_path . '/index.php?action=getPost&postId=' . $comment->idPost());
     }
 
     public function db() {

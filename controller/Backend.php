@@ -1,22 +1,19 @@
 <?php
 class Backend {
     private $_db;
+    private $_path;
 
     public function __construct() {
-        if (!isset($_SESSION['login'])) {
-            header('location: index.php?action=home');
-        }
-
         $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
+        $this->_path = realpath('.');
 
-        function loadClass($class) {
-            require('model/' . $class . '.php');
+        if (!isset($_SESSION['login'])) {
+            header('location: ' . $this->_path . '/index.php?action=home');
         }
-        spl_autoload_register('loadClass');
     }
 
     public function writeNewPost() {
-        require('view/writeNewPost.php');
+        require($this->_path . '/view/writeNewPost.php');
     }
 
     public function addPost($title, $content, $published) {
@@ -31,14 +28,14 @@ class Backend {
         $postsManager = new PostsManager($this->_db);
         $postsManager->add(new Post($data));
 
-        header('location: index.php?action=home');
+        header('location: ' . $this->_path . '/index.php?action=home');
     }
 
     public function listPostsTitle() {
         $postsManager = new PostsManager($this->_db);
         $posts = $postsManager->getList();
 
-        require('view/listPostsTitle.php');
+        require($this->_path . 'view/listPostsTitle.php');
     }
 
     public function editPost($postId) {
@@ -47,7 +44,7 @@ class Backend {
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
 
-        require('view/editPost.php');
+        require($this->_path . 'view/editPost.php');
     }
 
     public function deletePost($postId) {
@@ -57,7 +54,7 @@ class Backend {
         $post = $postsManager->get($postId);
         $postsManager->delete($post);
 
-        header('location: index.php?action=home');
+        header('location: ' . $this->_path . '/index.php?action=home');
     }
 
     public function updatePost($postId, $title, $content, $published) {
@@ -79,7 +76,7 @@ class Backend {
 
         $postsManager->update($post);
 
-        header('location: index.php?action=home');
+        header('location: ' . $this->_path . '/index.php?action=home');
     }
 
     public function ListCommentsReport() {
@@ -87,7 +84,7 @@ class Backend {
         $commentsManager = new CommentsManager($this->_db);
         $comments = $commentsManager->getList();
 
-        require('view/listCommentsReport.php');
+        require($this->_path . '/view/listCommentsReport.php');
     }
 
     public function deleteComment($commentId) {
@@ -103,7 +100,7 @@ class Backend {
         $postsManager->update($post);
         $commentsManager->delete($comment);
 
-        header('location: index.php?action=listCommentsReport');
+        header('location: ' . $this->_path . '/index.php?action=listCommentsReport');
     }
 
     public function validComment($commentId) {
@@ -114,12 +111,12 @@ class Backend {
         $comment->setReportStatut(2);
         $commentsManager->update($comment);
 
-        header('location: index.php?action=listCommentsReport');
+        header('location: ' . $this->_path . '/index.php?action=listCommentsReport');
     }
 
     public function disconnection() {
         session_destroy();
 
-        header('location: index.php?action=home');
+        header('location: ' . $this->_path . '/index.php?action=home');
     }
 }

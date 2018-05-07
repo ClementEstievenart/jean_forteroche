@@ -58,4 +58,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require('template/template.php');
+require($this->_path . '/view/template/template.php');

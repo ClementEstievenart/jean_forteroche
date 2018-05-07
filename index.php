@@ -1,15 +1,22 @@
 <?php
 session_start();
 try {
-    require('controller/Frontend.php');
-    require('controller/Backend.php');
-    require('Helper.php');
+    $path = realpath('.');
+
+    require($path . '/controller/Frontend.php');
+    require($path . '/controller/Backend.php');
+    require($path . '/Helper.php');
+    include($path . '/routerConfig.php');
+
+    function loadModel($class) {
+        require('/model/' . $class . '.php');
+    }
+    spl_autoload_register('loadModel');
 
     $helper = new Helper();
     $getVar = $helper->getGetValues();
     $postVar = $helper->getPostValues();
 
-    include('routerConfig.php');
     $controlerList = ['frontend', 'backend'];
 
     for ($i = -1; $i<= 1; $i++) {
