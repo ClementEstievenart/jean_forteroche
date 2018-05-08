@@ -97,7 +97,8 @@ class Comment {
     }
 
     public function setDatePublication($datePublication) {
-        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $datePublication) OR preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}/', $datePublication)) {
+        if (preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}min[0-9]{2}s/', $datePublication)) {
+            $datePublication = preg_replace('/min[0-9]{2}s/', '', $datePublication);
             $this->_datePublication = $datePublication;
         } else {
             throw new exception('setDatePublication() : $datePublication is not a date : ' . $datePublication);

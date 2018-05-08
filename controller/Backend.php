@@ -58,6 +58,13 @@ class Backend {
 
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
+
+        $commentsManager = new CommentsManager($this->_db);
+        $comments = $commentsManager->getCommentsByPostId($post->id());
+        foreach ($comments as $comment) {
+            $this->deleteComment($comment->id());
+        }
+
         $postsManager->delete($post);
 
         header('location: index.php?action=listPostsTitle');
