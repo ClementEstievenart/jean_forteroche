@@ -68,7 +68,7 @@ class Frontend {
 
         $post = $postsManager->get($postId);
         $post->setNbComments($post->nbComments() + 1);
-        $postsManager->update($post);
+        $postsManager->updateWithSameDateUpdate($post);
 
         header('location: index.php?action=getPost&postId=' . $postId);
     }

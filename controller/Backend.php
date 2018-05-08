@@ -27,12 +27,14 @@ class Backend {
         $data = array(
             'idUser' => $user->id(),
             'title' => $title,
-            'content' => $content,
-            'published' => $published
+            'content' => $content
         );
-
         $postsManager = new PostsManager($this->_db);
         $postsManager->add(new Post($data));
+
+        if ($published) {
+            $postsManager->publish($post);
+        }
 
         header('location: index.php?action=listPostsTitle');
     }
@@ -77,19 +79,24 @@ class Backend {
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
 
-        if (!$post->published() AND $published) {
-            $post->setDatePublication(date('Y-m-d H:i:s'));
-        } elseif ($post->published() AND $content !== $post->content()) {
-            $post->setDateUpdate(date('Y-m-d H:i:s'));
-        } elseif ($post->published() AND !$published) {
-            $post->setDateUpdate(null);
+        $post->setTitle($title);
+
+        if ($post->datePublication() AND $published AND $content !== $post->content()) {
+            $post->setContent($content);
+            $postsManager->updateWithDateUpdate($post);
+        } elseif ($published) {
+            $post->setContent($content);
+            $postsManager->updateWithSameDateUpdate($post);
+        } else {
+            $post->setContent($content);
+            $postsManager->updateWithNoDateUpdate($post);
         }
 
-        $post->setTitle($title);
-        $post->setContent($content);
-        $post->setPublished($published);
-
-        $postsManager->update($post);
+        if (!$post->datePublication() AND $published) {
+            $postsManager->publish($post);
+        } elseif ($post->datePublication() AND !$published) {
+            $postsManager->unPublish($post);
+        }
 
         header('location: index.php?action=listPostsTitle');
     }
@@ -112,7 +119,7 @@ class Backend {
         $post = $postsManager->get($comment->idPost());
         $post->setNbComments($post->nbComments() - 1);
 
-        $postsManager->update($post);
+        $postsManager->updateWithSameDateUpdate($post);
         $commentsManager->delete($comment);
 
         header('location: index.php?action=listCommentsReport');

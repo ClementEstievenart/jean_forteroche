@@ -34,7 +34,7 @@ class CommentsManager {
 
     public function getList() {
         $comments = [];
-        $req = $this->_db->query('SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatutFROM comments WHERE report_statut < 2 ORDER BY report_number DESC');
+        $req = $this->_db->query('SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut FROM comments WHERE report_statut < 2 ORDER BY report_number DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }

@@ -26,7 +26,7 @@ ob_start();
             table: {title: 'Table', items: 'inserttable tableprops deletetable | cell | row column'},
             tools: {title: 'Tools', items: 'spellchecker | code'},
             help : {title: 'Help', items: 'help'}},
-        toolbar: ["fontselect | formatselect | fontsizeselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | forecolor backcolor | numlist bullist outdent indent", "spellchecker | save <?php if ($post->published()) { echo 'unpublish'; } else { echo 'publish'; } ?> remove | fullscreen"],
+        toolbar: ["fontselect | formatselect | fontsizeselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | forecolor backcolor | numlist bullist outdent indent", "spellchecker | save <?php if ($post->datePublication()) { echo 'unpublish'; } else { echo 'publish'; } ?> remove | fullscreen"],
         language_url: 'http://localhost/projet_4/vendor/tinymce/js/tinymce/langs/fr_FR',
         image_advtab: true,
         image_caption: true,
@@ -51,7 +51,7 @@ ob_start();
 <h2>Éditer l'épisode</h2>
 <form id="editForm" action="index.php?action=updatePost&amp;postId=<?= htmlspecialchars($post->id()) ?>" method="post">
     <h3 id="title"><?= htmlspecialchars_decode($post->title()) ?></h3>
-    <div style="display: none"><input id="published" name="published" value="<?= htmlspecialchars($post->published()) ?>"></div>
+    <div style="display: none"><input id="published" name="published" value="<?php if ($post->datePublication()) { echo '1'; } else { echo '0'; } ?>"></div>
     <div><textarea id="content" name="content" required><?= htmlspecialchars_decode($post->content()) ?></textarea></div>
 </form>
 <?php

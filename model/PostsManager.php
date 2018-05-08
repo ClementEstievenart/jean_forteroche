@@ -7,12 +7,11 @@ class PostsManager {
     }
 
     public function add(Post $post) {
-        $req = $this->_db->prepare('INSERT INTO posts (idUser, title, content, published) VALUES (:idUser, :title, :content, :published)');
+        $req = $this->_db->prepare('INSERT INTO posts (id_user, title, content) VALUES (:idUser, :title, :content)');
         $req->execute(array(
             'idUser' => $post->idUser(),
             'title' => $post->title(),
-            'content' => $post->content(),
-            'published' => $post->published()
+            'content' => $post->content()
         ));
         $req->closeCursor();
     }
@@ -24,7 +23,7 @@ class PostsManager {
     }
 
     public function get($id) {
-        $req = $this->_db->prepare('SELECT id, idUser, title, content, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, DATE_FORMAT(dateUpdate, "%d/%m/%Y à %Hh%i") as dateUpdate, published, nbComments FROM posts WHERE id = :id');
+        $req = $this->_db->prepare('SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments as nbComments FROM posts WHERE id = :id');
         $req->execute(array('id' => $id));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
@@ -34,7 +33,7 @@ class PostsManager {
 
     public function getList() {
         $posts = [];
-        $req = $this->_db->query('SELECT id, idUser, title, content, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, DATE_FORMAT(dateUpdate, "%d/%m/%Y à %Hh%i") as dateUpdate, published, nbComments FROM posts ORDER BY datePublication DESC');
+        $req = $this->_db->query('SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments FROM posts ORDER BY IFNULL(date_publication, date_creation) DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = new Post($data);
         }
@@ -45,7 +44,7 @@ class PostsManager {
 
     public function getListPublished() {
         $posts = [];
-        $req = $this->_db->query('SELECT id, idUser, title, content, DATE_FORMAT(datePublication, "%d/%m/%Y à %Hh%i") as datePublication, DATE_FORMAT(dateUpdate, "%d/%m/%Y à %Hh%i") as dateUpdate, published, nbComments FROM posts WHERE published = 1 ORDER BY datePublication DESC');
+        $req = $this->_db->query('SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments FROM posts WHERE date_publication != "NULL" ORDER BY date_publication DESC');
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = new Post($data);
         }
@@ -54,15 +53,55 @@ class PostsManager {
         return $posts;
     }
 
-    public function update(Post $post) {
-        $req = $this->_db->prepare('UPDATE posts SET idUser = :idUser, title =  :title, content = :content, dateUpdate = :dateUpdate, published = :published, nbComments = :nbComments WHERE id = :id');
+    public function updateWithDateUpdate(Post $post) {
+        $req = $this->_db->prepare('UPDATE posts SET id_user = :idUser, title =  :title, content = :content, date_update = NOW(), nb_comments = :nbComments WHERE id = :id');
         $req->execute(array(
             'idUser' => $post->idUser(),
             'title' => $post->title(),
             'content' => $post->content(),
-            'dateUpdate' => $post->dateUpdate(),
-            'published' => $post->published(),
             'nbComments' => $post->nbComments(),
+            'id' => $post->id()
+        ));
+        $req->closeCursor();
+    }
+
+    public function updateWithSameDateUpdate(Post $post) {
+        $req = $this->_db->prepare('UPDATE posts SET id_user = :idUser, title =  :title, content = :content, nb_comments = :nbComments WHERE id = :id');
+        $req->execute(array(
+            'idUser' => $post->idUser(),
+            'title' => $post->title(),
+            'content' => $post->content(),
+            'nbComments' => $post->nbComments(),
+            'id' => $post->id()
+        ));
+        $req->closeCursor();
+    }
+
+    public function updateWithNoDateUpdate(Post $post) {
+        $req = $this->_db->prepare('UPDATE posts SET id_user = :idUser, title =  :title, content = :content, date_update = :dateUpdate, nb_comments = :nbComments WHERE id = :id');
+        $req->execute(array(
+            'idUser' => $post->idUser(),
+            'title' => $post->title(),
+            'content' => $post->content(),
+            'dateUpdate' => null,
+            'nbComments' => $post->nbComments(),
+            'id' => $post->id()
+        ));
+        $req->closeCursor();
+    }
+
+    public function publish (Post $post) {
+        $req = $this->_db->prepare('UPDATE posts SET date_publication = NOW() WHERE id = :id');
+        $req->execute(array(
+            'id' => $post->id()
+        ));
+        $req->closeCursor();
+    }
+
+    public function unpublish (Post $post) {
+        $req = $this->_db->prepare('UPDATE posts SET date_publication = :datePublication WHERE id = :id');
+        $req->execute(array(
+            'datePublication' => null,
             'id' => $post->id()
         ));
         $req->closeCursor();

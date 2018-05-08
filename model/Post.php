@@ -6,7 +6,6 @@ class Post {
     private $_content;
     private $_datePublication;
     private $_dateUpdate;
-    private $_published;
     private $_nbComments;
 
     public function __construct($data) {
@@ -46,10 +45,6 @@ class Post {
         return $this->_dateUpdate;
     }
 
-    public function published() {
-        return $this->_published;
-    }
-
     public function nbComments() {
         return $this->_nbComments;
     }
@@ -85,7 +80,8 @@ class Post {
     }
 
     public function setDatePublication($datePublication) {
-        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $datePublication) OR preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}/', $datePublication)) {
+        if (preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}min[0-9]{2}s/', $datePublication) OR $datePublication === null) {
+            $datePublication = preg_replace('/min[0-9]{2}s/', '', $datePublication);
             $this->_datePublication = $datePublication;
         } else {
             throw new exception('setDatePublication() : $datePublication is not a date : ' . $datePublication);
@@ -93,20 +89,11 @@ class Post {
     }
 
     public function setDateUpdate($dateUpdate) {
-        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $dateUpdate) OR preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}/', $dateUpdate) OR $dateUpdate === null) {
+        if (preg_match('/[0-9]{2}\/[0-9]{2}\/[0-9]{4} à [0-9]{2}h[0-9]{2}/', $dateUpdate) OR $dateUpdate === null) {
+            $dateUpdate = preg_replace('/min[0-9]{2}s/', '', $dateUpdate);
             $this->_dateUpdate = $dateUpdate;
         } else {
             throw new exception('setDateUpdate() : $dateUpdate is not a date : ' . $dateUpdate);
-        }
-    }
-
-    public function setPublished($published) {
-        $published = (int) $published;
-
-        if ($published === 0 OR $published === 1) {
-            $this->_published = $published;
-        } else {
-            throw new exception('setPublished() : $published is not a boolean -> ' . $published);
         }
     }
 
