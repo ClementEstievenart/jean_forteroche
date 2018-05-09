@@ -5,12 +5,17 @@ class Backend {
     private $_login;
 
     public function __construct() {
+        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
         if (!isset($_SESSION['login'])) {
+            header('location: index.php?action=home');
+        }
+        $usersManager = new UsersManager($this->_db);
+        if(!$usersManager->getByLogin($_SESSION['login'])) {
             header('location: index.php?action=home');
         }
 
         $this->_login = $_SESSION['login'];
-        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $this->_path = realpath('.');
     }
 

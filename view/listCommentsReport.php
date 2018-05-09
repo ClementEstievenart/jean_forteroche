@@ -10,11 +10,11 @@ ob_start();
         <h4><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?> a commenté le <?= htmlspecialchars($comment->datePublication()) ?> l'épisode <em><a href="index.php?action=findPageOfComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>&amp;postId=<?= htmlspecialchars($postsManager->get($comment->idPost())->id()) ?>&amp;page=1"><?= htmlspecialchars_decode($postsManager->get($comment->idPost())->title()) ?></a></em></h4>
         <p><?= htmlspecialchars($comment->content()) ?></p>
         <p>Statut : <?php
-        if (!$comment->reportStatut()) {
-            echo 'Non signalé';
-        } else {
-            echo 'Signalé ' . htmlspecialchars($comment->reportNumber()) . ' fois';
-        }
+            if (!$comment->reportStatut()) {
+                echo 'Non signalé';
+            } else {
+                echo 'Signalé ' . htmlspecialchars($comment->reportNumber()) . ' fois';
+            }
         ?></p>
         <div>
             <a href="index.php?action=deleteComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>"><button>Supprimer le commentaire</button></a>
