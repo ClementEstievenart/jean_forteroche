@@ -24,7 +24,10 @@ class CommentsManager {
     }
 
     public function get($id) {
-        $req = $this->_db->prepare('SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut FROM comments WHERE id = :id');
+        $req = $this->_db->prepare('
+            SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
+            FROM comments
+            WHERE id = :id');
         $req->execute(array('id' => $id));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
@@ -32,9 +35,17 @@ class CommentsManager {
         return new Comment($data);
     }
 
-    public function getList() {
+    public function getList($page) {
         $comments = [];
-        $req = $this->_db->query('SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut FROM comments WHERE report_statut < 2 ORDER BY report_number DESC');
+        $start = ($page - 1) * 10;
+        $req = $this->_db->prepare('
+            SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
+            FROM comments
+            WHERE report_statut < 2
+            ORDER BY report_number DESC
+            LIMIT 10 OFFSET :start');
+        $req->bindParam(':start', $start, PDO::PARAM_INT);
+        $req->execute();
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }
@@ -43,10 +54,18 @@ class CommentsManager {
         return $comments;
     }
 
-    public function getCommentsByPostId($postId) {
+    public function getCommentsByPostId($postId, $page) {
         $comments = [];
-        $req = $this->_db->prepare('SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut FROM comments WHERE id_post = :idPost ORDER BY date_publication DESC');
-        $req->execute(array('idPost' => $postId));
+        $start = ($page - 1) * 10;
+        $req = $this->_db->prepare('
+            SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
+            FROM comments
+            WHERE id_post = :idPost
+            ORDER BY date_publication DESC
+            LIMIT 10 OFFSET :start');
+        $req->bindParam(':idPost', $postId, PDO::PARAM_INT);
+        $req->bindParam(':start', $start, PDO::PARAM_INT);
+        $req->execute();
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $comments[] = new Comment($data);
         }
@@ -67,6 +86,35 @@ class CommentsManager {
             'id' => $comment->id()
         ));
         $req->closeCursor();
+    }
+
+    public function findCommentPosition ($commentId, $postId) {
+        $comments = [];
+        $req = $this->_db->prepare('SELECT id FROM comments WHERE id_post = :postId ORDER BY date_publication DESC');
+        $req->execute(array(
+            'postId' => $postId
+        ));
+        while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
+            $comments[] = (int) $data['id'];
+        }
+        $req->closeCursor();
+
+        foreach ($comments as $key => $id) {
+            if ($id === $commentId) {
+                $positionComment = $key;
+                break;
+            }
+        }
+
+        return $positionComment;
+    }
+
+    public function nbCommentsNoValidated () {
+        $req = $this->_db->query('SELECT COUNT(*) FROM comments WHERE report_statut < 2');
+        $nbComments = (int) $req->fetch(PDO::FETCH_ASSOC)['COUNT(*)'];
+        $req->closeCursor();
+
+        return $nbComments;
     }
 
     public function db() {

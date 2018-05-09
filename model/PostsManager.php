@@ -23,7 +23,10 @@ class PostsManager {
     }
 
     public function get($id) {
-        $req = $this->_db->prepare('SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments as nbComments FROM posts WHERE id = :id');
+        $req = $this->_db->prepare('
+            SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments as nbComments
+            FROM posts
+            WHERE id = :id');
         $req->execute(array('id' => $id));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
@@ -31,9 +34,16 @@ class PostsManager {
         return new Post($data);
     }
 
-    public function getList() {
+    public function getList($page) {
         $posts = [];
-        $req = $this->_db->query('SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments FROM posts ORDER BY IFNULL(date_publication, date_creation) DESC');
+        $start = ($page - 1) * 10;
+        $req = $this->_db->prepare('
+            SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments
+            FROM posts
+            ORDER BY IFNULL(date_publication, date_creation) DESC
+            LIMIT 10 OFFSET :start');
+        $req->bindParam(':start', $start, PDO::PARAM_INT);
+        $req->execute();
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = new Post($data);
         }
@@ -42,9 +52,17 @@ class PostsManager {
         return $posts;
     }
 
-    public function getListPublished() {
+    public function getListPublished($page) {
         $posts = [];
-        $req = $this->_db->query('SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments FROM posts WHERE date_publication != "NULL" ORDER BY date_publication DESC');
+        $start = ($page - 1) * 10;
+        $req = $this->_db->prepare('
+            SELECT id, id_user as idUser, title, content, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, DATE_FORMAT(date_update, "%d/%m/%Y à %Hh%imin%ss") as dateUpdate, nb_comments
+            FROM posts
+            WHERE date_publication != "NULL"
+            ORDER BY date_publication DESC
+            LIMIT 10 OFFSET :start');
+        $req->bindParam(':start', $start, PDO::PARAM_INT);
+        $req->execute();
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = new Post($data);
         }
@@ -107,8 +125,12 @@ class PostsManager {
         $req->closeCursor();
     }
 
-    public function db() {
-        return $this->_db;
+    public function nbPosts () {
+        return (int) $this->_db->query('SELECT COUNT(*) FROM posts')->fetch()[0];
+    }
+
+    public function nbPostsPublish () {
+        return (int) $this->_db->query('SELECT COUNT(*) FROM posts WHERE date_publication != "NULL"')->fetch()[0];
     }
 
     public function setDb(PDO $db) {

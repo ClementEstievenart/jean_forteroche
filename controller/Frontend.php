@@ -4,7 +4,7 @@ class Frontend {
     private $_path;
 
     public function __construct() {
-        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
+        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $this->_path = realpath('.');
     }
 
@@ -12,22 +12,27 @@ class Frontend {
         require($this->_path . '/view/home.php');
     }
 
-    public function getPostsPublished() {
+    public function getPostsPublished($page) {
+        $page = (int) $page;
+
         $postsManager = new PostsManager($this->_db);
-        $posts = $postsManager->getListPublished();
+        $posts = $postsManager->getListPublished($page);
+
+        $nbPosts = $postsManager->nbPostsPublish();
 
         require($this->_path . '/view/listPosts.php');
     }
 
-    public function getPostById($postId) {
+    public function getPostById($postId, $page) {
         $postId = (int) $postId;
+        $page = (int) $page;
 
         $postsManager = new PostsManager($this->_db);
         $commentsManager = new CommentsManager($this->_db);
         $usersManager = new UsersManager($this->_db);
 
         $post = $postsManager->get($postId);
-        $comments = $commentsManager->getCommentsByPostId($postId);
+        $comments = $commentsManager->getCommentsByPostId($postId, $page);
         $user = $usersManager->get($post->idUser());
 
         require($this->_path . '/view/post.php');
@@ -53,7 +58,7 @@ class Frontend {
         }
     }
 
-    public function addComment($postId, $lastName, $firstName, $content) {
+    public function addComment($postId, $page, $lastName, $firstName, $content) {
         $data = array(
             'lastName' => $lastName,
             'firstName' => $firstName,
@@ -70,10 +75,10 @@ class Frontend {
         $post->setNbComments($post->nbComments() + 1);
         $postsManager->updateWithSameDateUpdate($post);
 
-        header('location: index.php?action=getPost&postId=' . $postId);
+        header('location: index.php?action=getPost&postId=' . $postId . '&page=' . $page);
     }
 
-    public function reportComment($commentId) {
+    public function reportComment($commentId, $page) {
         $commentsManager = new CommentsManager($this->_db);
         $comment = $commentsManager->get($commentId);
 
@@ -85,7 +90,7 @@ class Frontend {
         }
         $commentsManager->update($comment);
 
-        header('location: index.php?action=getPost&postId=' . $comment->idPost());
+        header('location: index.php?action=getPost&postId=' . $comment->idPost() . '&page=' . $page);
     }
 
     public function db() {

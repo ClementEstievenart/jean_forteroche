@@ -8,7 +8,17 @@ ob_start();
 <?php
 foreach ($posts as $post) {?>
     <h3><a href="index.php?action=editPost&amp;postId=<?= htmlspecialchars($post->id()) ?>"><?= htmlspecialchars_decode($post->title()) ?></a></h3>
-<?php }
+<?php }?>
+<div>
+    <?php
+    if ($nbPosts > 10) {?>
+        <nav id="pages">
+            <a <?php if ($page > 1) {?>href="index.php?action=listPostsTitle&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?>> ← Précédant </a>
+            <a <?php if ($page * 10 < $nbPosts) {?>href="index.php?action=listPostsTitle&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?>> Suivant →</a>
+        </nav>
+    <?php }?>
+</div>
+<?php
 $content = ob_get_clean();
 
 require($this->_path . '/view/template/template.php');

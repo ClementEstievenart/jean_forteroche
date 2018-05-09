@@ -10,7 +10,7 @@ class Backend {
         }
 
         $this->_login = $_SESSION['login'];
-        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '');
+        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $this->_path = realpath('.');
     }
 
@@ -39,9 +39,13 @@ class Backend {
         header('location: index.php?action=listPostsTitle');
     }
 
-    public function listPostsTitle() {
+    public function listPostsTitle($page) {
+        $page = (int) $page;
+
         $postsManager = new PostsManager($this->_db);
-        $posts = $postsManager->getList();
+        $posts = $postsManager->getList($page);
+
+        $nbPosts = $postsManager->nbPosts();
 
         require($this->_path . '/view/listPostsTitle.php');
     }
@@ -101,12 +105,28 @@ class Backend {
         header('location: index.php?action=listPostsTitle');
     }
 
-    public function ListCommentsReport() {
+    public function listCommentsReport($page) {
+        $page = (int) $page;
+
         $postsManager = new PostsManager($this->_db);
         $commentsManager = new CommentsManager($this->_db);
-        $comments = $commentsManager->getList();
+        $comments = $commentsManager->getList($page);
+
+        $nbComments = $commentsManager->nbCommentsNoValidated();
 
         require($this->_path . '/view/listCommentsReport.php');
+    }
+
+    public function findPageOfComment ($commentId, $postId) {
+        $commentId = (int) $commentId;
+        $postId = (int) $postId;
+
+        $commentsManager = new CommentsManager($this->_db);
+        $positionComment = $commentsManager->findCommentPosition($commentId, $postId);
+
+        $page = (int) floor($positionComment / 10) + 1;
+
+        header('location: index.php?action=getPost&postId=' . $postId . '&page=' . $page . '#commentId' . $commentId);
     }
 
     public function deleteComment($commentId) {
