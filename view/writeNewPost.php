@@ -6,7 +6,7 @@ ob_start();
 <script src='http://localhost/projet_4/vendor/tinymce/js/tinymce/tinymce.min.js'></script>
 <script>
     tinymce.init({
-        selector: '#title',
+        selector: '#edit_title',
         inline: true,
         toolbar: 'undo redo | bold italic underline strikethrough | subscript superscript | removeformat',
         menubar: false,
@@ -50,7 +50,7 @@ ob_start();
 ?>
 <h2>Rédiger un nouvel épisode</h2>
 <form id="newPostForm" action="index.php?action=addPost" method="post" name="newPost">
-    <h3 id="title">Editer le titre</h3>
+    <h3 id="edit_title">Editer le titre</h3>
     <div style="display: none"><input id="published" name="published"></div>
     <div><textarea id="content" name="content" required></textarea></div>
 </form>

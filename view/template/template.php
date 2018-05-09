@@ -2,10 +2,12 @@
 <html lang="fr">
 
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8"/>
         <title><?= $title ?></title>
+        <link rel="stylesheet" href="public/css/blog.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700">
         <?= $tinyMCE ?>
-        <link href="../public/css/blog.css" rel="stylesheet">
+
     </head>
 
     <body>

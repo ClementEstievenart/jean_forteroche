@@ -61,6 +61,9 @@ class Backend {
         $postsManager = new PostsManager($this->_db);
         $post = $postsManager->get($postId);
 
+        $usersManager = new UsersManager($this->_db);
+        $user = $usersManager->get($post->idUser());
+
         require($this->_path . '/view/editPost.php');
     }
 

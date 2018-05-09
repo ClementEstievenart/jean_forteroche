@@ -1,5 +1,8 @@
 <header>
-    <h1>Billet Simple pour l'Alaska</h1>
+    <div id="header_title">
+        <h1>Billet Simple pour l'Alaska</h1>
+        <p>Par Jean Forteroche</p>
+    </div>
     <nav>
         <a href="index.php?action=home">Accueil</a>
         <a href="index.php?action=listPosts&amp;page=1">Épisodes</a>
