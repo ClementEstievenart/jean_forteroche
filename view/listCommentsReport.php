@@ -7,8 +7,8 @@ ob_start();
 <h2>Modérer les commentaires :</h2>
 <?php foreach ($comments as $comment) {?>
     <div>
-        <h5 class="report_title"><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?> a commenté le <?= htmlspecialchars($comment->datePublication()) ?> le chapitre <em><a href="index.php?action=findPageOfComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>&amp;postId=<?= htmlspecialchars($postsManager->get($comment->idPost())->id()) ?>&amp;page=1"><?= htmlspecialchars_decode($postsManager->get($comment->idPost())->title()) ?></a></em></h5>
-        <div class="comments"><p><?= htmlspecialchars($comment->content()) ?></p></div>
+        <h5 class="report_title"><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?> a commenté le <?= htmlspecialchars($comment->datePublication()) ?> le chapitre <?= htmlspecialchars_decode($postsManager->get($comment->idPost())->title()) ?></h5>
+        <div class="comments list_report"><a href="index.php?action=findPageOfComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>&amp;postId=<?= htmlspecialchars($postsManager->get($comment->idPost())->id()) ?>&amp;page=1"><?= htmlspecialchars($comment->content()) ?></a></div>
         <div class="report_button">
             <p class="report_statut">Statut : <?php
                 if (!$comment->reportStatut()) {
@@ -18,8 +18,8 @@ ob_start();
                 }
             ?></p>
             <div>
-                <a href="index.php?action=deleteComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>&amp;page=<?= $page ?>" class="delete_comment">Supprimer le commentaire</a>
-                <a href="index.php?action=validComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>&amp;page=<?= $page ?>">Valider le commentaire</a>
+                <a href="index.php?action=deleteComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>&amp;page=<?= $page ?>" class="delete_comment button">Supprimer le commentaire</a>
+                <a href="index.php?action=validComment&amp;commentId=<?= htmlspecialchars($comment->id()) ?>&amp;page=<?= $page ?>" class="button">Valider le commentaire</a>
             </div>
         </div>
     </div>
@@ -28,8 +28,8 @@ ob_start();
     <?php
     if ($nbComments > 10) {?>
         <nav id="pages">
-            <a <?php if ($page > 1) {?>href="index.php?action=listCommentsReport&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?>> ◄ Précédent </a>
-            <a <?php if ($page * 10 < $nbComments) {?>href="index.php?action=listCommentsReport&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?>> Suivant ►</a>
+            <a <?php if ($page > 1) {?>href="index.php?action=listCommentsReport&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"> ◄ Précédent </a>
+            <a <?php if ($page * 10 < $nbComments) {?>href="index.php?action=listCommentsReport&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button"> Suivant ►</a>
         </nav>
     <?php }?>
 </div>

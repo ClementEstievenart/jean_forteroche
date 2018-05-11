@@ -13,8 +13,8 @@ foreach ($posts as $post) {?>
     <?php
     if ($nbPosts > 10) {?>
         <nav id="pages">
-            <a <?php if ($page > 1) {?>href="index.php?action=listPostsTitle&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?>> ◄ Précédent </a>
-            <a <?php if ($page * 10 < $nbPosts) {?>href="index.php?action=listPostsTitle&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?>> Suivant ►</a>
+            <a <?php if ($page > 1) {?>href="index.php?action=listPostsTitle&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"> ◄ Précédent </a>
+            <a <?php if ($page * 10 < $nbPosts) {?>href="index.php?action=listPostsTitle&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button"> Suivant ►</a>
         </nav>
     <?php }?>
 </div>

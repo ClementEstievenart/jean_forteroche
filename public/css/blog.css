@@ -39,8 +39,7 @@ header {
     margin: 0px;
 }
 
-a, input[type='submit'] {
-    display: inline-block;
+.button, input[type='submit'] {
     text-decoration: none;
     background-color: #9abed9;
     color: white;
@@ -51,16 +50,21 @@ a, input[type='submit'] {
     border: none;
 }
 
-a:hover, input[type='submit']:hover {
+.button:hover, input[type='submit']:hover {
     background-color: #84a9c4;
 }
 
-a:active, input[type='submit']:active {
+.button:active, input[type='submit']:active {
     background-color: #7897ad;
 }
 
-a:not(:any-link) {
+a.button {
+    display: inline-block;
+}
+
+a.button:not(:any-link) {
     background-color: #bababa;
+    cursor: default;
 }
 
 #head_menu {
@@ -81,6 +85,8 @@ a:not(:any-link) {
 
 #head_menu li a {
     width: 160px;
+    text-decoration: none;
+    color: white;
 }
 
 #head_menu ol.sublist {
@@ -88,6 +94,7 @@ a:not(:any-link) {
     opacity: 0;
     transition: 0.4s;
     overflow: hidden;
+    padding-left: 15px;
 }
 
 #head_menu li:hover ol.sublist {
@@ -96,10 +103,7 @@ a:not(:any-link) {
 }
 
 #head_menu ol.sublist li {
-	list-style: upper-roman;
-    background-color: #9abed9;
-    color: white;
-    font-size: 2rem;
+	list-style: upper-roman inside;
 }
 
 #head_menu ol.sublist li a {
@@ -200,6 +204,8 @@ a:not(:any-link) {
     padding: 0px 5px;
     margin: 0px;
     background-color: #d99a9a;
+    text-decoration: none;
+    color: white;
 }
 
 #include .comments a:hover {
@@ -210,7 +216,7 @@ a:not(:any-link) {
     background-color: #ad7878;
 }
 
-#include .comments p {
+#include .comments p, #include .comments.list_report a {
     margin: 10px;
     padding: 5px;
     border: 1px solid #bababa;
@@ -269,9 +275,18 @@ a:not(:any-link) {
    background-color: #ad7878;
 }
 
-#include h5.report_title a {
-	padding: 0px 10px;
-    margin: 0px;
+#include .comments.list_report a {
+    display: block;
+    height: 25px;
+    font-size: 1.8rem;
+    text-indent: 30px;
+    background: transparent;
+    color: black;
+    font-family: 'PT Serif', serif;
+}
+
+#include .comments.list_report a:hover {
+    background-color: #bababa;
 }
 
 #include .report_button {
@@ -284,6 +299,7 @@ a:not(:any-link) {
 	border: 1px solid #7897ad;
     padding: 5px 15px;
     text-indent: 0px;
+    white-space: nowrap;
 }
 
 footer {

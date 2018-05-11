@@ -11,7 +11,7 @@ foreach ($posts as $post) {?>
         <h3><?= htmlspecialchars_decode($post->title()) ?>
         <em>Publié le <?= htmlspecialchars($post->datePublication()) ?></em></h3>
         <p><?= htmlspecialchars_decode($post->content()) ?></p>
-        <div><a href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=1">Commentaires</a></div>
+        <div><a href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=1" class="button">Commentaires</a></div>
   </article>
 <?php }?>
 
@@ -19,8 +19,8 @@ foreach ($posts as $post) {?>
     <?php
     if ($nbPosts > 10) {?>
         <nav id="pages">
-            <a <?php if ($page > 1) {?>href="index.php?action=listPosts&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?>> ◄ Précédent </a>
-            <a <?php if ($page * 10 < $nbPosts) {?>href="index.php?action=listPosts&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?>> Suivant ►</a>
+            <a <?php if ($page > 1) {?>href="index.php?action=listPosts&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"> ◄ Précédent </a>
+            <a <?php if ($page * 10 < $nbPosts) {?>href="index.php?action=listPosts&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button"> Suivant ►</a>
         </nav>
     <?php }?>
 </div>

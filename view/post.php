@@ -12,8 +12,8 @@ ob_start();
 </article>
 
 <nav id="pages">
-    <a <?php if ($postPrevId) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($postPrevId) ?>&amp;page=1"<?php }?>> ◄ Chapitre précédent</a>
-    <a <?php if ($postNextId) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($postNextId) ?>&amp;page=1"<?php }?>> Chapitre suivant ►</a>
+    <a <?php if ($postPrevId) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($postPrevId) ?>&amp;page=1"<?php }?> class="button"> ◄ Chapitre précédent</a>
+    <a <?php if ($postNextId) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($postNextId) ?>&amp;page=1"<?php }?> class="button"> Chapitre suivant ►</a>
 </nav>
 
 <form action="index.php?action=addComment&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=<?= htmlspecialchars($page) ?>" method="post">
@@ -43,8 +43,8 @@ ob_start();
     <?php
     if ($post->nbComments() > 10) {?>
         <nav id="pages">
-            <a <?php if ($page !== 1) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?>> ◄ Précédent </a>
-            <a <?php if ($page * 10 < $post->nbComments()) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?>> Suivant ►</a>
+            <a <?php if ($page !== 1) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"> ◄ Précédent </a>
+            <a <?php if ($page * 10 < $post->nbComments()) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button"> Suivant ►</a>
         </nav>
     <?php }?>
 </div>
