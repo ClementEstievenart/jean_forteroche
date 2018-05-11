@@ -51,9 +51,9 @@ $routerConfig = array (
             'getKeys' => ['commentId', 'postId']),
         'deleteComment' => array(
             'method' => 'deleteComment',
-            'getKeys' => ['commentId']),
+            'getKeys' => ['commentId', 'page']),
         'validComment' => array(
             'method' => 'validComment',
-            'getKeys' => ['commentId'])
+            'getKeys' => ['commentId', 'page'])
     )
 );

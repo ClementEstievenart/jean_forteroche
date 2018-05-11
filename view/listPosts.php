@@ -4,7 +4,7 @@ $tinyMCE = null;
 
 ob_start();
 ?>
-<h2>Liste des épisodes</h2>
+<h2>Liste des chapitres</h2>
 <?php
 foreach ($posts as $post) {?>
   <article>
@@ -19,7 +19,7 @@ foreach ($posts as $post) {?>
     <?php
     if ($nbPosts > 10) {?>
         <nav id="pages">
-            <a <?php if ($page > 1) {?>href="index.php?action=listPosts&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?>> ◄ Précédant </a>
+            <a <?php if ($page > 1) {?>href="index.php?action=listPosts&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?>> ◄ Précédent </a>
             <a <?php if ($page * 10 < $nbPosts) {?>href="index.php?action=listPosts&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?>> Suivant ►</a>
         </nav>
     <?php }?>

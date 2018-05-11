@@ -54,6 +54,24 @@ class CommentsManager {
         return $comments;
     }
 
+    public function getAllCommentsByPostId($postId) {
+        $comments = [];
+        $start = ($page - 1) * 10;
+        $req = $this->_db->prepare('
+            SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
+            FROM comments
+            WHERE id_post = :idPost
+            ORDER BY date_publication DESC');
+        $req->bindParam(':idPost', $postId, PDO::PARAM_INT);
+        $req->execute();
+        while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
+            $comments[] = new Comment($data);
+        }
+        $req->closeCursor();
+
+        return $comments;
+    }
+
     public function getCommentsByPostId($postId, $page) {
         $comments = [];
         $start = ($page - 1) * 10;

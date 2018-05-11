@@ -6,7 +6,7 @@ ob_start();
 <script src='http://localhost/projet_4/vendor/tinymce/js/tinymce/tinymce.min.js'></script>
 <script>
     tinymce.init({
-        selector: '#edit_title',
+        selector: '#title',
         inline: true,
         toolbar: 'undo redo | bold italic underline strikethrough | subscript superscript | removeformat',
         menubar: false,
@@ -48,9 +48,9 @@ $tinyMCE = ob_get_clean();
 
 ob_start();
 ?>
-<h2>Éditer l'épisode</h2>
+<h2>Éditer le chapitre</h2>
 <form id="editForm" action="index.php?action=updatePost&amp;postId=<?= htmlspecialchars($post->id()) ?>" method="post">
-    <h3 id="edit_title"><?= htmlspecialchars_decode($post->title()) ?></h3>
+    <div id="edit_title_container"><h3 id="title"><?= htmlspecialchars_decode($post->title()) ?></h3></div>
     <?php if ($post->datePublication()) {?><p class="date_display"><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></p><?php } ?>
     <?php if ($post->dateUpdate()) {?><p class="date_display"><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
     <div style="display: none"><input id="published" name="published" value="<?php if ($post->datePublication()) { echo '1'; } else { echo '0'; } ?>"></div>

@@ -52,6 +52,21 @@ class PostsManager {
         return $posts;
     }
 
+    public function getListTitles() {
+        $posts = [];
+        $req = $this->_db->query('
+            SELECT id, title
+            FROM posts
+            WHERE date_publication != "NULL"
+            ORDER BY date_publication');
+        while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
+            $posts[] = new Post($data);
+        }
+        $req->closeCursor();
+
+        return $posts;
+    }
+
     public function getListPublished($page) {
         $posts = [];
         $start = ($page - 1) * 10;
@@ -69,6 +84,60 @@ class PostsManager {
         $req->closeCursor();
 
         return $posts;
+    }
+
+    public function getNextPublished(Post $post) {
+        $req = $this->_db->prepare('
+            SELECT date_publication
+            FROM posts
+            WHERE id = :id');
+        $req->execute(array(
+            'id' => $post->id()
+        ));
+
+        $datePublication = $req->fetch()['date_publication'];
+        $req->closeCursor();
+
+        $req = $this->_db->prepare('
+            SELECT id
+            FROM posts
+            WHERE date_publication != "NULL" AND date_publication > :datePublication
+            ORDER BY date_publication
+            ');
+        $req->execute(array(
+            'datePublication' => $datePublication
+        ));
+        $postId = $req->fetch()['id'];
+        $req->closeCursor();
+
+        return (int) $postId;
+    }
+
+    public function getPrevPublished(Post $post) {
+        $req = $this->_db->prepare('
+            SELECT date_publication
+            FROM posts
+            WHERE id = :id');
+        $req->execute(array(
+            'id' => $post->id()
+        ));
+
+        $datePublication = $req->fetch()['date_publication'];
+        $req->closeCursor();
+
+        $req = $this->_db->prepare('
+            SELECT id
+            FROM posts
+            WHERE date_publication != "NULL" AND date_publication < :datePublication
+            ORDER BY date_publication DESC
+            ');
+        $req->execute(array(
+            'datePublication' => $datePublication
+        ));
+        $postId = $req->fetch()['id'];
+        $req->closeCursor();
+
+        return (int) $postId;
     }
 
     public function updateWithDateUpdate(Post $post) {

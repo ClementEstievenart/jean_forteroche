@@ -20,6 +20,8 @@ class Backend {
     }
 
     public function writeNewPost() {
+        $postTitles = $this->listPostTitles();
+
         require($this->_path . '/view/writeNewPost.php');
     }
 
@@ -41,7 +43,7 @@ class Backend {
             $postsManager->publish($post);
         }
 
-        header('location: index.php?action=listPostsTitle');
+        header('location: index.php?action=listPostsTitle&page=1');
     }
 
     public function listPostsTitle($page) {
@@ -51,6 +53,8 @@ class Backend {
         $posts = $postsManager->getList($page);
 
         $nbPosts = $postsManager->nbPosts();
+
+        $postTitles = $this->listPostTitles();
 
         require($this->_path . '/view/listPostsTitle.php');
     }
@@ -64,6 +68,8 @@ class Backend {
         $usersManager = new UsersManager($this->_db);
         $user = $usersManager->get($post->idUser());
 
+        $postTitles = $this->listPostTitles();
+
         require($this->_path . '/view/editPost.php');
     }
 
@@ -74,14 +80,14 @@ class Backend {
         $post = $postsManager->get($postId);
 
         $commentsManager = new CommentsManager($this->_db);
-        $comments = $commentsManager->getCommentsByPostId($post->id());
+        $comments = $commentsManager->getAllCommentsByPostId($post->id());
         foreach ($comments as $comment) {
             $this->deleteComment($comment->id());
         }
 
         $postsManager->delete($post);
 
-        header('location: index.php?action=listPostsTitle');
+        header('location: index.php?action=listPostsTitle&page=1');
     }
 
     public function updatePost($postId, $title, $content, $published) {
@@ -110,7 +116,7 @@ class Backend {
             $postsManager->unPublish($post);
         }
 
-        header('location: index.php?action=listPostsTitle');
+        header('location: index.php?action=listPostsTitle&page=1');
     }
 
     public function listCommentsReport($page) {
@@ -121,6 +127,8 @@ class Backend {
         $comments = $commentsManager->getList($page);
 
         $nbComments = $commentsManager->nbCommentsNoValidated();
+
+        $postTitles = $this->listPostTitles();
 
         require($this->_path . '/view/listCommentsReport.php');
     }
@@ -137,7 +145,7 @@ class Backend {
         header('location: index.php?action=getPost&postId=' . $postId . '&page=' . $page . '#commentId' . $commentId);
     }
 
-    public function deleteComment($commentId) {
+    public function deleteComment($commentId, $page) {
         $commentId = (int) $commentId;
 
         $postsManager = new PostsManager($this->_db);
@@ -150,10 +158,10 @@ class Backend {
         $postsManager->updateWithSameDateUpdate($post);
         $commentsManager->delete($comment);
 
-        header('location: index.php?action=listCommentsReport');
+        header('location: index.php?action=listCommentsReport&page=' . $page);
     }
 
-    public function validComment($commentId) {
+    public function validComment($commentId, $page) {
         $commentId = (int) $commentId;
 
         $commentsManager = new CommentsManager($this->_db);
@@ -161,12 +169,17 @@ class Backend {
         $comment->setReportStatut(Comment::COMMENT_VALIDATED);
         $commentsManager->update($comment);
 
-        header('location: index.php?action=listCommentsReport');
+        header('location: index.php?action=listCommentsReport&page=' . $page);
     }
 
     public function disconnection() {
         session_destroy();
 
         header('location: index.php?action=home');
+    }
+
+    public function listPostTitles() {
+        $postsManager = new PostsManager($this->_db);
+        return $postsManager->getListTitles();
     }
 }

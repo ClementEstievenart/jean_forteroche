@@ -9,6 +9,8 @@ class Frontend {
     }
 
     public function homePage() {
+        $postTitles = $this->listPostTitles();
+
         require($this->_path . '/view/home.php');
     }
 
@@ -19,6 +21,8 @@ class Frontend {
         $posts = $postsManager->getListPublished($page);
 
         $nbPosts = $postsManager->nbPostsPublish();
+
+        $postTitles = $this->listPostTitles();
 
         require($this->_path . '/view/listPosts.php');
     }
@@ -35,16 +39,25 @@ class Frontend {
         $comments = $commentsManager->getCommentsByPostId($postId, $page);
         $user = $usersManager->get($post->idUser());
 
+        $postTitles = $this->listPostTitles();
+
+        $postNextId = $postsManager->getNextPublished($post);
+        $postPrevId = $postsManager->getPrevPublished($post);
+
         require($this->_path . '/view/post.php');
     }
 
     public function login() {
+        $postTitles = $this->listPostTitles();
+
         require($this->_path . '/view/login.php');
     }
 
     public function connection($login, $password) {
         $usersManager = new UsersManager($this->_db);
         $user = $usersManager->getByLogin($login);
+
+        $postTitles = $this->listPostTitles();
 
         if ($user) {
             if (password_verify($password, $user->password())) {
@@ -90,10 +103,11 @@ class Frontend {
         }
         $commentsManager->update($comment);
 
-        header('location: index.php?action=getPost&postId=' . $comment->idPost() . '&page=' . $page);
+        header('location: index.php?action=getPost&postId=' . $comment->idPost() . '&page=' . $page . '#commentId' . $commentId);
     }
 
-    public function db() {
-        return $this->_db;
+    public function listPostTitles() {
+        $postsManager = new PostsManager($this->_db);
+        return $postsManager->getListTitles();
     }
 }
