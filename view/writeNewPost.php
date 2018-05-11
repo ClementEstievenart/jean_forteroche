@@ -8,7 +8,7 @@ ob_start();
     tinymce.init({
         selector: '#title',
         inline: true,
-        toolbar: 'undo redo | bold italic underline strikethrough | subscript superscript | removeformat',
+        toolbar: false,
         menubar: false,
         language_url: 'http://localhost/projet_4/vendor/tinymce/js/tinymce/langs/fr_FR'
     });
@@ -16,17 +16,16 @@ ob_start();
 <script>
     tinymce.init({
         selector: '#content',
-        plugins: "textcolor colorpicker lists advlist image imagetools code media link table paste help anchor autolink preview searchreplace wordcount visualchars autoresize autosave charmap codesample contextmenu fullscreen hr nonbreaking print save spellchecker",
+        plugins: "textcolor colorpicker lists image imagetools media link paste help autolink preview searchreplace wordcount visualchars autoresize autosave contextmenu fullscreen nonbreaking save spellchecker",
         menu: {
-            file: {title: 'File', items: 'newdocument restoredraft | preview print'},
+            file: {title: 'File', items: 'restoredraft | preview'},
             edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall searchreplace'},
-            insert: {title: 'Insert', items: 'image link media inserttable | codesample hr charmap | anchor nonbreaking'},
-            view: {title: 'View', items: 'visualaid visualblocks visualchars | spellchecker | fullscreen code'},
-            format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats blockformats | removeformat'},
-            table: {title: 'Table', items: 'inserttable tableprops deletetable | cell | row column'},
-            tools: {title: 'Tools', items: 'spellchecker | code'},
+            insert: {title: 'Insert', items: 'image link media'},
+            view: {title: 'View', items: 'visualaid visualblocks visualchars | spellchecker | fullscreen'},
+            format: {title: 'Format', items: 'bold italic underline strikethrough | blockformats | removeformat'},
+            tools: {title: 'Tools', items: 'spellchecker'},
             help : {title: 'Help', items: 'help'}},
-        toolbar: ["fontselect | formatselect | fontsizeselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | forecolor backcolor | numlist bullist outdent indent", "spellchecker | save publish | fullscreen"],
+        toolbar: ["formatselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | save publish | fullscreen"],
         language_url: 'http://localhost/projet_4/vendor/tinymce/js/tinymce/langs/fr_FR',
         image_advtab: true,
         image_caption: true,
