@@ -8,11 +8,11 @@ class Backend {
         $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         if (!isset($_SESSION['login'])) {
-            header('location: index.php?action=home');
+            header('location: http://localhost/projet_4/Accueil');
         }
         $usersManager = new UsersManager($this->_db);
         if(!$usersManager->getByLogin($_SESSION['login'])) {
-            header('location: index.php?action=home');
+            header('location: http://localhost/projet_4/Accueil');
         }
 
         $this->_login = $_SESSION['login'];
@@ -43,7 +43,7 @@ class Backend {
             $postsManager->publish($post);
         }
 
-        header('location: index.php?action=listPostsTitle&page=1');
+        header('location: http://localhost/projet_4/Titre-des-chapitres/1');
     }
 
     public function listPostsTitle($page) {
@@ -87,7 +87,7 @@ class Backend {
 
         $postsManager->delete($post);
 
-        header('location: index.php?action=listPostsTitle&page=1');
+        header('location: http://localhost/projet_4/Titre-des-chapitres/1');
     }
 
     public function updatePost($postId, $title, $content, $published) {
@@ -116,7 +116,7 @@ class Backend {
             $postsManager->unPublish($post);
         }
 
-        header('location: index.php?action=listPostsTitle&page=1');
+        header('location: http://localhost/projet_4/Titre-des-chapitres/1');
     }
 
     public function listCommentsReport($page) {
@@ -133,16 +133,17 @@ class Backend {
         require($this->_path . '/view/listCommentsReport.php');
     }
 
-    public function findPageOfComment ($commentId, $postId) {
+    public function findPageOfComment ($commentId) {
         $commentId = (int) $commentId;
-        $postId = (int) $postId;
 
         $commentsManager = new CommentsManager($this->_db);
-        $positionComment = $commentsManager->findCommentPosition($commentId, $postId);
+        $comment = $commentsManager->get($commentId);
+
+        $positionComment = $commentsManager->findCommentPosition($commentId, $comment->idPost());
 
         $page = (int) floor($positionComment / 10) + 1;
 
-        header('location: index.php?action=getPost&postId=' . $postId . '&page=' . $page . '#commentId' . $commentId);
+        header('location: http://localhost/projet_4/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId);
     }
 
     public function deleteComment($commentId, $page) {
@@ -158,7 +159,7 @@ class Backend {
         $postsManager->updateWithSameDateUpdate($post);
         $commentsManager->delete($comment);
 
-        header('location: index.php?action=listCommentsReport&page=' . $page);
+        header('location: http://localhost/projet_4/Liste-des-commentaires/' . $page);
     }
 
     public function validComment($commentId, $page) {
@@ -169,13 +170,13 @@ class Backend {
         $comment->setReportStatut(Comment::COMMENT_VALIDATED);
         $commentsManager->update($comment);
 
-        header('location: index.php?action=listCommentsReport&page=' . $page);
+        header('location: http://localhost/projet_4/Liste-des-commentaires/' . $page);
     }
 
     public function disconnection() {
         session_destroy();
 
-        header('location: index.php?action=home');
+        header('location: http://localhost/projet_4/Accueil');
     }
 
     public function listPostTitles() {

@@ -48,7 +48,7 @@ $tinyMCE = ob_get_clean();
 ob_start();
 ?>
 <h2>Éditer le chapitre</h2>
-<form id="editForm" action="index.php?action=updatePost&amp;postId=<?= htmlspecialchars($post->id()) ?>" method="post">
+<form id="editForm" action="Enregister-le-chapitre-<?= htmlspecialchars($post->id()) ?>" method="post">
     <div id="edit_title_container"><h3 id="title"><?= htmlspecialchars_decode($post->title()) ?></h3></div>
     <?php if ($post->datePublication()) {?><p class="date_display"><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></p><?php } ?>
     <?php if ($post->dateUpdate()) {?><p class="date_display"><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>

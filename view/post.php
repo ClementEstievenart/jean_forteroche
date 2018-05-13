@@ -12,11 +12,11 @@ ob_start();
 </article>
 
 <nav id="pages">
-    <a <?php if ($postPrevId) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($postPrevId) ?>&amp;page=1"<?php }?> class="button"> ◄ Chapitre précédent</a>
-    <a <?php if ($postNextId) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($postNextId) ?>&amp;page=1"<?php }?> class="button"> Chapitre suivant ►</a>
+    <a <?php if ($postPrevId) {?>href="Chapitre-<?= htmlspecialchars($postPrevId) ?>/1"<?php }?> class="button"> ◄ Chapitre précédent</a>
+    <a <?php if ($postNextId) {?>href="Chapitre-<?= htmlspecialchars($postNextId) ?>/1"<?php }?> class="button"> Chapitre suivant ►</a>
 </nav>
 
-<form action="index.php?action=addComment&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=<?= htmlspecialchars($page) ?>" method="post">
+<form action="Ajouter-un-commentaire-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page) ?>" method="post">
     <h3>Ajouter un commentaire :</h3>
     <div><input id="lastName" name="lastName" type="text" required placeholder="Votre nom">
     <input id="firstName" name="firstName" type="text" required placeholder="Votre prénom"></div>
@@ -33,7 +33,7 @@ ob_start();
             <h5><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?></h5>
             <div class="post_description">
                 <div><em>a commenté le <?= htmlspecialchars($comment->datePublication()) ?></em></div>
-                <div class="report_link"><a href="index.php?action=report&amp;commentId=<?= htmlspecialchars($comment->id()) ?>&amp;page=<?= htmlspecialchars($page) ?>">Signaler ce commentaire !</a></div>
+                <div class="report_link"><a href="Signaler-un-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= htmlspecialchars($page) ?>">Signaler ce commentaire !</a></div>
             </div>
             <p><?= htmlspecialchars($comment->content()) ?></p>
         </div>
@@ -43,8 +43,8 @@ ob_start();
     <?php
     if ($post->nbComments() > 10) {?>
         <nav id="pages">
-            <a <?php if ($page !== 1) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"> ◄ Précédent </a>
-            <a <?php if ($page * 10 < $post->nbComments()) {?>href="index.php?action=getPost&amp;postId=<?= htmlspecialchars($post->id()) ?>&amp;page=<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button"> Suivant ►</a>
+            <a <?php if ($page !== 1) {?>href="Chapitre-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"> ◄ Précédent </a>
+            <a <?php if ($page * 10 < $post->nbComments()) {?>href="Chapitre-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button"> Suivant ►</a>
         </nav>
     <?php }?>
 </div>

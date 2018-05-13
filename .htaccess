@@ -1,0 +1,59 @@
+Options +FollowSymlinks
+
+RewriteEngine on
+RewriteBase /projet_4/
+
+# home :
+RewriteRule ^Accueil$ index.php [L]
+
+# posts view :
+RewriteRule ^Chapitres/([0-9]+)$ index.php?action=listPosts&page=$1 [L]
+
+# post view :
+RewriteRule ^Chapitre-([0-9]+)/([0-9]+)$   index.php?action=getPost&postId=$1&page=$2 [L]
+
+# add comment :
+RewriteRule ^Ajouter-un-commentaire-([0-9]+)/([0-9]+)$ index.php?action=addComment&postId=$1&page=$2 [L]
+
+# report comment :
+RewriteRule ^Signaler-un-commentaire-([0-9]+)/([0-9]+)$ index.php?action=report&commentId=$1&page=$2 [L]
+
+# login view :
+RewriteRule ^Login$ index.php?action=login [L]
+
+# connection :
+RewriteRule ^Connexion$ index.php?action=connection [L]
+
+### Backend ###
+#disconnection
+RewriteRule ^Deconnexion$ index.php?action=disconnection [L]
+
+# write new post view
+RewriteRule ^Nouveau-chapitre$ index.php?action=writeNewPost [L]
+
+# add post
+RewriteRule ^Ajouter-chapitre$ index.php?action=addPost [L]
+
+# list posts title view
+RewriteRule ^Titre-des-chapitres/([0-9]+)$ index.php?action=listPostsTitle&page=$1 [L]
+
+# edit post view
+RewriteRule ^Editer-un-chapitre-([0-9]+)$ index.php?action=editPost&postId=$1 [L]
+
+# update post
+RewriteRule ^Enregister-le-chapitre-([0-9]+)$ index.php?action=updatePost&postId=$1 [L]
+
+# delete post
+RewriteRule ^Supprimer-le-chapitre-([0-9]+)$ index.php?action=deletePost&postId=$1 [L]
+
+# list comments for moderate
+RewriteRule ^Liste-des-commentaires/([0-9]+)$ index.php?action=listCommentsReport&page=$1 [L]
+
+# Find page of the current comment
+RewriteRule ^Voir-le-context-([0-9]+)$ index.php?action=findPageOfComment&commentId=$1 [L]
+
+# delete comment
+RewriteRule ^Supprime-le-commentaire-([0-9]+)/([0-9]+)$ index.php?action=deleteComment&commentId=$1&page=$2 [L]
+
+#valide comment
+RewriteRule ^Valider-le-commentaire-([0-9]+)/([0-9]+)$ index.php?action=validComment&commentId=$1&page=$2 [L]

@@ -62,7 +62,7 @@ class Frontend {
         if ($user) {
             if (password_verify($password, $user->password())) {
                 $_SESSION['login'] = $login;
-                header('location: index.php?action=home');
+                header('location: http://localhost/projet_4/Accueil');
             } else {
                 require($this->_path . '/view/login.php');
             }
@@ -72,6 +72,9 @@ class Frontend {
     }
 
     public function addComment($postId, $page, $lastName, $firstName, $content) {
+        $postId = (int) $postId;
+        $page = (int) $page;
+
         $data = array(
             'lastName' => $lastName,
             'firstName' => $firstName,
@@ -88,10 +91,13 @@ class Frontend {
         $post->setNbComments($post->nbComments() + 1);
         $postsManager->updateWithSameDateUpdate($post);
 
-        header('location: index.php?action=getPost&postId=' . $postId . '&page=' . $page);
+        header('location: http://localhost/projet_4/Chapitre-' . $postId . '/' . $page);
     }
 
     public function reportComment($commentId, $page) {
+        $commentId = (int) $commentId;
+        $page = (int) $page;
+
         $commentsManager = new CommentsManager($this->_db);
         $comment = $commentsManager->get($commentId);
 
@@ -103,7 +109,7 @@ class Frontend {
         }
         $commentsManager->update($comment);
 
-        header('location: index.php?action=getPost&postId=' . $comment->idPost() . '&page=' . $page . '#commentId' . $commentId);
+        header('location: http://localhost/projet_4/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId, false);
     }
 
     public function listPostTitles() {

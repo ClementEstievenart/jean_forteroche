@@ -56,7 +56,6 @@ class CommentsManager {
 
     public function getAllCommentsByPostId($postId) {
         $comments = [];
-        $start = ($page - 1) * 10;
         $req = $this->_db->prepare('
             SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
             FROM comments
