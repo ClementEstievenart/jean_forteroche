@@ -7,6 +7,7 @@ body {
     font-family: 'PT Sans', sans-serif;
     background: no-repeat center url(../images/mountains-1622731_1920.jpg) fixed;
     background-size: cover;
+    cursor: default;
 }
 
 header {
@@ -105,8 +106,10 @@ a.button:not(:any-link) {
 	height: 0px;
     opacity: 0;
     transition: 0.4s;
-    overflow: hidden;
     padding-left: 0px;
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #head_menu li:hover ol.sublist {
@@ -115,13 +118,11 @@ a.button:not(:any-link) {
 }
 
 #head_menu ol.sublist li {
-	list-style: upper-roman inside;
-    width: 160px;
-    margin: 0px auto;
+    margin: 0px;
 }
 
-#head_menu ol.sublist li a {
-    margin: 0px;
+#head_menu ol.sublist a {
+    margin: 0px auto;
 }
 
 #head_menu li a[href="Chapitres/1"]::after {
@@ -172,8 +173,17 @@ a.button:not(:any-link) {
 #include p {
     font-size: 1.8rem;
     text-align: justify;
-    text-indent: 25px;
+}
+
+#include .post_content p {
     font-family: 'PT Serif', serif;
+}
+
+#include .extract {
+    max-height: 190px;
+    overflow: hidden;
+    background: text linear-gradient(to bottom, black, black 50%, transparent 100%);
+    color: transparent;
 }
 
 #include .date_display {
@@ -265,6 +275,10 @@ a.button:not(:any-link) {
 #include h3#title {
 	transition: 0.2s;
     outline: none;
+    background-color: white;
+    border: 1px solid #c5c5c5;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    cursor: text;
 }
 
 #include h3#title:hover {
@@ -280,20 +294,45 @@ a.button:not(:any-link) {
     color: black;
 }
 
-#include h3.list_post_title {
-	margin: 0px 0px;
-    padding: 0px;
+#include h3.list_post_title a {
+	text-decoration: none;
+    color: inherit;
 }
 
-#include h3.list_post_title.no_publish a, #include .delete_comment {
+#include h3.list_post_title{
+    margin: 0px auto;
+    color: #9abed9;
+}
+
+#include h3.list_post_title.no_publish {
+    color: #d99a9a;
+}
+
+#include h3.list_post_title.no_publish:hover {
+    color: #c48484;
+}
+
+#include h3.list_post_title.no_publish:active {
+    color: #ad7878;
+}
+
+#include h3.list_post_title.publish:hover {
+    color: #84a9c4;
+}
+
+#include h3.list_post_title.publish:active {
+    color: #7897ad;
+}
+
+#include .delete_comment {
    background-color: #d99a9a;
 }
 
-#include h3.list_post_title.no_publish a:hover, #include .delete_comment:hover {
+#include .delete_comment:hover {
    background-color: #c48484;
 }
 
-#include h3.list_post_title.no_publish a:active, #include .delete_comment:active {
+#include .delete_comment:active {
    background-color: #ad7878;
 }
 

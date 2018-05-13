@@ -6,7 +6,7 @@ ob_start();
 ?>
 <article>
     <h2><?= htmlspecialchars_decode($post->title()) ?></h2>
-    <p><?= htmlspecialchars_decode($post->content()) ?></p>
+    <div class="post_content"><?= htmlspecialchars_decode($post->content()) ?></div>
     <p class="date_display"><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></p>
     <?php if ($post->dateUpdate()) {?><p class="date_display"><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
 </article>

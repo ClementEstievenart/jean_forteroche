@@ -4,7 +4,7 @@
     <li><a href="Chapitres/1" class="button">Chapitres</a>
         <ol class="sublist">
             <?php foreach ($postTitles as $postTitle) {?>
-                <a href="Chapitre-<?= htmlspecialchars($postTitle->id()) ?>/1"><li class="button"><?= htmlspecialchars_decode($postTitle->title()) ?></li></a>
+                <li><a href="Chapitre-<?= htmlspecialchars($postTitle->id()) ?>/1" class="button"><?= htmlspecialchars_decode($postTitle->title()) ?></a></li>
             <?php }?>
         </ol>
     </li>

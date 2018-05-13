@@ -7,7 +7,7 @@ ob_start();
 <h2>Sélectionner le chapitre à éditer :</h2>
 <?php
 foreach ($posts as $post) {?>
-    <h3 class="list_post_title <?php if ($post->datepublication()) {?>publish<?php } else {?>no_publish<?php }?>"><a href="Editer-un-chapitre-<?= htmlspecialchars($post->id()) ?>"><?= htmlspecialchars_decode($post->title()) ?></a> <em><?php if ($post->datePublication()) {?>Publié le <?php echo($post->datePublication()); }?></em></h3>
+    <h3 class="list_post_title <?php if ($post->datepublication()) {?>publish<?php } else {?>no_publish<?php }?>"><a href="Editer-un-chapitre-<?= htmlspecialchars($post->id()) ?>"><?= htmlspecialchars_decode($post->title()) ?></a> <em><?php if ($post->datePublication()) {?>Publié le <?php echo($post->datePublication()); } else { echo('Non publié'); }?></em></h3>
 <?php }?>
 <div>
     <?php

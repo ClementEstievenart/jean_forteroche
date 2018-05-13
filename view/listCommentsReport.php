@@ -18,8 +18,8 @@ ob_start();
                 }
             ?></p>
             <div>
-                <a href="Supprime-le-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= $page ?>" class="delete_comment button">Supprimer le commentaire</a>
-                <a href="Valider-le-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= $page ?>" class="button">Valider le commentaire</a>
+                <a href="Supprime-le-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= $page ?>" class="delete_comment button">Supprimer</a>
+                <a href="Valider-le-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= $page ?>" class="button">Valider</a>
             </div>
         </div>
     </div>
