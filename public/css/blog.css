@@ -27,6 +27,15 @@ header {
     min-width: 450px;
     font-family: 'Share Tech Mono', 'Terminal', monospace;
     transform: rotate(-10deg);
+    transition: 0.5s;
+    z-index: 2;
+}
+
+#header_title.top_menu {
+    position: fixed;
+    top: -100px;
+    right: -125px;
+    transform: rotate(-10deg) scale(0.35);
 }
 
 #header_title h1 {
@@ -70,7 +79,7 @@ a.button:not(:any-link) {
 #head_menu {
     margin-left: 20px;
     position: sticky;
-    top: 20px;
+    top: 105px;
     height: 330px;
 }
 
@@ -81,12 +90,15 @@ a.button:not(:any-link) {
 
 #head_menu li {
     list-style: none;
+    margin: 5px 0px;
+    position: relative;
 }
 
 #head_menu li a {
     width: 160px;
     text-decoration: none;
     color: white;
+    margin: 0px 0px;
 }
 
 #head_menu ol.sublist {
@@ -94,7 +106,7 @@ a.button:not(:any-link) {
     opacity: 0;
     transition: 0.4s;
     overflow: hidden;
-    padding-left: 15px;
+    padding-left: 0px;
 }
 
 #head_menu li:hover ol.sublist {
@@ -104,10 +116,20 @@ a.button:not(:any-link) {
 
 #head_menu ol.sublist li {
 	list-style: upper-roman inside;
+    width: 160px;
+    margin: 0px auto;
 }
 
 #head_menu ol.sublist li a {
     margin: 0px;
+}
+
+#head_menu li a[href="Chapitres/1"]::after {
+	display: block;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    content: '▼';
 }
 
 #container {

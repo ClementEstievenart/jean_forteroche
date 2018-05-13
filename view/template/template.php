@@ -24,6 +24,7 @@
         </div>
 
         <?php require('footer.php'); ?>
-    </body>
 
+        <script src="public/js/blog.js"></script>
+    </body>
 </html>
