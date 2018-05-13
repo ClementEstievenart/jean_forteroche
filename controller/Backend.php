@@ -2,21 +2,25 @@
 class Backend {
     private $_db;
     private $_path;
+    private $_url;
     private $_login;
 
-    public function __construct() {
-        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    public function __construct(array $config) {
+        $this->_path = $config['locator']['path'];
+        $this->_url = $config['locator']['url'];
+        $dbConfig = $config['db'];
+
+        $this->_db = new PDO('mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'] . ';charset=utf8', $dbConfig['login'], $dbConfig['password'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         if (!isset($_SESSION['login'])) {
-            header('location: http://localhost/projet_4/Accueil');
+            header('location: ' . $this->_url . '/Accueil');
         }
         $usersManager = new UsersManager($this->_db);
         if(!$usersManager->getByLogin($_SESSION['login'])) {
-            header('location: http://localhost/projet_4/Accueil');
+            header('location: ' . $this->_url . '/Accueil');
         }
 
         $this->_login = $_SESSION['login'];
-        $this->_path = realpath('.');
     }
 
     public function writeNewPost() {
@@ -43,7 +47,7 @@ class Backend {
             $postsManager->publish($post);
         }
 
-        header('location: http://localhost/projet_4/Titre-des-chapitres/1');
+        header('location: ' . $this->_url . '/Titre-des-chapitres/1');
     }
 
     public function listPostsTitle($page) {
@@ -87,7 +91,7 @@ class Backend {
 
         $postsManager->delete($post);
 
-        header('location: http://localhost/projet_4/Titre-des-chapitres/1');
+        header('location: ' . $this->_url . '/Titre-des-chapitres/1');
     }
 
     public function updatePost($postId, $title, $content, $published) {
@@ -116,7 +120,7 @@ class Backend {
             $postsManager->unPublish($post);
         }
 
-        header('location: http://localhost/projet_4/Titre-des-chapitres/1');
+        header('location: ' . $this->_url . '/Titre-des-chapitres/1');
     }
 
     public function listCommentsReport($page) {
@@ -143,7 +147,7 @@ class Backend {
 
         $page = (int) floor($positionComment / 10) + 1;
 
-        header('location: http://localhost/projet_4/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId);
+        header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId);
     }
 
     public function deleteComment($commentId, $page) {
@@ -159,7 +163,7 @@ class Backend {
         $postsManager->updateWithSameDateUpdate($post);
         $commentsManager->delete($comment);
 
-        header('location: http://localhost/projet_4/Liste-des-commentaires/' . $page);
+        header('location: ' . $this->_url . '/Liste-des-commentaires/' . $page);
     }
 
     public function validComment($commentId, $page) {
@@ -170,13 +174,13 @@ class Backend {
         $comment->setReportStatut(Comment::COMMENT_VALIDATED);
         $commentsManager->update($comment);
 
-        header('location: http://localhost/projet_4/Liste-des-commentaires/' . $page);
+        header('location: ' . $this->_url . '/Liste-des-commentaires/' . $page);
     }
 
     public function disconnection() {
         session_destroy();
 
-        header('location: http://localhost/projet_4/Accueil');
+        header('location: ' . $this->_url . '/Accueil');
     }
 
     public function listPostTitles() {

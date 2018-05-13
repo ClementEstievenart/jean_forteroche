@@ -1,7 +1,9 @@
 <?php
 try {
     session_start();
-    $path = realpath('.');
+
+    $config = parse_ini_file('config.ini', true);
+    $path = $config['locator']['path'];
 
     require($path . '/controller/Frontend.php');
     require($path . '/controller/Backend.php');
@@ -21,7 +23,7 @@ try {
 
     for ($i = 0; $i<= 1; $i++) {
         if (!isset($getVar['action'])) {
-            $controler = new Frontend();
+            $controler = new Frontend($config);
             $controler->homePage();
             break;
         }
@@ -29,9 +31,9 @@ try {
         foreach ($routerConfig[$controlerList[$i]] as $action => $actionParameters) {
             if($getVar['action'] === $action) {
                 if ($i === 0) {
-                    $controler = new Frontend();
+                    $controler = new Frontend($config);
                 } else {
-                    $controler = new Backend();
+                    $controler = new Backend($config);
                 }
 
                 $parameters = [];

@@ -2,10 +2,14 @@
 class Frontend {
     private $_db;
     private $_path;
+    private $_url;
 
-    public function __construct() {
-        $this->_db = new PDO('mysql:host=localhost;dbname=jean_forteroche;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        $this->_path = realpath('.');
+    public function __construct(array $config) {
+        $this->_path = $config['locator']['path'];
+        $this->_url = $config['locator']['url'];
+        $dbConfig = $config['db'];
+
+        $this->_db = new PDO('mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'] . ';charset=utf8', $dbConfig['login'], $dbConfig['password'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
 
     public function homePage() {
@@ -62,7 +66,7 @@ class Frontend {
         if ($user) {
             if (password_verify($password, $user->password())) {
                 $_SESSION['login'] = $login;
-                header('location: http://localhost/projet_4/Accueil');
+                header('location: ' . $this->_url . '/Accueil');
             } else {
                 require($this->_path . '/view/login.php');
             }
@@ -91,7 +95,7 @@ class Frontend {
         $post->setNbComments($post->nbComments() + 1);
         $postsManager->updateWithSameDateUpdate($post);
 
-        header('location: http://localhost/projet_4/Chapitre-' . $postId . '/' . $page);
+        header('location: ' . $this->_url . '/Chapitre-' . $postId . '/' . $page);
     }
 
     public function reportComment($commentId, $page) {
@@ -109,7 +113,7 @@ class Frontend {
         }
         $commentsManager->update($comment);
 
-        header('location: http://localhost/projet_4/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId, false);
+        header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId, false);
     }
 
     public function listPostTitles() {
