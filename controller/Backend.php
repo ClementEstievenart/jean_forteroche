@@ -45,7 +45,8 @@ class Backend {
             'content' => $content
         );
         $postsManager = new PostsManager($this->_db);
-        $postsManager->add(new Post($data));
+        $post = new Post($data);
+        $postsManager->add($post);
 
         if ($published) {
             $postsManager->publish($post);

@@ -17,6 +17,7 @@ ob_start();
     tinymce.init({
         selector: '#content',
         plugins: "textcolor colorpicker lists image imagetools media link paste help autolink preview searchreplace wordcount visualchars autoresize autosave contextmenu fullscreen nonbreaking save spellchecker",
+        content_css: ['/projet_4/public/css/editor.css'],
         menu: {
             file: {title: 'File', items: 'restoredraft | preview'},
             edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall searchreplace'},
@@ -40,20 +41,23 @@ ob_start();
         spellchecker_rpc_url: 'spellchecker.php',
         spellchecker_language: 'fr_FR',
         spellchecker_languages: 'French=fr_FR',
+        //custom_format: { block : '*', style: { fontFamily: 'PT Serif' }}
+
     });
+
 </script>
 <?php
 $tinyMCE = ob_get_clean();
 
 ob_start();
 ?>
-<h2>Éditer le chapitre</h2>
+<h2 class="page_content">Éditer le chapitre</h2>
 <form id="editForm" action="Enregister-le-chapitre-<?= htmlspecialchars($post->id()) ?>" method="post">
-    <div id="edit_title_container"><h3 id="title"><?= htmlspecialchars_decode($post->title()) ?></h3></div>
+    <div id="edit_title_container"><h3 id="title" class="page_content"><?= htmlspecialchars_decode($post->title()) ?></h3></div>
     <?php if ($post->datePublication()) {?><p class="date_display"><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></p><?php } ?>
     <?php if ($post->dateUpdate()) {?><p class="date_display"><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
     <div style="display: none"><input id="published" name="published" value="<?php if ($post->datePublication()) { echo '1'; } else { echo '0'; } ?>"></div>
-    <div><textarea id="content" name="content" required><?= htmlspecialchars_decode($post->content()) ?></textarea></div>
+    <div class="post_content"><textarea id="content" name="content" required><?= htmlspecialchars_decode($post->content()) ?></textarea></div>
 </form>
 <?php
 $content = ob_get_clean();

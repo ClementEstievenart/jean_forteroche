@@ -5,7 +5,7 @@ $tinyMCE = null;
 ob_start();
 ?>
 <article>
-    <h2><?= htmlspecialchars_decode($post->title()) ?></h2>
+    <h2 class="page_content"><?= htmlspecialchars_decode($post->title()) ?></h2>
     <div class="post_content"><?= htmlspecialchars_decode($post->content()) ?></div>
     <p class="date_display"><em>Publié le <?= htmlspecialchars($post->datePublication()) ?> par <?= htmlspecialchars($user->login()) ?></em></p>
     <?php if ($post->dateUpdate()) {?><p class="date_display"><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
@@ -17,24 +17,24 @@ ob_start();
 </nav>
 
 <form action="Ajouter-un-commentaire-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page) ?>" method="post">
-    <h3>Ajouter un commentaire :</h3>
+    <h3 class="page_content">Ajouter un commentaire :</h3>
     <div><input id="pseudo" name="pseudo" type="text" required placeholder="Votre pseudo" maxlength="16"></div>
     <div><textarea id="content" name="content" required placeholder="Rédigez votre commentaire"></textarea></div>
     <div><input id="send" type="submit" value="Envoyer"></div>
 </form>
 
-<h3><?= htmlspecialchars($post->nbComments()) ?> commentaires :</h3>
+<h3 class="page_content"><?= htmlspecialchars($post->nbComments()) ?> commentaires :</h3>
 <div class="comments">
     <?php
     foreach($comments as $comment) {
     ?>
        <div id="commentId<?= htmlspecialchars($comment->id()) ?>">
-            <h5><?= htmlspecialchars($comment->pseudo()) ?></h5>
+            <h5 class="page_content"><?= htmlspecialchars($comment->pseudo()) ?></h5>
             <div class="post_description">
                 <div><em>a commenté le <?= htmlspecialchars($comment->datePublication()) ?></em></div>
                 <div class="report_link"><a href="Signaler-un-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= htmlspecialchars($page) ?>">Signaler ce commentaire !</a></div>
             </div>
-            <p><?= htmlspecialchars($comment->content()) ?></p>
+            <p class="page_content"><?= htmlspecialchars($comment->content()) ?></p>
         </div>
     <?php }?>
 </div>

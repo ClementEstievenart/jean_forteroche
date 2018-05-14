@@ -1,5 +1,5 @@
 <?php
-$title = 'Nouvel épisode';
+$title = 'Nouveau chapitre';
 
 ob_start();
 ?>
@@ -47,7 +47,7 @@ $tinyMCE = ob_get_clean();
 
 ob_start();
 ?>
-<h2>Rédiger un nouveau chapitre</h2>
+<h2 class="page_content">Rédiger un nouveau chapitre</h2>
 <form id="newPostForm" action="Ajouter-chapitre" method="post" name="newPost">
     <div id="edit_title_container"><h3 id="title">Editer le titre</h3></div>
     <div style="display: none"><input id="published" name="published"></div>

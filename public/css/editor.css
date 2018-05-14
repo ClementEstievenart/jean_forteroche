@@ -1,0 +1,38 @@
+body {
+    font-family: 'PT Serif', serif;
+}
+
+h1 {
+    font-size: 28px;
+    margin: 18px 0px;
+}
+
+h2 {
+    font-size: 25px;
+    margin: 18px 0px;
+}
+
+h3 {
+    font-size: 23px;
+    margin: 18px 0px;
+}
+
+h4 {
+    font-size: 20px;
+    margin: 18px 0px;
+}
+
+h5 {
+    font-size: 18px;
+    margin: 16px 0px;
+}
+
+h6 {
+    font-size: 14px;
+    margin: 12px 0px;
+}
+
+p {
+    font-size: 16px;
+    margin: 16px 0px;
+}
