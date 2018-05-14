@@ -4,6 +4,7 @@ class Backend {
     private $_path;
     private $_url;
     private $_login;
+    private $_lastComments;
 
     public function __construct(array $config) {
         $this->_path = $config['locator']['path'];
@@ -21,6 +22,9 @@ class Backend {
         }
 
         $this->_login = $_SESSION['login'];
+
+        $commentsManager = new CommentsManager($this->_db);
+        $this->_lastComments = $commentsManager->getLast();
     }
 
     public function writeNewPost() {

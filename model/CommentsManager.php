@@ -54,6 +54,21 @@ class CommentsManager {
         return $comments;
     }
 
+    public function getLast() {
+        $comments = [];
+        $req = $this->_db->query('
+            SELECT id, last_name as lastName, first_name as firstName, content
+            FROM comments
+            ORDER BY date_publication DESC
+            LIMIT 10');
+        while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
+            $comments[] = new Comment($data);
+        }
+        $req->closeCursor();
+
+        return $comments;
+    }
+
     public function getAllCommentsByPostId($postId) {
         $comments = [];
         $req = $this->_db->prepare('

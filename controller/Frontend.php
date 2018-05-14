@@ -3,6 +3,7 @@ class Frontend {
     private $_db;
     private $_path;
     private $_url;
+    private $_lastComments;
 
     public function __construct(array $config) {
         $this->_path = $config['locator']['path'];
@@ -10,6 +11,9 @@ class Frontend {
         $dbConfig = $config['db'];
 
         $this->_db = new PDO('mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'] . ';charset=utf8', $dbConfig['login'], $dbConfig['password'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+        $commentsManager = new CommentsManager($this->_db);
+        $this->_lastComments = $commentsManager->getLast();
     }
 
     public function homePage() {

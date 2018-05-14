@@ -8,6 +8,7 @@ body {
     background: no-repeat center url(../images/mountains-1622731_1920.jpg) fixed;
     background-size: cover;
     cursor: default;
+    overflow-x: hidden;
 }
 
 header {
@@ -17,34 +18,46 @@ header {
     height: 290px;
 }
 
-#header_title {
+.site_title {
     text-align: center;
     background: no-repeat center url(../images/billet.png) ;
     background-size: 550px 300px;
-    border-radius: 10px;
     padding: 50px;
     height: 200px;
     width: 450px;
     min-width: 450px;
     font-family: 'Share Tech Mono', 'Terminal', monospace;
     transform: rotate(-10deg);
-    transition: 0.5s;
+    transition: 0.25s;
+    transition-delay: 0.25s;
     z-index: 2;
 }
 
-#header_title.top_menu {
-    position: fixed;
-    top: -100px;
-    right: -125px;
-    transform: rotate(-10deg) scale(0.35);
+.site_title.top_menu {
+    position: absolute;
+    top: -235px;
+    transform: rotate(-10deg) scale(0.35) translateX(-430px);
 }
 
-#header_title h1 {
+.site_title.no_display{
+	opacity: 0;
+    transition-delay: 0s;
+}
+
+.site_title.top_menu.no_display {
+    transform: rotate(-10deg) scale(0.35) translateX(-330px);
+}
+
+.site_title.header.no_display {
+	transform: rotate(-10deg) translateY(-100px);
+}
+
+.site_title h1 {
 	font-size: 5rem;
     margin-top: 10px;
 }
 
-#header_title p {
+.site_title p {
 	font-size: 3rem;
     margin: 0px;
 }
@@ -81,7 +94,7 @@ a.button:not(:any-link) {
     margin-left: 20px;
     position: sticky;
     top: 105px;
-    height: 330px;
+    height: 523px;
 }
 
 #head_menu ul {
@@ -91,18 +104,19 @@ a.button:not(:any-link) {
 
 #head_menu li {
     list-style: none;
-    margin: 5px 0px;
+    margin: 0px 0px 5px 0px;
     position: relative;
+    width: 250px;
 }
 
 #head_menu li a {
-    width: 160px;
+    width: 220px;
     text-decoration: none;
     color: white;
     margin: 0px 0px;
 }
 
-#head_menu ol.sublist {
+#head_menu .sublist {
 	height: 0px;
     opacity: 0;
     transition: 0.4s;
@@ -112,25 +126,70 @@ a.button:not(:any-link) {
     overflow-x: hidden;
 }
 
-#head_menu li:hover ol.sublist {
+#head_menu input, #head_menu input.connection {
+    display: block;
+    width: 218px;
+    height: 27px;
+    padding: 5px 15px;
+    margin: 0px;
+    font-size: 2rem;
+}
+
+#head_menu input.connection {
+    width: 250px;
+    height: 37px;
+    cursor: pointer;
+}
+
+#head_menu li:hover .sublist, #head_menu .sublist.active {
     opacity: 1;
 	height: auto;
 }
 
-#head_menu ol.sublist li {
+#head_menu .sublist li {
     margin: 0px;
 }
 
-#head_menu ol.sublist a {
+#head_menu .sublist a {
     margin: 0px auto;
 }
 
-#head_menu li a[href="Chapitres/1"]::after {
+#head_menu li a.sublist_menu::after {
 	display: block;
     position: absolute;
     top: 5px;
     right: 15px;
     content: '▼';
+}
+
+#head_menu .nav_frame {
+	background: rgba(255, 255, 255, 0.6);
+    border: 4px solid #9abed9;
+    padding: 1px 11px;
+    height: 186px;
+}
+
+#head_menu .nav_frame h1 {
+    font-size: 2rem;
+    margin: 0px;
+    height: 27px;
+}
+
+#head_menu .nav_frame p {
+    text-align: justify;
+    font-size: 1.3rem;
+    margin: 5px 0px;
+}
+
+#head_menu .nav_frame a {
+    color: black;
+    text-decoration: underline;
+}
+
+#head_menu div.last_comments {
+    height: 159px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #container {
@@ -173,6 +232,7 @@ a.button:not(:any-link) {
 #include p {
     font-size: 1.8rem;
     text-align: justify;
+    margin: 0px;
 }
 
 #include .post_content p {
@@ -180,9 +240,11 @@ a.button:not(:any-link) {
 }
 
 #include .extract {
-    max-height: 190px;
+    max-height: 180px;
     overflow: hidden;
-    background: text linear-gradient(to bottom, black, black 50%, transparent 100%);
+    background: linear-gradient(to bottom, black, black 50%, transparent 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
     color: transparent;
 }
 
@@ -191,7 +253,7 @@ a.button:not(:any-link) {
     margin: 0px;
 }
 
-#include input[type='text'], #include input[type='password'], #include textarea {
+input[type='text'], input[type='password'], textarea {
 	font-size: 1.8rem;
     font-family: 'PT Sans', sans-serif;
     margin: 5px 5px;
@@ -200,22 +262,22 @@ a.button:not(:any-link) {
     border: 1px solid grey;
 }
 
-#include input[type='text'], #include input[type='password'] {
+input[type='text'], input[type='password'] {
 	width: 183px;
 }
 
-#include textarea {
+textarea {
     width: -moz-available;
     width: -webkit-fill-available;
     min-width: 400px;
     height: 100px;
 }
 
-#include input[type='text']:hover, #include input[type='password']:hover, #include textarea:hover {
+input[type='text']:hover, input[type='password']:hover, #include textarea:hover {
     border-color: #9abed9;
 }
 
-#include input[type='text']:focus, #include input[type='password']:focus, #include textarea:focus {
+input[type='text']:focus, input[type='password']:focus, #include textarea:focus {
     border-color: #84a9c4;
 }
 
@@ -254,8 +316,13 @@ a.button:not(:any-link) {
     border: 1px solid #bababa;
 }
 
+@keyframes commentTarget {
+    from { background-color: #bababa; }
+    to { background-color: transparent; }
+}
+
 #include .comments div:target p {
-    background-color: #bababa;
+    animation: 0.5s linear 2s backwards commentTarget;
 }
 
 #include nav#pages {
