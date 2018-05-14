@@ -20,13 +20,13 @@
     <?php } else {?>
         <li><a href="Login" class="button sublist_menu">Connexion</a>
             <form action="Connexion" method="post">
-                <ul class="sublist login">
+                <ul class="sublist login<?php if (!empty($_POST['login'])) {?> active<?php }?>">
                     <li><input id="login" name="login" type="text" required placeholder="Identifiant"></li>
                     <li><input id="password" name="password" type="password" required placeholder="Mot de passe"></li>
-                    <?php if (!empty($_POST['login'])) {?>
-                        <p id="connection_fail">Erreur de connexion : identifiant ou mot de passe invalide !</p>
-                    <?php }?>
                     <li><input class="connection" type="submit" value="Se connecter"></li>
+                    <?php if (!empty($_POST['login'])) {?>
+                        <p id="connection_fail">Erreur de connexion :<br>identifiants invalides !</p>
+                    <?php }?>
                 </ul>
             </form>
         </li>

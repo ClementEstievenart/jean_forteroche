@@ -72,10 +72,10 @@ class Frontend {
                 $_SESSION['login'] = $login;
                 header('location: ' . $this->_url . '/Accueil');
             } else {
-                require($this->_path . '/view/login.php');
+                require($this->_path . '/view/home.php');
             }
         } else {
-            require($this->_path . '/view/login.php');
+            require($this->_path . '/view/home.php');
         }
     }
 

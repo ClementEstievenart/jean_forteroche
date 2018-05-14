@@ -192,6 +192,16 @@ a.button:not(:any-link) {
     overflow-x: hidden;
 }
 
+#connection_fail {
+    padding: 5px 15px;
+    text-align: center;
+    font-size: 16px;
+    bottom: 0;
+    background: #ad7878;
+	color : white;
+    margin: 0px;
+}
+
 #container {
     display: flex;
     margin: 30px 50px;
@@ -214,6 +224,10 @@ a.button:not(:any-link) {
     color: #84a9c4;
     border-top: 1px solid;
     padding: 10px;
+}
+
+#include p.page_content {
+    font-size: 1.6rem;
 }
 
 #include .img_container {
@@ -358,10 +372,6 @@ input[type='text']:focus, input[type='password']:focus, #include textarea:focus 
 
 #include nav#pages {
     text-align: center;
-}
-
-#include p#connection_fail {
-	color : red;
 }
 
 #include #edit_title_container {

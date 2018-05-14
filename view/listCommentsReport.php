@@ -10,7 +10,7 @@ ob_start();
         <h5 class="page_content report_title"><?= htmlspecialchars($comment->pseudo()) ?> a commenté le <?= htmlspecialchars($comment->datePublication()) ?> le chapitre <?= htmlspecialchars_decode($postsManager->get($comment->idPost())->title()) ?></h5>
         <div class="comments list_report"><a href="Voir-le-context-<?= htmlspecialchars($comment->id()) ?>"><?= htmlspecialchars($comment->content()) ?></a></div>
         <div class="report_button">
-            <p class="report_statut">Statut : <?php
+            <p class="report_statut page_content">Statut : <?php
                 if (!$comment->reportStatut()) {
                     echo 'Non signalé';
                 } else {

@@ -52,7 +52,6 @@ class UsersManager {
         } else {
             return false;
         }
-
     }
 
     public function update(User $user) {
@@ -66,9 +65,5 @@ class UsersManager {
 
     public function setDb(PDO $db) {
         $this->_db = $db;
-    }
-
-    public function db() {
-        return $this->_db;
     }
 }
