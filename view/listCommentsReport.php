@@ -7,7 +7,7 @@ ob_start();
 <h2>Modérer les commentaires :</h2>
 <?php foreach ($comments as $comment) {?>
     <div>
-        <h5 class="report_title"><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?> a commenté le <?= htmlspecialchars($comment->datePublication()) ?> le chapitre <?= htmlspecialchars_decode($postsManager->get($comment->idPost())->title()) ?></h5>
+        <h5 class="report_title"><?= htmlspecialchars($comment->pseudo()) ?> a commenté le <?= htmlspecialchars($comment->datePublication()) ?> le chapitre <?= htmlspecialchars_decode($postsManager->get($comment->idPost())->title()) ?></h5>
         <div class="comments list_report"><a href="Voir-le-context-<?= htmlspecialchars($comment->id()) ?>"><?= htmlspecialchars($comment->content()) ?></a></div>
         <div class="report_button">
             <p class="report_statut">Statut : <?php

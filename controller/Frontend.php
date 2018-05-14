@@ -79,13 +79,12 @@ class Frontend {
         }
     }
 
-    public function addComment($postId, $page, $lastName, $firstName, $content) {
+    public function addComment($postId, $page, $pseudo, $content) {
         $postId = (int) $postId;
         $page = (int) $page;
 
         $data = array(
-            'lastName' => $lastName,
-            'firstName' => $firstName,
+            'pseudo' => $pseudo,
             'content' => $content,
             'idPost' => $postId
         );
@@ -93,13 +92,14 @@ class Frontend {
         $commentsManager = new CommentsManager($this->_db);
         $postsManager = new PostsManager($this->_db);
 
-        $commentsManager->add(new Comment($data));
+        $comment = new Comment($data);
+        $commentsManager->add($comment);
 
         $post = $postsManager->get($postId);
         $post->setNbComments($post->nbComments() + 1);
         $postsManager->updateWithSameDateUpdate($post);
 
-        header('location: ' . $this->_url . '/Chapitre-' . $postId . '/' . $page);
+        header('location: ' . $this->_url . '/Chapitre-' . $postId . '/' . $page . '#commentId' . $comment->id());
     }
 
     public function reportComment($commentId, $page) {

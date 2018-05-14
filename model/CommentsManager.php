@@ -7,10 +7,9 @@ class CommentsManager {
     }
 
     public function add(Comment $comment) {
-        $req = $this->_db->prepare('INSERT INTO comments (last_name, first_name, content, id_post) VALUES (:lastName, :firstName, :content, :idPost)');
+        $req = $this->_db->prepare('INSERT INTO comments (pseudo, content, id_post) VALUES (:pseudo, :content, :idPost)');
         $req->execute(array(
-            'lastName' => $comment->lastName(),
-            'firstName' => $comment->firstName(),
+            'pseudo' => $comment->pseudo(),
             'content' => $comment->content(),
             'idPost' => $comment->idPost()
         ));
@@ -25,7 +24,7 @@ class CommentsManager {
 
     public function get($id) {
         $req = $this->_db->prepare('
-            SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
+            SELECT id, pseudo, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
             FROM comments
             WHERE id = :id');
         $req->execute(array('id' => $id));
@@ -39,10 +38,10 @@ class CommentsManager {
         $comments = [];
         $start = ($page - 1) * 10;
         $req = $this->_db->prepare('
-            SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
+            SELECT id, pseudo, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
             FROM comments
             WHERE report_statut < 2
-            ORDER BY report_number DESC
+            ORDER BY report_number DESC, date_publication DESC
             LIMIT 10 OFFSET :start');
         $req->bindParam(':start', $start, PDO::PARAM_INT);
         $req->execute();
@@ -57,7 +56,7 @@ class CommentsManager {
     public function getLast() {
         $comments = [];
         $req = $this->_db->query('
-            SELECT id, last_name as lastName, first_name as firstName, content
+            SELECT id, pseudo, content
             FROM comments
             ORDER BY date_publication DESC
             LIMIT 10');
@@ -72,7 +71,7 @@ class CommentsManager {
     public function getAllCommentsByPostId($postId) {
         $comments = [];
         $req = $this->_db->prepare('
-            SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
+            SELECT id, pseudo, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
             FROM comments
             WHERE id_post = :idPost
             ORDER BY date_publication DESC');
@@ -90,7 +89,7 @@ class CommentsManager {
         $comments = [];
         $start = ($page - 1) * 10;
         $req = $this->_db->prepare('
-            SELECT id, last_name as lastName, first_name as firstName, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
+            SELECT id, pseudo, content, id_post as idPost, DATE_FORMAT(date_publication, "%d/%m/%Y à %Hh%imin%ss") as datePublication, report_number as reportNumber, report_statut as reportStatut
             FROM comments
             WHERE id_post = :idPost
             ORDER BY date_publication DESC
@@ -107,10 +106,9 @@ class CommentsManager {
     }
 
     public function update(Comment $comment) {
-        $req = $this->_db->prepare('UPDATE comments SET last_name = :lastName, first_name = :firstName, content = :content, id_post = :idPost, report_number = :reportNumber, report_statut = :reportStatut WHERE id = :id');
+        $req = $this->_db->prepare('UPDATE comments SET pseudo = :pseudo, content = :content, id_post = :idPost, report_number = :reportNumber, report_statut = :reportStatut WHERE id = :id');
         $req->execute(array(
-            'lastName' => $comment->lastName(),
-            'firstName' => $comment->firstName(),
+            'pseudo' => $comment->pseudo(),
             'content' => $comment->content(),
             'idPost' => $comment->idPost(),
             'reportNumber' => $comment->reportNumber(),

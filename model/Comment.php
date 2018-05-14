@@ -1,8 +1,7 @@
 <?php
 class Comment {
     private $_id;
-    private $_lastName;
-    private $_firstName;
+    private $_pseudo;
     private $_content;
     private $_idPost;
     private $_datePublication;
@@ -30,12 +29,8 @@ class Comment {
         return $this->_id;
     }
 
-    public function lastName() {
-        return $this->_lastName;
-    }
-
-    public function firstNAme() {
-        return $this->_firstName;
+    public function pseudo() {
+        return $this->_pseudo;
     }
 
     public function content() {
@@ -67,19 +62,11 @@ class Comment {
         }
     }
 
-    public function setLastName($lastName) {
-        if (strlen($lastName) < 255) {
-            $this->_lastName = $lastName;
+    public function setPseudo($pseudo) {
+        if (strlen($pseudo) <= 16) {
+            $this->_pseudo = $pseudo;
         } else {
-            throw new exception('setLastName() : $lastName is not a varchar -> ' . $lastName);
-        }
-    }
-
-    public function setFirstName($firstName) {
-        if (strlen($firstName) < 255) {
-            $this->_firstName = $firstName;
-        } else {
-            throw new exception('setFirstName() : $firstName is not a varchar -> ' . $firstName);
+            throw new exception('setPseudo() : $pseudo is not a varchar(16) -> ' . $pseudo);
         }
     }
 

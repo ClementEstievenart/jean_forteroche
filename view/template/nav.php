@@ -18,7 +18,7 @@
         <li><a href="Liste-des-commentaires/1" class="button">Modérer les commentaires</a></li>
         <li><a href="Deconnexion" class="button">Déconnexion</a></li>
     <?php } else {?>
-        <li><a href="Login" class="button sublist_menu">Connexion</a>
+        <li><a href="" class="button sublist_menu">Connexion</a>
             <form action="Connexion" method="post">
                 <ul class="sublist login">
                     <li><input id="login" name="login" type="text" required placeholder="Identifiant"></li>
@@ -39,7 +39,7 @@
         <li><div class="nav_frame">
             <h1>Derniers commentaires :</h1>
             <div class="last_comments">
-                <?php foreach ($this->_lastComments as $comment) {?> <p><a href="Voir-le-context-<?= htmlspecialchars($comment->id()) ?>"><strong><?= $comment->lastName() ?>:</strong> <?= $comment->content()?></a></p> <?php }?>
+                <?php foreach ($this->_lastComments as $comment) {?> <p><a href="Voir-le-context-<?= htmlspecialchars($comment->id()) ?>"><strong><?= $comment->pseudo() ?>:</strong> <?= $comment->content()?></a></p> <?php }?>
             </div>
         </div></li>
     </ul>

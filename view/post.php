@@ -18,8 +18,7 @@ ob_start();
 
 <form action="Ajouter-un-commentaire-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page) ?>" method="post">
     <h3>Ajouter un commentaire :</h3>
-    <div><input id="lastName" name="lastName" type="text" required placeholder="Votre nom">
-    <input id="firstName" name="firstName" type="text" required placeholder="Votre prénom"></div>
+    <div><input id="pseudo" name="pseudo" type="text" required placeholder="Votre pseudo" maxlength="16"></div>
     <div><textarea id="content" name="content" required placeholder="Rédigez votre commentaire"></textarea></div>
     <div><input id="send" type="submit" value="Envoyer"></div>
 </form>
@@ -30,7 +29,7 @@ ob_start();
     foreach($comments as $comment) {
     ?>
        <div id="commentId<?= htmlspecialchars($comment->id()) ?>">
-            <h5><?= htmlspecialchars($comment->lastName()) ?> <?= htmlspecialchars($comment->firstName()) ?></h5>
+            <h5><?= htmlspecialchars($comment->pseudo()) ?></h5>
             <div class="post_description">
                 <div><em>a commenté le <?= htmlspecialchars($comment->datePublication()) ?></em></div>
                 <div class="report_link"><a href="Signaler-un-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= htmlspecialchars($page) ?>">Signaler ce commentaire !</a></div>
