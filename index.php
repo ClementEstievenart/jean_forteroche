@@ -5,6 +5,7 @@ try {
     $config = parse_ini_file('config.ini', true);
     $path = $config['locator']['path'];
 
+    require($path . '/controller/Controller.php');
     require($path . '/controller/Frontend.php');
     require($path . '/controller/Backend.php');
     require($path . '/Helper.php');

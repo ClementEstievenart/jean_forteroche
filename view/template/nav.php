@@ -7,7 +7,7 @@
     <li><a href="Accueil" class="button"><i class="fas fa-home"></i> Accueil</a></li>
     <li><a href="Chapitres/1" class="button sublist_menu"><i class="fas fa-book-open"></i> Chapitres</a>
         <ol class="sublist">
-            <?php foreach ($postTitles as $postTitle) {?>
+            <?php foreach ($this->_listPostTitles as $postTitle) {?>
                 <li><a href="Chapitre-<?= htmlspecialchars($postTitle->id()) ?>/1" class="button"><?= htmlspecialchars_decode($postTitle->title()) ?></a></li>
             <?php }?>
         </ol>

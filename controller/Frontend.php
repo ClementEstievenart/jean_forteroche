@@ -1,36 +1,15 @@
 <?php
-class Frontend {
-    private $_db;
-    private $_path;
-    private $_url;
-    private $_lastComments;
-
-    public function __construct(array $config) {
-        $this->_path = $config['locator']['path'];
-        $this->_url = $config['locator']['url'];
-        $dbConfig = $config['db'];
-
-        $this->_db = new PDO('mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'] . ';charset=utf8', $dbConfig['login'], $dbConfig['password'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-        $commentsManager = new CommentsManager($this->_db);
-        $this->_lastComments = $commentsManager->getLast();
-    }
+class Frontend extends Controller {
 
     public function homePage() {
-        $postTitles = $this->listPostTitles();
-
         require($this->_path . '/view/home.php');
     }
 
     public function getPostsPublished($page) {
         $page = (int) $page;
 
-        $postsManager = new PostsManager($this->_db);
-        $posts = $postsManager->getListPublished($page);
-
-        $nbPosts = $postsManager->nbPostsPublish();
-
-        $postTitles = $this->listPostTitles();
+        $posts = $this->_postsManager->getListPublished($page);
+        $nbPosts = $this->_postsManager->nbPostsPublish();
 
         require($this->_path . '/view/listPosts.php');
     }
@@ -39,33 +18,22 @@ class Frontend {
         $postId = (int) $postId;
         $page = (int) $page;
 
-        $postsManager = new PostsManager($this->_db);
-        $commentsManager = new CommentsManager($this->_db);
-        $usersManager = new UsersManager($this->_db);
+        $post = $this->_postsManager->get($postId);
+        $comments = $this->_commentsManager->getCommentsByPostId($postId, $page);
+        $user = $this->_usersManager->get($post->idUser());
 
-        $post = $postsManager->get($postId);
-        $comments = $commentsManager->getCommentsByPostId($postId, $page);
-        $user = $usersManager->get($post->idUser());
-
-        $postTitles = $this->listPostTitles();
-
-        $postNextId = $postsManager->getNextPublished($post);
-        $postPrevId = $postsManager->getPrevPublished($post);
+        $postNextId = $this->_postsManager->getNextPublished($post);
+        $postPrevId = $this->_postsManager->getPrevPublished($post);
 
         require($this->_path . '/view/post.php');
     }
 
     public function login() {
-        $postTitles = $this->listPostTitles();
-
         require($this->_path . '/view/login.php');
     }
 
     public function connection($login, $password) {
-        $usersManager = new UsersManager($this->_db);
-        $user = $usersManager->getByLogin($login);
-
-        $postTitles = $this->listPostTitles();
+        $user = $this->_usersManager->getByLogin($login);
 
         if ($user) {
             if (password_verify($password, $user->password())) {
@@ -89,25 +57,23 @@ class Frontend {
             'idPost' => $postId
         );
 
-        $commentsManager = new CommentsManager($this->_db);
-        $postsManager = new PostsManager($this->_db);
-
         $comment = new Comment($data);
-        $commentsManager->add($comment);
+        $this->_commentsManager->add($comment);
 
-        $post = $postsManager->get($postId);
+        $post = $this->_postsManager->get($postId);
         $post->setNbComments($post->nbComments() + 1);
-        $postsManager->updateWithSameDateUpdate($post);
+        $this->_postsManager->updateWithSameDateUpdate($post);
 
-        header('location: ' . $this->_url . '/Chapitre-' . $postId . '/' . $page . '#commentId' . $comment->id());
+        $comments = $this->_commentsManager->getLast();
+
+        header('location: ' . $this->_url . '/Chapitre-' . $postId . '/' . $page . '#commentId' . $comments[0]->id());
     }
 
     public function reportComment($commentId, $page) {
         $commentId = (int) $commentId;
         $page = (int) $page;
 
-        $commentsManager = new CommentsManager($this->_db);
-        $comment = $commentsManager->get($commentId);
+        $comment = $this->_commentsManager->get($commentId);
 
         if ($comment->reportStatut() !== Comment::COMMENT_VALIDATED) {
             if ($comment->reportStatut() === Comment::COMMENT_NOT_REPORTED) {
@@ -115,13 +81,8 @@ class Frontend {
             }
             $comment->setReportNumber($comment->reportNumber() + 1);
         }
-        $commentsManager->update($comment);
+        $this->_commentsManager->update($comment);
 
         header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId, false);
-    }
-
-    public function listPostTitles() {
-        $postsManager = new PostsManager($this->_db);
-        return $postsManager->getListTitles();
     }
 }
