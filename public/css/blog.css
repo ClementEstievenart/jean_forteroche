@@ -5,7 +5,7 @@ html {
 body {
     margin: 0px 0px;
     font-family: 'PT Sans', sans-serif;
-    background: no-repeat center url(../images/mountains-1622731_1920.jpg) fixed;
+    background: no-repeat center url(../images/background.jpg) fixed;
     background-size: cover;
     cursor: default;
     overflow-x: hidden;
@@ -128,17 +128,22 @@ a.button:not(:any-link) {
 
 #head_menu input, #head_menu input.connection {
     display: block;
-    width: 218px;
+    width: 198px;
     height: 27px;
-    padding: 5px 15px;
+    padding: 5px 15px 5px 35px;
     margin: 0px;
     font-size: 2rem;
 }
 
 #head_menu input.connection {
+    padding: 5px 15px;
     width: 250px;
     height: 37px;
     cursor: pointer;
+}
+
+#head_menu i.input {
+    transform: translate(8px, 10px)
 }
 
 #head_menu li:hover .sublist, #head_menu .sublist.active {
@@ -157,9 +162,11 @@ a.button:not(:any-link) {
 #head_menu li a.sublist_menu::after {
 	display: block;
     position: absolute;
-    top: 5px;
+    top: 7px;
     right: 15px;
-    content: '▼';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: '\f078';
 }
 
 #head_menu .nav_frame {
@@ -176,9 +183,12 @@ a.button:not(:any-link) {
 }
 
 #head_menu .nav_frame p {
-    text-align: justify;
     font-size: 1.3rem;
     margin: 5px 0px;
+}
+
+#head_menu .nav_frame.author p {
+    text-align: justify;
 }
 
 #head_menu .nav_frame a {
@@ -200,6 +210,11 @@ a.button:not(:any-link) {
     background: #ad7878;
 	color : white;
     margin: 0px;
+}
+
+i {
+    width: 22px;
+    text-align: center;
 }
 
 #container {
@@ -308,6 +323,7 @@ input[type='text'], input[type='password'], textarea {
 
 input[type='text'], input[type='password'] {
 	width: 183px;
+    padding-left: 35px;
 }
 
 textarea {
@@ -330,6 +346,12 @@ input[type='text']:focus, input[type='password']:focus, #include textarea:focus 
     border-top: 1px dashed #84a9c4;
     margin: 10px 0px 0px 0px;
     padding-top: 5px;
+}
+
+i.input {
+	position: absolute;
+    font-size: 1.8rem;
+    transform: translate(13px, 13px);
 }
 
 #include .comments .post_description {
@@ -358,7 +380,6 @@ input[type='text']:focus, input[type='password']:focus, #include textarea:focus 
     margin: 10px;
     padding: 5px;
     border: 1px solid #bababa;
-    font-size: 1.6rem;
 }
 
 @keyframes commentTarget {

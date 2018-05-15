@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="public/css/blog.css"/>
         <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700|PT+Serif:400,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+        <link href="public/font/css/fontawesome-all.css" rel="stylesheet">
         <?= $tinyMCE ?>
 
     </head>

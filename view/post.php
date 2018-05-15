@@ -12,13 +12,13 @@ ob_start();
 </article>
 
 <nav id="pages">
-    <a <?php if ($postPrevId) {?>href="Chapitre-<?= htmlspecialchars($postPrevId) ?>/1"<?php }?> class="button"> ◄ Chapitre précédent</a>
-    <a <?php if ($postNextId) {?>href="Chapitre-<?= htmlspecialchars($postNextId) ?>/1"<?php }?> class="button"> Chapitre suivant ►</a>
+    <a <?php if ($postPrevId) {?>href="Chapitre-<?= htmlspecialchars($postPrevId) ?>/1"<?php }?> class="button"><i class="fas fa-chevron-left"></i> Chapitre précédent</a>
+    <a <?php if ($postNextId) {?>href="Chapitre-<?= htmlspecialchars($postNextId) ?>/1"<?php }?> class="button">Chapitre suivant <i class="fas fa-chevron-right"></i></a>
 </nav>
 
 <form action="Ajouter-un-commentaire-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page) ?>" method="post">
     <h3 class="page_content">Ajouter un commentaire :</h3>
-    <div><input id="pseudo" name="pseudo" type="text" required placeholder="Votre pseudo" maxlength="16"></div>
+    <div><i class="fas fa-user input"></i><input id="pseudo" name="pseudo" type="text" required placeholder="Votre pseudo" maxlength="16"></div>
     <div><textarea id="content" name="content" required placeholder="Rédigez votre commentaire"></textarea></div>
     <div><input id="send" type="submit" value="Envoyer"></div>
 </form>
@@ -29,7 +29,7 @@ ob_start();
     foreach($comments as $comment) {
     ?>
        <div id="commentId<?= htmlspecialchars($comment->id()) ?>">
-            <h5 class="page_content"><?= htmlspecialchars($comment->pseudo()) ?></h5>
+            <h5 class="page_content"><i class="fas fa-user"></i> <?= htmlspecialchars($comment->pseudo()) ?></h5>
             <div class="post_description">
                 <div><em>a commenté le <?= htmlspecialchars($comment->datePublication()) ?></em></div>
                 <div class="report_link"><a href="Signaler-un-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= htmlspecialchars($page) ?>">Signaler ce commentaire !</a></div>
@@ -42,8 +42,8 @@ ob_start();
     <?php
     if ($post->nbComments() > 10) {?>
         <nav id="pages">
-            <a <?php if ($page !== 1) {?>href="Chapitre-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"> ◄ Précédent </a>
-            <a <?php if ($page * 10 < $post->nbComments()) {?>href="Chapitre-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button"> Suivant ►</a>
+            <a <?php if ($page !== 1) {?>href="Chapitre-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"><i class="fas fa-chevron-left"></i> Précédent</a>
+            <a <?php if ($page * 10 < $post->nbComments()) {?>href="Chapitre-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button">Suivant <i class="fas fa-chevron-right"></i></a>
         </nav>
     <?php }?>
 </div>
