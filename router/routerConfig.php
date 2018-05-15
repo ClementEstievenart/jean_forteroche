@@ -1,6 +1,6 @@
 <?php
 $routerConfig = array (
-    'frontend' => array(
+    'Frontend' => array(
         'home' => array(
             'method' => 'homePage'),
         'listPosts' => array(
@@ -22,7 +22,7 @@ $routerConfig = array (
             'method' => 'connection',
             'postKeys' => ['login', 'password'])
     ),
-    'backend' => array(
+    'Backend' => array(
         'disconnection' => array(
             'method' => 'disconnection'),
         'writeNewPost' => array(
