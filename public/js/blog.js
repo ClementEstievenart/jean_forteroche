@@ -11,13 +11,18 @@ document.addEventListener('scroll', function(e) {
 document.querySelectorAll('.sublist.login input').forEach(function (inputElt) {
     inputElt.addEventListener('focus', function (e) {
         e.target.parentNode.parentNode.setAttribute('class', 'sublist login active');
-        e.target.parentNode.parentNode.parentNode.parentNode.setAttribute('class', 'active');
+
     });
 });
 
 document.querySelectorAll('.sublist.login input').forEach(function (inputElt) {
     inputElt.addEventListener('blur', function (e) {
         e.target.parentNode.parentNode.setAttribute('class', 'sublist login');
-        e.target.parentNode.parentNode.parentNode.parentNode.setAttribute('class', '');
+
     });
 });
+
+if(/active/.test(document.querySelector('.sublist.login').getAttribute('class'))) {
+    console.log(document.getElementById('login'));
+    document.getElementById('login').focus();
+}

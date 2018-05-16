@@ -73,11 +73,11 @@ header {
     border: none;
 }
 
-.button:hover, input[type='submit']:hover {
+.button:hover:not(#login_button), input[type='submit']:hover {
     background-color: #84a9c4;
 }
 
-.button:active, input[type='submit']:active {
+.button:active:not(#login_button), input[type='submit']:active {
     background-color: #7897ad;
 }
 
@@ -85,7 +85,7 @@ a.button {
     display: inline-block;
 }
 
-a.button:not(:any-link) {
+a.button:not(:any-link, #login_button) {
     background-color: #bababa;
     cursor: default;
 }
@@ -121,7 +121,7 @@ a.button:not(:any-link) {
     opacity: 0;
     transition: 0.4s;
     padding-left: 0px;
-    max-height: 250px;
+    max-height: 350px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -359,8 +359,10 @@ i.input {
     justify-content: space-between;
 }
 
-#include .comments a {
-    font-size: 1.4rem;
+#include .comments a.report_link {
+    position: absolute;
+    transform: translate(-50px, -5px);
+    font-size: 2rem;
     padding: 0px 5px;
     margin: 0px;
     background-color: #d99a9a;
@@ -368,11 +370,11 @@ i.input {
     color: white;
 }
 
-#include .comments a:hover {
+#include .comments a.report_link:hover {
     background-color: #c48484;
 }
 
-#include .comments a:active {
+#include .comments a.report_link:active {
     background-color: #ad7878;
 }
 
@@ -428,28 +430,33 @@ i.input {
     color: inherit;
 }
 
-#include h3.list_post_title{
+#include h3.list_post_title {
     margin: 0px auto;
     color: #9abed9;
 }
 
-#include h3.list_post_title.no_publish {
+#include h3.list_post_title em {
+    color: black;
+    font-weight: 400;
+}
+
+#include h3.list_post_title.no_publish a {
     color: #d99a9a;
 }
 
-#include h3.list_post_title.no_publish:hover {
+#include h3.list_post_title.no_publish:hover a {
     color: #c48484;
 }
 
-#include h3.list_post_title.no_publish:active {
+#include h3.list_post_title.no_publish:active a {
     color: #ad7878;
 }
 
-#include h3.list_post_title.publish:hover {
+#include h3.list_post_title.publish:hover a {
     color: #84a9c4;
 }
 
-#include h3.list_post_title.publish:active {
+#include h3.list_post_title.publish:active a {
     color: #7897ad;
 }
 
@@ -469,10 +476,13 @@ i.input {
     display: block;
     height: 25px;
     font-size: 1.8rem;
-    text-indent: 30px;
+    text-decoration: none;
     background: transparent;
     color: black;
-    font-family: 'PT Serif', serif;
+}
+
+#include .report_button a {
+    padding-left: 11px;
 }
 
 #include .comments.list_report a:hover {
@@ -485,11 +495,13 @@ i.input {
     align-items: center;
 }
 
-#include .report_statut{
+#include p.report_statut{
 	border: 1px solid #7897ad;
-    padding: 5px 15px;
+    padding: 7px 15px;
     text-indent: 0px;
     white-space: nowrap;
+    height: 21px;
+    margin: 5px 0px;
 }
 
 footer {

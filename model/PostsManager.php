@@ -6,8 +6,13 @@ class PostsManager {
         $this->setDb($db);
     }
 
-    public function add(Post $post) {
-        $req = $this->_db->prepare('INSERT INTO posts (id_user, title, content) VALUES (:idUser, :title, :content)');
+    public function add(Post $post, $published) {
+        if ($published) {
+            $sql = 'INSERT INTO posts (id_user, title, content, date_publication) VALUES (:idUser, :title, :content, NOW())';
+        } else {
+            $sql = 'INSERT INTO posts (id_user, title, content) VALUES (:idUser, :title, :content)';
+        }
+        $req = $this->_db->prepare($sql);
         $req->execute(array(
             'idUser' => $post->idUser(),
             'title' => $post->title(),

@@ -29,11 +29,7 @@ class Backend extends Controller {
             'content' => $content
         );
         $post = new Post($data);
-        $this->_postsManager->add($post);
-
-        if ($published) {
-            $this->_postsManager->publish($post);
-        }
+        $this->_postsManager->add($post, $published);
 
         header('location: ' . $this->_url . '/Titre-des-chapitres/1');
     }

@@ -1,11 +1,11 @@
-<nav id="head_menu">
+<nav id="head_menu" <?php if (isset($_SESSION['login'])) {?>style="height:649px"<?php }?>>
     <div class="site_title top_menu no_display">
         <h1>Billet Simple<br>pour l'Alaska</h1>
         <p>Par Jean Forteroche</p>
     </div>
     <ul>
-    <li><a href="Accueil" class="button"><i class="fas fa-home"></i> Accueil</a></li>
-    <li><a href="Chapitres/1" class="button sublist_menu"><i class="fas fa-book-open"></i> Chapitres</a>
+    <li><a href="Accueil" class="button" title="Page d'accueil"><i class="fas fa-home"></i> Accueil</a></li>
+    <li><a href="Chapitres/1" class="button sublist_menu" title="Liste des chapitres"><i class="fas fa-book-open"></i> Chapitres</a>
         <ol class="sublist">
             <?php foreach ($this->_listPostTitles as $postTitle) {?>
                 <li><a href="Chapitre-<?= htmlspecialchars($postTitle->id()) ?>/1" class="button"><?= htmlspecialchars_decode($postTitle->title()) ?></a></li>
@@ -13,12 +13,12 @@
         </ol>
     </li>
     <?php if (isset($_SESSION['login'])) {?>
-        <li><a href="Nouveau-chapitre" class="button"><i class="far fa-plus-square"></i> Nouveau chapitre</a></li>
-        <li><a href="Titre-des-chapitres/1" class="button"><i class="far fa-edit"></i> Éditer un chapitre</a></li>
-        <li><a href="Liste-des-commentaires/1" class="button"><i class="far fa-comments"></i> Modérer</a></li>
-        <li><a href="Deconnexion" class="button"><i class="fas fa-unlock"></i> Déconnexion</a></li>
+        <li><a href="Nouveau-chapitre" class="button" title="Écrire un nouveau chapitre"><i class="far fa-plus-square"></i> Nouveau chapitre</a></li>
+        <li><a href="Titre-des-chapitres/1" class="button" title="Éditer/Publier un chapitre"><i class="far fa-edit"></i> Éditer un chapitre</a></li>
+        <li><a href="Liste-des-commentaires/1" class="button" title="Lister les commentaires pour les modérer"><i class="far fa-comments"></i> Modérer</a></li>
+        <li><a href="Deconnexion" class="button" title="Déconnexion"><i class="fas fa-unlock"></i> Déconnexion</a></li>
     <?php } else {?>
-        <li><a href="Login" class="button sublist_menu"><i class="fas fa-unlock"></i> Connexion</a>
+        <li><a id="login_button" class="button sublist_menu" title="Connexion"><i class="fas fa-unlock"></i> Connexion</a>
             <form action="Connexion" method="post">
                 <ul class="sublist login<?php if (!empty($_POST['login'])) {?> active<?php }?>">
                     <li><i class="fas fa-user input"></i><input id="login" name="login" type="text" required placeholder="Identifiant"></li>
