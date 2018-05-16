@@ -85,7 +85,7 @@ a.button {
     display: inline-block;
 }
 
-a.button:not(:any-link, #login_button) {
+a.button:not(:any-link):not(#login_button) {
     background-color: #bababa;
     cursor: default;
 }
@@ -207,7 +207,7 @@ a.button:not(:any-link, #login_button) {
     text-align: center;
     font-size: 16px;
     bottom: 0;
-    background: #ad7878;
+    background: #d99a9a;
 	color : white;
     margin: 0px;
 }
@@ -389,7 +389,7 @@ i.input {
     to { background-color: transparent; }
 }
 
-#include .comments div:target p {
+#include .comments div:target p:not(.report_statut) {
     animation: 0.5s linear 2s backwards commentTarget;
 }
 
@@ -510,6 +510,29 @@ footer {
     padding: 20px 50px;
 }
 
+footer h1 {
+    font-size: 2.2rem;
+}
+
 footer h2 {
+    font-size: 2rem;
+}
+
+footer h3 {
     font-size: 1.8rem;
+    margin: 0px 10px;
+}
+
+footer p {
+    font-size: 1.4rem;
+    margin: 0px;
+}
+
+footer li {
+    display: flex;
+    align-items: baseline;
+}
+
+footer hr {
+    color: black;
 }

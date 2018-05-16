@@ -40,14 +40,18 @@ ob_start();
                     <p class="report_statut page_content">Statut : <?php
                         if (!$comment->reportStatut()) {
                             echo 'Non signalé';
-                        } else {
+                        } elseif ($comment->reportStatut() === 1) {
                             echo 'Signalé ' . htmlspecialchars($comment->reportNumber()) . ' fois';
+                        } else {
+                            echo 'Validé';
                         }
                     ?></p>
-                    <div>
-                        <a title="Supprimer le commentaire" href="Supprime-le-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= $page ?>" class="delete_comment button"><i class="fas fa-times-circle"></i> Supprimer</a>
-                        <a title="Valider le commentaire" href="Valider-le-commentaire-<?= htmlspecialchars($comment->id()) ?>/<?= $page ?>" class="button"><i class="fas fa-check-circle"></i> Valider</a>
-                    </div>
+                    <?php if ($comment->reportStatut() < 2) {?>
+                       <div>
+                        <a title="Supprimer le commentaire" href="Supprime-le-commentaire-<?= htmlspecialchars($comment->id()) ?>-post/<?= $page ?>" class="delete_comment button"><i class="fas fa-times-circle"></i> Supprimer</a>
+                        <a title="Valider le commentaire" href="Valider-le-commentaire-<?= htmlspecialchars($comment->id()) ?>-post/<?= $page ?>" class="button"><i class="fas fa-check-circle"></i> Valider</a>
+                        </div>
+                    <?php }?>
                 </div>
             <?php }?>
         </div>

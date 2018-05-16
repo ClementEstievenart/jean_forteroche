@@ -112,7 +112,7 @@ class Backend extends Controller {
         header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId);
     }
 
-    public function deleteComment($commentId, $page) {
+    public function deleteComment($commentId, $page, $redirection) {
         $commentId = (int) $commentId;
 
         $comment = $this->_commentsManager->get($commentId);
@@ -122,7 +122,11 @@ class Backend extends Controller {
         $this->_postsManager->updateWithSameDateUpdate($post);
         $this->_commentsManager->delete($comment);
 
-        header('location: ' . $this->_url . '/Liste-des-commentaires/' . $page);
+        if ($redirection === 'post') {
+            header('location: ' . $this->_url . '/Chapitre-' . $post->id() . '/' . $page);
+        } elseif ($redirection === 'listComments') {
+            header('location: ' . $this->_url . '/Liste-des-commentaires/' . $page);
+        }
     }
 
     public function validComment($commentId, $page) {

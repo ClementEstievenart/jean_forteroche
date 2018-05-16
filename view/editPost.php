@@ -41,8 +41,6 @@ ob_start();
         spellchecker_rpc_url: 'spellchecker.php',
         spellchecker_language: 'fr_FR',
         spellchecker_languages: 'French=fr_FR',
-        //custom_format: { block : '*', style: { fontFamily: 'PT Serif' }}
-
     });
 
 </script>

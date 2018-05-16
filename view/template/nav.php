@@ -21,12 +21,12 @@
         <li><a id="login_button" class="button sublist_menu" title="Connexion"><i class="fas fa-unlock"></i> Connexion</a>
             <form action="Connexion" method="post">
                 <ul class="sublist login<?php if (!empty($_POST['login'])) {?> active<?php }?>">
-                    <li><i class="fas fa-user input"></i><input id="login" name="login" type="text" required placeholder="Identifiant"></li>
-                    <li><i class="fas fa-key input"></i><input id="password" name="password" type="password" required placeholder="Mot de passe"></li>
-                    <li><input class="connection" type="submit" value="Se connecter"></li>
                     <?php if (!empty($_POST['login'])) {?>
                         <p id="connection_fail">Erreur de connexion :<br>identifiants invalides !</p>
                     <?php }?>
+                    <li><i class="fas fa-user input"></i><input id="login" name="login" type="text" required placeholder="Identifiant"></li>
+                    <li><i class="fas fa-key input"></i><input id="password" name="password" type="password" required placeholder="Mot de passe"></li>
+                    <li><input class="connection" type="submit" value="Se connecter"></li>
                 </ul>
             </form>
         </li>

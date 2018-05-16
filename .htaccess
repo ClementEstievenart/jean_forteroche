@@ -53,7 +53,7 @@ RewriteRule ^Liste-des-commentaires/([0-9]+)$ index.php?action=listCommentsRepor
 RewriteRule ^Voir-le-context-([0-9]+)$ index.php?action=findPageOfComment&commentId=$1 [L]
 
 # delete comment
-RewriteRule ^Supprime-le-commentaire-([0-9]+)/([0-9]+)$ index.php?action=deleteComment&commentId=$1&page=$2 [L]
+RewriteRule ^Supprime-le-commentaire-([0-9]+)-(post|listComments)/([0-9]+)$ index.php?action=deleteComment&commentId=$1&page=$3&redirection=$2 [L]
 
 #valide comment
 RewriteRule ^Valider-le-commentaire-([0-9]+)/([0-9]+)$ index.php?action=validComment&commentId=$1&page=$2 [L]
