@@ -11,7 +11,7 @@ ob_start();
     <?php if ($post->dateUpdate()) {?><p class="date_display"><em>Modifié le <?= htmlspecialchars($post->dateUpdate()) ?></em></p><?php } ?>
 </article>
 
-<nav id="pages">
+<nav class="pages">
     <a <?php if ($postPrevId) {?>href="Chapitre-<?= htmlspecialchars($postPrevId) ?>/1"<?php }?> class="button" title="Chapitre précédent"><i class="fas fa-chevron-left"></i> Chapitre précédent</a>
     <a <?php if ($postNextId) {?>href="Chapitre-<?= htmlspecialchars($postNextId) ?>/1"<?php }?> class="button">Chapitre suivant <i class="fas fa-chevron-right" title="Chapitre suivant"></i></a>
 </nav>
@@ -60,7 +60,7 @@ ob_start();
 <div>
     <?php
     if ($post->nbComments() > 10) {?>
-        <nav id="pages">
+        <nav class="pages">
             <a <?php if ($page !== 1) {?>href="Chapitre-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button" title="Commentaires précédents"><i class="fas fa-chevron-left"></i> Précédent</a>
             <a <?php if ($page * 10 < $post->nbComments()) {?>href="Chapitre-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button" title="Commentaires suivants">Suivant <i class="fas fa-chevron-right"></i></a>
         </nav>

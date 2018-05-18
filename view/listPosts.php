@@ -18,7 +18,7 @@ foreach ($posts as $post) {?>
 <div>
     <?php
     if ($nbPosts > 10) {?>
-        <nav id="pages">
+        <nav class="pages">
             <a <?php if ($page > 1) {?>href="Chapitres/<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"><i class="fas fa-chevron-left" title="Chapitres précedents"></i> Précédent</a>
             <a <?php if ($page * 10 < $nbPosts) {?>href="Chapitres/<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button" title="Chapitres suivants">Suivant <i class="fas fa-chevron-right"></i></a>
         </nav>

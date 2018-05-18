@@ -12,7 +12,7 @@ foreach ($posts as $post) {?>
 <div>
     <?php
     if ($nbPosts > 10) {?>
-        <nav id="pages">
+        <nav class="pages">
             <a <?php if ($page > 1) {?>href="Titre-des-chapitres/<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button"><i class="fas fa-chevron-left" title="Titres précedents"></i> Précédent</a>
             <a <?php if ($page * 10 < $nbPosts) {?>href="Titre-des-chapitres/<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button" title="Titres suivants">Suivant <i class="fas fa-chevron-right"></i></a>
         </nav>

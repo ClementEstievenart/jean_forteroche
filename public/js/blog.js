@@ -1,28 +1,34 @@
-document.addEventListener('scroll', function(e) {
-    if (e.target.scrollingElement.scrollTop >= 300) {
-        document.querySelector('.site_title.header').setAttribute('class', 'site_title header no_display');
-        document.querySelector('.site_title.top_menu').setAttribute('class', 'site_title top_menu');
+//Login form focus
+if (document.querySelector('.sublist.login')) {
+    if(/active/.test(document.querySelector('.sublist.login').className)) {
+        document.getElementById('login').focus();
+    }
+}
+
+//Menu sublist effects
+document.querySelectorAll('#head_menu .sublist_menu:not(#display_menu)').forEach(function (aElt) {
+    aElt.addEventListener('click', function () {
+        if (/active/.test(aElt.parentNode.querySelector('.sublist').className)) {
+            aElt.className = aElt.className.replace(' active', '');
+            aElt.parentNode.querySelector('.sublist').className = aElt.parentNode.querySelector('.sublist').className.replace(' active', '');
+        } else {
+            document.querySelectorAll('#head_menu li .active').forEach(function (menuElt) {
+                menuElt.className = menuElt.className.replace(' active', '');
+            });
+            aElt.className += ' active';
+            aElt.parentNode.querySelector('.sublist').className += ' active';
+        }
+    });
+});
+
+
+//Menu display for small device
+document.getElementById('display_menu').addEventListener('click', function () {
+    if (/active/.test(document.querySelector('#menu_button>ul').className)) {
+        document.querySelector('#menu_button>ul').className = document.querySelector('#menu_button>ul').className.replace(' active', '');
+        document.getElementById('display_menu').className = document.getElementById('display_menu').className.replace(' active', '');
     } else {
-        document.querySelector('.site_title.header').setAttribute('class', 'site_title header');
-        document.querySelector('.site_title.top_menu').setAttribute('class', 'site_title top_menu no_display');
+        document.getElementById('display_menu').className += ' active';
+        document.querySelector('#menu_button>ul').className += ' active';
     }
 });
-
-document.querySelectorAll('.sublist.login input').forEach(function (inputElt) {
-    inputElt.addEventListener('focus', function (e) {
-        e.target.parentNode.parentNode.setAttribute('class', 'sublist login active');
-
-    });
-});
-
-document.querySelectorAll('.sublist.login input').forEach(function (inputElt) {
-    inputElt.addEventListener('blur', function (e) {
-        e.target.parentNode.parentNode.setAttribute('class', 'sublist login');
-
-    });
-});
-
-if(/active/.test(document.querySelector('.sublist.login').getAttribute('class'))) {
-    console.log(document.getElementById('login'));
-    document.getElementById('login').focus();
-}

@@ -8,14 +8,16 @@ body {
     background: no-repeat center url(../images/background.jpg) fixed;
     background-size: cover;
     cursor: default;
-    overflow-x: hidden;
+    min-width: 320px;
 }
 
 header {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 20px 0px;
     height: 290px;
+    transition: 0.2s;
 }
 
 .site_title {
@@ -28,37 +30,16 @@ header {
     min-width: 450px;
     font-family: 'Share Tech Mono', 'Terminal', monospace;
     transform: rotate(-10deg);
-    transition: 0.25s;
-    transition-delay: 0.25s;
     z-index: 2;
 }
 
-.site_title.top_menu {
-    position: absolute;
-    top: -235px;
-    transform: rotate(-10deg) scale(0.35) translateX(-430px);
-}
-
-.site_title.no_display{
-	opacity: 0;
-    transition-delay: 0s;
-}
-
-.site_title.top_menu.no_display {
-    transform: rotate(-10deg) scale(0.35) translateX(-330px);
-}
-
-.site_title.header.no_display {
-	transform: rotate(-10deg) translateY(-100px);
-}
-
 .site_title h1 {
-	font-size: 5rem;
+	font-size: 50px;
     margin-top: 10px;
 }
 
 .site_title p {
-	font-size: 3rem;
+	font-size: 30px;
     margin: 0px;
 }
 
@@ -73,19 +54,28 @@ header {
     border: none;
 }
 
-.button:hover:not(#login_button), input[type='submit']:hover {
+.button:hover, input[type='submit']:hover {
     background-color: #84a9c4;
 }
 
-.button:active:not(#login_button), input[type='submit']:active {
+.button:active, input[type='submit']:active, a.active {
     background-color: #7897ad;
 }
 
 a.button {
+    display: block;
+    cursor: pointer;
+}
+
+nav.pages {
+    text-align: center;
+}
+
+nav.pages a {
     display: inline-block;
 }
 
-a.button:not(:any-link):not(#login_button) {
+a.button:not(:any-link):not(.sublist_menu) {
     background-color: #bababa;
     cursor: default;
 }
@@ -93,8 +83,17 @@ a.button:not(:any-link):not(#login_button) {
 #head_menu {
     margin-left: 20px;
     position: sticky;
-    top: 105px;
+    top: 10px;
     height: 523px;
+    transition: 0.2s;
+}
+
+#head_menu.connected {
+	height: 649px;
+}
+
+#display_menu {
+	display: none;
 }
 
 #head_menu ul {
@@ -102,28 +101,33 @@ a.button:not(:any-link):not(#login_button) {
     margin: 0px;
 }
 
-#head_menu li {
+#head_menu li, #head_menu #menu_button {
     list-style: none;
     margin: 0px 0px 5px 0px;
     position: relative;
     width: 250px;
 }
 
-#head_menu li a {
-    width: 220px;
+#head_menu a {
     text-decoration: none;
     color: white;
     margin: 0px 0px;
 }
 
 #head_menu .sublist {
-	height: 0px;
-    opacity: 0;
-    transition: 0.4s;
-    padding-left: 0px;
+    transition: 0.2s;
     max-height: 350px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+#head_menu .sublist:not(.active) {
+	height: 0px;
+    opacity: 0;
+}
+
+#head_menu .sublist ol {
+    padding-left: 0px;
 }
 
 #head_menu input, #head_menu input.connection {
@@ -146,9 +150,8 @@ a.button:not(:any-link):not(#login_button) {
     transform: translate(8px, 10px)
 }
 
-#head_menu li:hover .sublist, #head_menu .sublist.active {
+#head_menu .sublist.active {
     opacity: 1;
-	height: auto;
 }
 
 #head_menu .sublist li {
@@ -159,7 +162,7 @@ a.button:not(:any-link):not(#login_button) {
     margin: 0px auto;
 }
 
-#head_menu li a.sublist_menu::after {
+#head_menu a.sublist_menu::after {
 	display: block;
     position: absolute;
     top: 7px;
@@ -167,6 +170,11 @@ a.button:not(:any-link):not(#login_button) {
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     content: '\f078';
+    transition: 0.2s;
+}
+
+#head_menu a.sublist_menu.active::after {
+    transform: rotate(180deg);
 }
 
 #head_menu .nav_frame {
@@ -220,13 +228,13 @@ i {
 #container {
     display: flex;
     margin: 30px 50px;
+    transition: 0.2s;
 }
 
 #include {
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0px 0px 20px grey;
     padding: 10px 20px;
-    width: 100%;
 }
 
 #include h2.page_content {
@@ -264,37 +272,37 @@ i {
 }
 
 #include .post_content h1 {
-    font-size: 28px;
+    font-size: 2.8rem;
     margin: 18px 0px;
 }
 
 #include .post_content h2 {
-    font-size: 25px;
+    font-size: 2.5rem;
     margin: 18px 0px;
 }
 
 #include .post_content h3 {
-    font-size: 23px;
+    font-size: 2.3rem;
     margin: 18px 0px;
 }
 
 #include .post_content h4 {
-    font-size: 20px;
+    font-size: 2.0rem;
     margin: 18px 0px;
 }
 
 #include .post_content h5 {
-    font-size: 18px;
+    font-size: 1.8rem;
     margin: 16px 0px;
 }
 
 #include .post_content h6 {
-    font-size: 14px;
+    font-size: 1.4rem;
     margin: 12px 0px;
 }
 
 #include .post_content p {
-    font-size: 16px;
+    font-size: 1.6rem;
     margin: 16px 0px;
 }
 
@@ -329,7 +337,7 @@ input[type='text'], input[type='password'] {
 textarea {
     width: -moz-available;
     width: -webkit-fill-available;
-    min-width: 400px;
+    min-width: 198px;
     height: 100px;
 }
 
@@ -361,9 +369,9 @@ i.input {
 
 #include .comments a.report_link {
     position: absolute;
-    transform: translate(-50px, -5px);
+    transform: translate(-47px, -8px);
     font-size: 2rem;
-    padding: 0px 5px;
+    padding: 3px 7px;
     margin: 0px;
     background-color: #d99a9a;
     text-decoration: none;
@@ -379,6 +387,7 @@ i.input {
 }
 
 #include .comments p, #include .comments.list_report a {
+    display: block;
     margin: 10px;
     padding: 5px;
     border: 1px solid #bababa;
@@ -473,7 +482,6 @@ i.input {
 }
 
 #include .comments.list_report a {
-    display: block;
     height: 25px;
     font-size: 1.8rem;
     text-decoration: none;
@@ -508,6 +516,7 @@ footer {
     background-color: rgba(186, 186, 186, 0.8);
     margin: 40px 0px 0px 0px;
     padding: 20px 50px;
+    transition: 0.2s;
 }
 
 footer h1 {
@@ -535,4 +544,95 @@ footer li {
 
 footer hr {
     color: black;
+}
+
+footer ul {
+    padding-left: 10px;
+}
+
+@media (max-width: 900px) {
+    #container {
+	    margin-left: 20px;
+        margin-right: 20px;
+    }
+    footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    #head_menu {
+        margin-left: 8px;
+    }
+}
+
+@media (max-width: 750px) {
+    header {
+        height: 220px;
+        margin-bottom: 40px;
+    }
+    .site_title.header {
+	    transform: scale(0.8) rotate(-10deg);
+    }
+    #container {
+	    flex-direction: column-reverse;
+    }
+    #head_menu{
+        height: auto;
+        top: 0px;
+        margin-left: 0px;
+    }
+    #head_menu.connected {
+	    height: auto;
+    }
+    #head_menu .site_title.top_menu {
+	    display: none;
+    }
+
+    #head_menu li, #head_menu #menu_button{
+	    width: auto;
+        background-color: rgba(255, 255, 255, 0.6);
+    }
+    #head_menu #menu_button>ul {
+        opacity: 0;
+        height: 0px;
+        overflow: hidden;
+        transition: 0.2s;
+        padding: 0px 5px;
+    }
+    #head_menu #menu_button>ul.active {
+        opacity: 1;
+        height: auto;
+        padding: 5px;
+    }
+    #head_menu input.connection {
+	    width: 100%;
+    }
+    #head_menu .nav_frame {
+	    display: none;
+    }
+    #head_menu #display_menu {
+	    display: block;
+    }
+}
+
+@media (max-width: 550px) {
+    header {
+        height: 160px;
+    }
+    .site_title.header {
+	    transform: scale(0.55) rotate(-10deg);
+    }
+    #container {
+	    margin-left: 0px;
+        margin-right: 0px;
+    }
+    footer {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+@media (max-width: 400px) {
+    html {
+        font-size: 8.5px;
+    }
 }

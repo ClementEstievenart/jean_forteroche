@@ -27,7 +27,7 @@ ob_start();
 <div>
     <?php
     if ($nbComments > 10) {?>
-        <nav id="pages">
+        <nav class="pages">
             <a <?php if ($page > 1) {?>href="Liste-des-commentaires/<?= htmlspecialchars($page - 1) ?>"<?php }?> class="button" title="Commentaires précédents"><i class="fas fa-chevron-left"></i> Précédent</a>
             <a <?php if ($page * 10 < $nbComments) {?>href="Liste-des-commentaires/<?= htmlspecialchars($page + 1) ?>"<?php }?> class="button" title="Commentaires suivants">Suivant <i class="fas fa-chevron-right"></i></a>
         </nav>
