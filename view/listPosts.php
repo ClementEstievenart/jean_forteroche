@@ -11,7 +11,7 @@ foreach ($posts as $post) {?>
         <h3 class="page_content"><?= htmlspecialchars_decode($post->title()) ?>
         <em>Publié le <?= htmlspecialchars($post->datePublication()) ?></em></h3>
         <div class="post_content extract"><?= htmlspecialchars_decode($post->content()) ?></div>
-        <div><a href="Chapitre-<?= htmlspecialchars($post->id()) ?>/1" class="button">Lire la suite</a></div>
+        <div><a href="Chapitre-<?= htmlspecialchars($post->id()) ?>/1" class="button read_more">Lire la suite</a></div>
   </article>
 <?php }?>
 

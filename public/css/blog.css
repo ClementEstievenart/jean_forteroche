@@ -71,7 +71,7 @@ nav.pages {
     text-align: center;
 }
 
-nav.pages a {
+nav.pages a, a.read_more {
     display: inline-block;
 }
 
@@ -235,6 +235,7 @@ i {
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0px 0px 20px grey;
     padding: 10px 20px;
+    width: 100%;
 }
 
 #include h2.page_content {
@@ -503,6 +504,10 @@ i.input {
     align-items: center;
 }
 
+#include .report_button>div {
+    display: flex;
+}
+
 #include p.report_statut{
 	border: 1px solid #7897ad;
     padding: 7px 15px;
@@ -574,6 +579,9 @@ footer ul {
     }
     #container {
 	    flex-direction: column-reverse;
+    }
+    #include {
+	    width: auto;
     }
     #head_menu{
         height: auto;

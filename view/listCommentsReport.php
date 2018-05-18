@@ -18,7 +18,7 @@ ob_start();
                 }
             ?></p>
             <div>
-                <a title="Supprimer le commentaire" href="Supprime-le-commentaire-<?= htmlspecialchars($comment->id()) ?>-listComments/<?= $page ?>" class="delete_comment button"><i class="fas fa-times-circle"></i> Supprimer</a>
+                <a title="Supprimer le commentaire" href="Supprimer-le-commentaire-<?= htmlspecialchars($comment->id()) ?>-listComments/<?= $page ?>" class="delete_comment button"><i class="fas fa-times-circle"></i> Supprimer</a>
                 <a title="Valider le commentaire" href="Valider-le-commentaire-<?= htmlspecialchars($comment->id()) ?>-listComments/<?= $page ?>" class="button"><i class="fas fa-check-circle"></i> Valider</a>
             </div>
         </div>
