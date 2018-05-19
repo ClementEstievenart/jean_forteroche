@@ -556,6 +556,9 @@ footer ul {
 }
 
 @media (max-width: 900px) {
+    body {
+        background-image: url(../images/background-medium.jpg);
+    }
     #container {
 	    margin-left: 20px;
         margin-right: 20px;
@@ -623,6 +626,9 @@ footer ul {
 }
 
 @media (max-width: 550px) {
+    body {
+        background-image: url(../images/background-small.jpg);
+    }
     header {
         height: 160px;
     }
