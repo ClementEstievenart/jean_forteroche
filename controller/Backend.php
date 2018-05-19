@@ -5,10 +5,10 @@ class Backend extends Controller {
     public function __construct(array $config) {
         parent::__construct($config);
         if (!isset($_SESSION['login'])) {
-            header('location: ' . $this->_url . '/Accueil');
+            header('location: ' . $this->_url . '/Erreur');
         }
         if(!($this->_usersManager->getByLogin($_SESSION['login']))) {
-            header('location: ' . $this->_url . '/Accueil');
+            header('location: ' . $this->_url . '/Erreur');
         }
 
         $this->_login = $_SESSION['login'];
@@ -114,6 +114,7 @@ class Backend extends Controller {
 
     public function deleteComment($commentId, $page, $redirection) {
         $commentId = (int) $commentId;
+        $page = (int) $page;
 
         $comment = $this->_commentsManager->get($commentId);
         $post = $this->_postsManager->get($comment->idPost());
@@ -121,6 +122,10 @@ class Backend extends Controller {
 
         $this->_postsManager->updateWithSameDateUpdate($post);
         $this->_commentsManager->delete($comment);
+
+        if ($page % 10 === 1 AND $page !== 1) {
+            $page = $page - 1;
+        }
 
         if ($redirection === 'post') {
             header('location: ' . $this->_url . '/Chapitre-' . $post->id() . '/' . $page);

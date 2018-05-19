@@ -6,11 +6,11 @@ class Helper {
     private $_config;
     private $_routerConfig;
 
-    public function __construct() {
+    public function __construct($config) {
         session_start();
         spl_autoload_register('Helper::loadClass');
 
-        $this->_config = parse_ini_file('config.ini', true);
+        $this->_config = $config;
         $this->_path = $this->_config['locator']['path'];
         $this->_getVar = $this->getGetValues();
         $this->_postVar = $this->getPostValues();
@@ -51,7 +51,7 @@ class Helper {
         if (!isset($this->_getVar['action'])) {
             $controler = new Frontend($this->_config);
             $controler->homePage();
-            exit;
+            return;
         }
 
         foreach ($this->_routerConfig as $ctrl => $actions) {
@@ -82,9 +82,15 @@ class Helper {
                     }
 
                     $controler->$actionParameters['method'](...$parameters);
-                    break 2;
+                    return;
                 }
             }
         }
+        throw new exception('$_GET["action"] is unknown :' . $this->_getVar['action']);
+    }
+
+    public function error() {
+        $frontent = new Frontend(($this->_config));
+        $frontent->error();
     }
 }

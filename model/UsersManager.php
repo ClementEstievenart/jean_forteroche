@@ -27,7 +27,11 @@ class UsersManager {
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
 
-        return new User($data);
+        if ($data) {
+            return new User($data);
+        } else {
+            throw new exception('request fail');
+        }
     }
 
     public function getList() {
@@ -38,7 +42,11 @@ class UsersManager {
         }
         $req->closeCursor();
 
-        return $users;
+        if ($users) {
+            return $users;
+        } else {
+            throw new exception('request fail');
+        }
     }
 
     public function getByLogin($login) {

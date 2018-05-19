@@ -47,9 +47,8 @@ class Frontend extends Controller {
         }
     }
 
-    public function addComment($postId, $page, $pseudo, $content) {
+    public function addComment($postId, $pseudo, $content) {
         $postId = (int) $postId;
-        $page = (int) $page;
 
         $data = array(
             'pseudo' => $pseudo,
@@ -66,7 +65,7 @@ class Frontend extends Controller {
 
         $comments = $this->_commentsManager->getLast();
 
-        header('location: ' . $this->_url . '/Chapitre-' . $postId . '/' . $page . '#commentId' . $comments[0]->id());
+        header('location: ' . $this->_url . '/Chapitre-' . $postId . '/1#commentId' . $comments[0]->id());
     }
 
     public function reportComment($commentId, $page) {
@@ -84,5 +83,9 @@ class Frontend extends Controller {
         $this->_commentsManager->update($comment);
 
         header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId, false);
+    }
+
+    public function error() {
+        require($this->_path . '/view/error.php');
     }
 }

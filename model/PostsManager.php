@@ -36,7 +36,11 @@ class PostsManager {
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
 
-        return new Post($data);
+        if ($data) {
+            return new Post($data);
+        } else {
+            throw new exception('request fail get');
+        }
     }
 
     public function getList($page) {
@@ -54,7 +58,11 @@ class PostsManager {
         }
         $req->closeCursor();
 
-        return $posts;
+        if (!$posts AND $page !== 1) {
+            throw new exception('request fail');
+        } else {
+            return $posts;
+        }
     }
 
     public function getListTitles() {
@@ -69,7 +77,11 @@ class PostsManager {
         }
         $req->closeCursor();
 
-        return $posts;
+        if ($posts) {
+            return $posts;
+        } else {
+            throw new exception('request fail');
+        }
     }
 
     public function getListPublished($page) {
@@ -88,7 +100,11 @@ class PostsManager {
         }
         $req->closeCursor();
 
-        return $posts;
+        if (!$posts AND $page !== 1) {
+            throw new exception('request fail');
+        } else {
+            return $posts;
+        }
     }
 
     public function getNextPublished(Post $post) {
@@ -143,6 +159,7 @@ class PostsManager {
         $req->closeCursor();
 
         return (int) $postId;
+
     }
 
     public function updateWithDateUpdate(Post $post) {
@@ -200,11 +217,27 @@ class PostsManager {
     }
 
     public function nbPosts () {
-        return (int) $this->_db->query('SELECT COUNT(*) FROM posts')->fetch()[0];
+        $req = $this->_db->query('SELECT COUNT(*) FROM posts');
+        $nbPosts = $req->fetch()[0];
+        $req->closeCursor();
+
+        if ($nbPosts) {
+            return (int) $nbPosts;
+        } else {
+            throw new exception('request fail');
+        }
     }
 
     public function nbPostsPublish () {
-        return (int) $this->_db->query('SELECT COUNT(*) FROM posts WHERE date_publication != "NULL"')->fetch()[0];
+        $req = $this->_db->query('SELECT COUNT(*) FROM posts WHERE date_publication != "NULL"');
+        $nbPostsPublish = $req->fetch()[0];
+        $req->closeCursor();
+
+        if ($nbPostsPublish) {
+            return (int) $nbPostsPublish;
+        } else {
+            throw new exception('request fail');
+        }
     }
 
     public function setDb(PDO $db) {

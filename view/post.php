@@ -16,7 +16,7 @@ ob_start();
     <a <?php if ($postNextId) {?>href="Chapitre-<?= htmlspecialchars($postNextId) ?>/1"<?php }?> class="button">Chapitre suivant <i class="fas fa-chevron-right" title="Chapitre suivant"></i></a>
 </nav>
 
-<form action="Ajouter-un-commentaire-<?= htmlspecialchars($post->id()) ?>/<?= htmlspecialchars($page) ?>" method="post">
+<form action="Ajouter-un-commentaire-<?= htmlspecialchars($post->id()) ?>" method="post">
     <h3 class="page_content">Ajouter un commentaire :</h3>
     <div><i class="fas fa-user input"></i><input id="pseudo" name="pseudo" type="text" required placeholder="Votre pseudo" maxlength="16"></div>
     <div><textarea id="content" name="content" required placeholder="Rédigez votre commentaire"></textarea></div>

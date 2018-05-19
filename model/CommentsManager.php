@@ -30,8 +30,11 @@ class CommentsManager {
         $req->execute(array('id' => $id));
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $req->closeCursor();
-
-        return new Comment($data);
+        if ($data) {
+            return new Comment($data);
+        } else {
+            throw new exception('request fail');
+        }
     }
 
     public function getList($page) {
@@ -50,7 +53,11 @@ class CommentsManager {
         }
         $req->closeCursor();
 
-        return $comments;
+        if (!$comments AND $page !== 1) {
+            throw new exception('request fail');
+        } else {
+            return $comments;
+        }
     }
 
     public function getLast() {
@@ -65,7 +72,11 @@ class CommentsManager {
         }
         $req->closeCursor();
 
-        return $comments;
+        if ($comments) {
+            return $comments;
+        } else {
+            throw new exception('request fail');
+        }
     }
 
     public function getAllCommentsByPostId($postId) {
@@ -102,7 +113,11 @@ class CommentsManager {
         }
         $req->closeCursor();
 
-        return $comments;
+        if (!$comments AND $page !== 1) {
+            throw new exception('request fail');
+        } else {
+            return $comments;
+        }
     }
 
     public function update(Comment $comment) {
@@ -135,8 +150,11 @@ class CommentsManager {
                 break;
             }
         }
-
-        return $positionComment;
+        if ($positionComment) {
+            return $positionComment;
+        } else {
+            throw new exception('request fail');
+        }
     }
 
     public function nbCommentsNoValidated () {
