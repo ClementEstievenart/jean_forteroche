@@ -1,6 +1,5 @@
 <?php
-$title = 'Les épisodes';
-$tinyMCE = null;
+$title = 'Les chapitres';
 
 ob_start();
 ?>
@@ -10,7 +9,7 @@ foreach ($posts as $post) {?>
   <article>
         <h3 class="page_content"><?= htmlspecialchars_decode($post->title()) ?>
         <em>Publié le <?= htmlspecialchars($post->datePublication()) ?></em></h3>
-        <div class="post_content extract"><?= htmlspecialchars_decode($post->content()) ?></div>
+        <div class="post_content extract"><?= $this->getPostExcerpt($post) ?></div>
         <div><a href="Chapitre-<?= htmlspecialchars($post->id()) ?>/1" class="button read_more">Lire la suite</a></div>
   </article>
 <?php }?>

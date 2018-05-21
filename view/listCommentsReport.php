@@ -1,6 +1,5 @@
 <?php
 $title = 'Liste des commentaires';
-$tinyMCE = null;
 
 ob_start();
 ?>

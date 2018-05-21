@@ -1,6 +1,6 @@
 <?php
 try {
-    require ('/router/Helper.php');
+    require ('router/Helper.php');
 
     $config = parse_ini_file('config.ini', true);
     $router = new Helper($config);

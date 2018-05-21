@@ -1,6 +1,5 @@
 <?php
 $title = 'Liste des épisodes';
-$tinyMCE = null;
 
 ob_start();
 ?>

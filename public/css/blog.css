@@ -71,7 +71,7 @@ nav.pages {
     text-align: center;
 }
 
-nav.pages a, a.read_more {
+nav.pages a, a.read_more, a.share {
     display: inline-block;
 }
 
@@ -307,18 +307,27 @@ i {
     margin: 16px 0px;
 }
 
-#include .extract {
-    max-height: 180px;
-    overflow: hidden;
-    background: linear-gradient(to bottom, black, black 50%, transparent 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
 #include .date_display {
 	text-align: right;
     margin: 0px;
+}
+
+#include a.share {
+	text-decoration: none;
+    color: inherit;
+    margin: 0px 7px;
+}
+
+#include #twitter:hover {
+    color: #1da1f2;
+}
+
+#include #facebook:hover {
+    color: #4267b2;
+}
+
+#include #email:hover {
+    color: #7897ad;
 }
 
 input[type='text'], input[type='password'], textarea {
@@ -630,7 +639,7 @@ footer ul {
         background-image: url(../images/background-small.jpg);
     }
     header {
-        height: 160px;
+        height: 120px;
     }
     .site_title.header {
 	    transform: scale(0.55) rotate(-10deg);

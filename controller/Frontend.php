@@ -14,6 +14,12 @@ class Frontend extends Controller {
         require($this->_path . '/view/listPosts.php');
     }
 
+    private function getPostExcerpt($post) {
+        $excerpt = wordwrap(htmlspecialchars_decode($post->content()), 700, ' <!--STOP-->');
+        $excerpt = explode(' <!--STOP-->', $excerpt);
+        return $excerpt[0] . '...';
+    }
+
     public function getPostById($postId, $page) {
         $postId = (int) $postId;
         $page = (int) $page;

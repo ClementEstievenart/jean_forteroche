@@ -1,6 +1,5 @@
 <?php
 $title = "Erreur : vous vous êtes égaré(e) !";
-$tinyMCE = null;
 
 ob_start();
 ?>

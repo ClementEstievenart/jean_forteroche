@@ -11,7 +11,8 @@
         <link href="https://fonts.googleapis.com/css?family=PT+Serif:400" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
         <link href="public/font/css/fontawesome-all.css" rel="stylesheet">
-        <?= $tinyMCE ?>
+        <?php if (isset($tinyMCE)) { echo $tinyMCE; } ?>
+        <?php if (isset($metaSocial)) { echo $metaSocial; } ?>
 
     </head>
 
