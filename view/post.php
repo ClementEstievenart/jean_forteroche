@@ -7,18 +7,25 @@ ob_start()    ;
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@JeanForteroche" />
-    <meta name="twitter:title" content="Billet simple pour l'Alaska par Jean Forteroche" />
-    <meta name="twitter:description" content="<?= htmlspecialchars_decode($post->title()) ?>" />
-    <meta name="twitter:image" content="<?= $this->_url ?>/public/images/eBook-small.png" />
+    <meta name="twitter:title" content="<?= htmlspecialchars_decode($post->title()) ?> | Billet simple pour l'Alaska par Jean Forteroche" />
+    <meta name="twitter:description" content="<?= strip_tags($this->getPostExcerpt($post)) ?>" />
+    <meta name="twitter:image" content="<?= $this->_url ?>/public/images/logo.jpg" />
 
 
     <!-- Open Graph data -->
-    <meta property="og:title" content="Billet simple pour l'Alaska par Jean Forteroche" />
+    <meta property="og:title" content="<?= htmlspecialchars_decode($post->title()) ?> | Billet simple pour l'Alaska par Jean Forteroche" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="<?= $_SERVER['HTTP_REFERER'] ?>" />
-    <meta property="og:image" content="<?= $this->_url ?>/public/images/eBook-small.png" />
-    <meta property="og:description" content="<?= htmlspecialchars_decode($post->title()) ?>" />
+    <meta property="og:url" content="http://<?= $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" />
+    <meta property="og:image" content="<?= $this->_url ?>/public/images/logo.jpg" />
+    <meta property="og:description" content="<?= strip_tags($this->getPostExcerpt($post)) ?>" />
     <meta property="og:site_name" content="Billet simple pour l'Alaska" />
+
+    <!-- Schema.org meta for Google+ -->
+    <meta itemprop="name" content="<?= htmlspecialchars_decode($post->title()) ?> | Billet simple pour l'Alaska par Jean Forteroche">
+    <meta itemprop="description" content="<?= strip_tags($this->getPostExcerpt($post)) ?>">
+    <meta itemprop="image" content="<?= $this->_url ?>/public/images/logo.jpg">
+    <link rel="author" href="" />
+    <link rel="publisher" href="" />
 <?php
 $metaSocial = ob_get_clean();
 
@@ -39,7 +46,8 @@ ob_start();
 <h3 class="page_content">Partager :
     <a target="_blank" id="twitter" title="Twitter" href="https://twitter.com/share?url=http://<?= $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;" class="share"><i class="fab fa-twitter"></i></a>
     <a target="_blank" id="facebook" title="Facebook" href="https://www.facebook.com/sharer.php?u=http://<?= $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;" class="share"><i class="fab fa-facebook"></i></a>
-    <a target="_blank" id="email" title="Envoyer par mail" href="mailto:?subject=<?= htmlspecialchars_decode($post->title()) ?>%20|%20Billet%20simple%20pour%20l'Alaska&body=http://<?= $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" rel="nofollow" class="share"><i class="fas fa-envelope"></i></a>
+    <a target="_blank" id="google" title="Google +" href="https://plus.google.com/share?url=http://<?= $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>&hl=fr" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;" class="share"><i class="fab fa-google-plus-g"></i></a>
+    <a target="_blank" id="email" title="E-mail" href="mailto:?subject=<?= htmlspecialchars_decode($post->title()) ?>%20|%20Billet%20simple%20pour%20l'Alaska&body=http://<?= $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" rel="nofollow" class="share"><i class="fas fa-envelope"></i></a>
 </h3>
 
 

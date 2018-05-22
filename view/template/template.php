@@ -3,8 +3,9 @@
 
     <head>
         <meta charset="utf-8"/>
-        <meta name="viewport" content="width=500, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?= $title ?></title>
+        <link rel="icon" type="image/png" href="/public/images/ico-mountain.png" />
         <base href="<?= $this->_url ?>/" />
         <link rel="stylesheet" href="public/css/blog.css"/>
         <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet">

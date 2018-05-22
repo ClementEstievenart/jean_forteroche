@@ -8,7 +8,6 @@ body {
     background: no-repeat center url(../images/background.jpg) fixed;
     background-size: cover;
     cursor: default;
-    min-width: 320px;
 }
 
 header {
@@ -326,6 +325,10 @@ i {
     color: #4267b2;
 }
 
+#include #google:hover {
+	color: #db4437;
+}
+
 #include #email:hover {
     color: #7897ad;
 }
@@ -511,10 +514,12 @@ i.input {
 	display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 #include .report_button>div {
     display: flex;
+    flex-wrap: wrap;
 }
 
 #include p.report_statut{
@@ -657,5 +662,14 @@ footer ul {
 @media (max-width: 400px) {
     html {
         font-size: 8.5px;
+    }
+}
+
+@media (max-width: 350px) {
+    header {
+        height: 80px;
+    }
+    .site_title.header {
+	    transform: scale(0.45) rotate(-10deg);
     }
 }
