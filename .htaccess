@@ -1,7 +1,7 @@
 Options +FollowSymlinks
 
 RewriteEngine on
-RewriteBase /projet_4/
+RewriteBase /
 
 RewriteRule ^([A-Z][a-z\-]+)$ index.php?action=$1 [L]
 
