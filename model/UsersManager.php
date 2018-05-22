@@ -30,7 +30,7 @@ class UsersManager {
         if ($data) {
             return new User($data);
         } else {
-            throw new exception('request fail');
+            throw new exception('get in UsersManager : request fail');
         }
     }
 
@@ -45,7 +45,7 @@ class UsersManager {
         if ($users) {
             return $users;
         } else {
-            throw new exception('request fail');
+            throw new exception('getList in UsersManager : request fail');
         }
     }
 

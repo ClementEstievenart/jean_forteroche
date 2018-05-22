@@ -6,9 +6,11 @@ class Backend extends Controller {
         parent::__construct($config);
         if (!isset($_SESSION['login'])) {
             header('location: ' . $this->_url . '/Erreur');
+            exit;
         }
         if(!($this->_usersManager->getByLogin($_SESSION['login']))) {
             header('location: ' . $this->_url . '/Erreur');
+            exit;
         }
 
         $this->_login = $_SESSION['login'];
@@ -102,16 +104,6 @@ class Backend extends Controller {
         require($this->_path . '/view/listCommentsReport.php');
     }
 
-    public function findPageOfComment ($commentId) {
-        $commentId = (int) $commentId;
-
-        $comment = $this->_commentsManager->get($commentId);
-        $positionComment = $this->_commentsManager->findCommentPosition($commentId, $comment->idPost());
-        $page = (int) floor($positionComment / 10) + 1;
-
-        header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId);
-    }
-
     public function deleteComment($commentId, $page, $redirection) {
         $commentId = (int) $commentId;
         $page = (int) $page;
@@ -120,12 +112,13 @@ class Backend extends Controller {
         $post = $this->_postsManager->get($comment->idPost());
         $post->setNbComments($post->nbComments() - 1);
 
-        $this->_postsManager->updateWithSameDateUpdate($post);
-        $this->_commentsManager->delete($comment);
-
-        if ($page % 10 === 1 AND $page !== 1) {
+        $CommentPosition = $this->_commentsManager->findCommentPosition($commentId, $comment->idPost());
+        if ($CommentPosition % 10 === 1 AND $page !== 1) {
             $page = $page - 1;
         }
+
+        $this->_postsManager->updateWithSameDateUpdate($post);
+        $this->_commentsManager->delete($comment);
 
         if ($redirection === 'post') {
             header('location: ' . $this->_url . '/Chapitre-' . $post->id() . '/' . $page);
@@ -134,14 +127,18 @@ class Backend extends Controller {
         }
     }
 
-    public function validComment($commentId, $page) {
+    public function validComment($commentId, $page, $redirection) {
         $commentId = (int) $commentId;
 
         $comment = $this->_commentsManager->get($commentId);
         $comment->setReportStatut(Comment::COMMENT_VALIDATED);
         $this->_commentsManager->update($comment);
 
-        header('location: ' . $this->_url . '/Liste-des-commentaires/' . $page);
+        if ($redirection === 'post') {
+            header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId);
+        } elseif ($redirection === 'listComments') {
+            header('location: ' . $this->_url . '/Liste-des-commentaires/' . $page);
+        }
     }
 
     public function disconnection() {

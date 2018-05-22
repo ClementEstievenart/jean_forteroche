@@ -91,6 +91,16 @@ class Frontend extends Controller {
         header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId, false);
     }
 
+    public function findPageOfComment ($commentId) {
+        $commentId = (int) $commentId;
+
+        $comment = $this->_commentsManager->get($commentId);
+        $positionComment = $this->_commentsManager->findCommentPosition($commentId, $comment->idPost());
+        $page = (int) floor(($positionComment - 1) / 10) + 1;
+
+        header('location: ' . $this->_url . '/Chapitre-' . $comment->idPost() . '/' . $page . '#commentId' . $commentId);
+    }
+
     public function error() {
         require($this->_path . '/view/error.php');
     }

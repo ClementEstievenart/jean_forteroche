@@ -19,6 +19,9 @@ $routerConfig = array (
         'Connexion' => array(
             'method' => 'connection',
             'postKeys' => ['login', 'password']),
+        'Voir-le-context' => array(
+            'method' => 'findPageOfComment',
+            'getKeys' => ['id']),
         'Erreur' => array(
             'method' => 'error')
     ),
@@ -46,14 +49,11 @@ $routerConfig = array (
         'Liste-des-commentaires' => array(
             'method' => 'listCommentsReport',
             'getKeys' => ['page']),
-        'Voir-le-context' => array(
-            'method' => 'findPageOfComment',
-            'getKeys' => ['id']),
         'Supprimer-le-commentaire' => array(
             'method' => 'deleteComment',
             'getKeys' => ['id', 'page', 'redirection']),
         'Valider-le-commentaire' => array(
             'method' => 'validComment',
-            'getKeys' => ['id', 'page'])
+            'getKeys' => ['id', 'page', 'redirection'])
     )
 );

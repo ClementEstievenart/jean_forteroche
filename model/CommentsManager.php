@@ -33,7 +33,7 @@ class CommentsManager {
         if ($data) {
             return new Comment($data);
         } else {
-            throw new exception('request fail');
+            throw new exception('get in CommentsManager : request fail');
         }
     }
 
@@ -54,7 +54,7 @@ class CommentsManager {
         $req->closeCursor();
 
         if (!$comments AND $page !== 1) {
-            throw new exception('request fail');
+            throw new exception('getList in CommentsManager : request fail');
         } else {
             return $comments;
         }
@@ -75,7 +75,7 @@ class CommentsManager {
         if ($comments) {
             return $comments;
         } else {
-            throw new exception('request fail');
+            throw new exception('getLast in CommentsManager : request fail');
         }
     }
 
@@ -114,7 +114,7 @@ class CommentsManager {
         $req->closeCursor();
 
         if (!$comments AND $page !== 1) {
-            throw new exception('request fail');
+            throw new exception('getCommentsByPostId in CommentsManager : request fail');
         } else {
             return $comments;
         }
@@ -150,10 +150,11 @@ class CommentsManager {
                 break;
             }
         }
-        if ($positionComment) {
-            return $positionComment;
+
+        if (isset($positionComment)) {
+            return $positionComment + 1;
         } else {
-            throw new exception('request fail');
+            throw new exception('findCommentPosition in CommentsManager : request fail');
         }
     }
 

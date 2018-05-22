@@ -39,7 +39,7 @@ class PostsManager {
         if ($data) {
             return new Post($data);
         } else {
-            throw new exception('request fail get');
+            throw new exception('get in PostsManager : request fail');
         }
     }
 
@@ -59,7 +59,7 @@ class PostsManager {
         $req->closeCursor();
 
         if (!$posts AND $page !== 1) {
-            throw new exception('request fail');
+            throw new exception('getList in PostsManager : request fail');
         } else {
             return $posts;
         }
@@ -80,7 +80,7 @@ class PostsManager {
         if ($posts) {
             return $posts;
         } else {
-            throw new exception('request fail');
+            throw new exception('getListTitles in PostsManager : request fail');
         }
     }
 
@@ -101,7 +101,7 @@ class PostsManager {
         $req->closeCursor();
 
         if (!$posts AND $page !== 1) {
-            throw new exception('request fail');
+            throw new exception('getListPublished in PostsManager : request fail');
         } else {
             return $posts;
         }
@@ -224,7 +224,7 @@ class PostsManager {
         if ($nbPosts) {
             return (int) $nbPosts;
         } else {
-            throw new exception('request fail');
+            throw new exception('nbPosts in PostsManager : request fail');
         }
     }
 
@@ -236,7 +236,7 @@ class PostsManager {
         if ($nbPostsPublish) {
             return (int) $nbPostsPublish;
         } else {
-            throw new exception('request fail');
+            throw new exception('nbPostsPublish in PostsManager : request fail');
         }
     }
 
