@@ -531,6 +531,11 @@ i.input {
     margin: 5px 0px;
 }
 
+#include .mce-container, #include .mce-container *, #include .mce-widget, #include .mce-widget *, #include .mce-reset {
+    font-size: 1.6rem;
+    white-space: normal;
+}
+
 footer {
     background-color: rgba(186, 186, 186, 0.8);
     margin: 40px 0px 0px 0px;
@@ -652,6 +657,9 @@ footer ul {
     #container {
 	    margin-left: 0px;
         margin-right: 0px;
+    }
+    #editForm #mceu_19, #editForm #mceu_31, #mceu_28, #mceu_29, #mceu_30, #newPostForm #mceu_18, #newPostForm #mceu_27 {
+        display: none;
     }
     footer {
         padding-left: 5px;
